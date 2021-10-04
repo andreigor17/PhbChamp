@@ -1,0 +1,64 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+
+    <ui:define name="title">
+        Criar Player 
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formPlayer"
+                enctype="multipart/form-data"
+                class="form-horizontal">
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+
+            <p:fieldset legend="Dados" id="dadosFieldset">
+
+                <div class="column2 bold">
+                    <p:outputLabel value="Nome"
+                                   for="nomePlayer"/>
+                </div>
+                <div class="column3 text">
+                    <p:inputText id="nomePlayer"
+                                 value="#{managerPlayer.player.nome}"
+                                 required="true"
+                                 requiredMessage="Informe o nome do player!"/>
+                </div>
+
+            </p:fieldset>
+
+            <div class="actions">
+
+                <center>
+
+                    <p:commandButton value="Cancelar"
+                                     title="Cancelar"
+                                     icon="ui-icon-close"
+                                     process="@this"
+                                     update="@form"
+                                     />
+
+                    <p:commandButton value="Salvar"
+                                     title="Salvar Player"
+                                     icon="ui-icon-check"
+                                     process="@form"
+                                     update="@form"
+                                     actionListener="#{managerPlayer.salvarPlayer()}"
+                                     />
+
+                </center>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
