@@ -1,16 +1,87 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+
+    <ui:define name="title">
+        Visualizar Player
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formVisualizarPlayer"
+                >
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+
+            <div  class="actions">
+
+              <p:commandButton value="Excluir" 
+                                     icon="ui-icon-close" styleClass="ui-priority-primary-red left" 
+                                     >
+                    </p:commandButton>
+                    <p:button value="Editar" outcome="criarPlayer.xhtml"
+                              icon="ui-icon-pencil"  >
+                        <f:param value="#{ managerPlayer.player.id }" name="id"/>
+                    </p:button>
+
+                    <p:button value="Pesquisar" outcome="pesquisarPlayer.xhtml"
+                              icon="ui-icon-search"  />
+
+            </div>
+            <p:fieldset legend="Dados">
+
+            <div class="row">
+                <div class="column2 bold" >
+                    <p:outputLabel value="Nome:" for="nomePlayer"/>
+                </div>
+                <div class="column4 text" >
+                    <p:outputLabel id="nomePlayer"
+                                   value="#{managerPlayer.player.nome}"/>
+                </div>
+            </div>
+
+            
+            </p:fieldset>
+
+            <p:dialog id="confirmarRemoverPlayerDialog"
+                      widgetVar="confirmarRemoverPlayerDialog"
+                      header="Atenção!"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+                
+
+                <center>
+
+                    <p:commandButton value="Não"
+                                     title="Cancelar Remoção"
+                                     icon="fa fa-ban"
+                                     oncomplete="PF('confirmarRemoverPlayerDialog').hide();"
+                                     styleClass="btn btn-default"/>
+
+                    <p:commandButton value="Sim"
+                                     title="Confirmar Remoção"
+                                     icon="fa fa-check"
+                                     process="@this"
+                                     update="@form"
+                                     actionListener="#{managerPlayer.removerPlayer()}"
+                                     styleClass="btn btn-info"/>
+
+                </center>
+
+            </p:dialog>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

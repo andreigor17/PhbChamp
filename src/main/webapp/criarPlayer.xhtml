@@ -21,16 +21,19 @@
 
             <p:fieldset legend="Dados" id="dadosFieldset">
 
-                <div class="column2 bold">
-                    <p:outputLabel value="Nome"
-                                   for="nomePlayer"/>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Nome"
+                                       for="nomePlayer"/>
+                    </div>
+                    <div class="column3 text">
+                        <p:inputText id="nomePlayer"
+                                     value="#{managerPlayer.player.nome}"
+                                     required="true"
+                                     requiredMessage="Informe o nome do player!"/>
+                    </div>
                 </div>
-                <div class="column3 text">
-                    <p:inputText id="nomePlayer"
-                                 value="#{managerPlayer.player.nome}"
-                                 required="true"
-                                 requiredMessage="Informe o nome do player!"/>
-                </div>
+                
 
             </p:fieldset>
 
