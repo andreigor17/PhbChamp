@@ -55,7 +55,7 @@
                          currentPageReportTemplate="{currentPage} de {totalPages}"
                          rows="10"
                          rowsPerPageTemplate="5,10,15"
-                         emptyMessage="Nenhum cliente encontrado...">
+                         emptyMessage="Nenhum player encontrado...">
 
                 <f:facet name="header">
                     <p:outputLabel value="Players Cadastrados" />
@@ -68,6 +68,7 @@
                                   href="visualizarPlayer.xhtml?id=#{player.id}"/>
 
                         <p:commandButton title="Remover Player"
+                                         value="Excluir"
                                          icon="ui-icon-trash"
                                          process="@this"
                                          update="@form"

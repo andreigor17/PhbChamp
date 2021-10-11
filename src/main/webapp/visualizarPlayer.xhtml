@@ -20,32 +20,37 @@
 
             <div  class="actions">
 
-              <p:commandButton value="Excluir" 
-                                     icon="ui-icon-close" styleClass="ui-priority-primary-red left" 
-                                     >
-                    </p:commandButton>
-                    <p:button value="Editar" outcome="criarPlayer.xhtml"
-                              icon="ui-icon-pencil"  >
-                        <f:param value="#{ managerPlayer.player.id }" name="id"/>
-                    </p:button>
+                <p:commandButton title="Remover Player"
+                                 icon="ui-icon-close" 
+                                 styleClass="ui-priority-primary-red left" 
+                                 process="@this"
+                                 update="@form"
+                                 oncomplete="PF('confirmarRemoverPlayerDialog').show();">
+                    <f:setPropertyActionListener value="#{player}"
+                                                 target="#{managerPlayer.player}"/>
+                </p:commandButton>
+                <p:button value="Editar" outcome="criarPlayer.xhtml"
+                          icon="ui-icon-pencil"  >
+                    <f:param value="#{ managerPlayer.player.id }" name="id"/>
+                </p:button>
 
-                    <p:button value="Pesquisar" outcome="pesquisarPlayer.xhtml"
-                              icon="ui-icon-search"  />
+                <p:button value="Pesquisar" outcome="pesquisarPlayer.xhtml"
+                          icon="ui-icon-search"  />
 
             </div>
             <p:fieldset legend="Dados">
 
-            <div class="row">
-                <div class="column2 bold" >
-                    <p:outputLabel value="Nome:" for="nomePlayer"/>
+                <div class="row">
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Nome:" for="nomePlayer"/>
+                    </div>
+                    <div class="column4 text" >
+                        <p:outputLabel id="nomePlayer"
+                                       value="#{managerPlayer.player.nome}"/>
+                    </div>
                 </div>
-                <div class="column4 text" >
-                    <p:outputLabel id="nomePlayer"
-                                   value="#{managerPlayer.player.nome}"/>
-                </div>
-            </div>
 
-            
+
             </p:fieldset>
 
             <p:dialog id="confirmarRemoverPlayerDialog"
@@ -58,7 +63,7 @@
                       showEffect="fade"
                       hideEffect="fade">
 
-                
+
 
                 <center>
 
