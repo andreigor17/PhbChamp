@@ -7,10 +7,14 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +27,8 @@ public class Team extends ModeloGenerico implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<Player> players;
 
     public Long getId() {
         return id;
@@ -39,7 +45,14 @@ public class Team extends ModeloGenerico implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     
 }

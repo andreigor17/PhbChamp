@@ -66,4 +66,17 @@ public class PlayerServico extends ServicoGenerico<Player>{
         return query.getResultList();
     }
     
+     public List<Player> autoCompletePlayer() {
+        return buscarPorPlayer();
+    }
+     
+     public List<Player> buscarPorPlayer() {
+        String sql = "select p from Player p where p.ativo = true and p.team is null";
+        
+        Query query = getEntityManager().createQuery(sql);
+        
+        return query.getResultList();
+        
+    }
+    
 }

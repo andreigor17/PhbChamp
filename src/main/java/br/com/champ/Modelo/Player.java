@@ -11,19 +11,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author andre
  */
 @Entity
-public class Player extends ModeloGenerico implements Serializable{
-    
+public class Player extends ModeloGenerico implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String nick;
+    @ManyToOne
+    private Team team;
 
     public String getNome() {
         return nome;
@@ -48,6 +52,15 @@ public class Player extends ModeloGenerico implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     
-    
+
 }
