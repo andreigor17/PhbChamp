@@ -33,35 +33,26 @@
                                      requiredMessage="Informe o nome do time!"/>
                     </div>
                 </div>
-                
+
+
                 <div class="row">
                     <div class="column2 bold">
-                        <p:outputLabel value="Selecionar jogador 1:"
-                                       for="jogadorUm"/>
+                        <p:outputLabel value="Selecionar jogador:"
+                                       for="jogadorAutoComplete"/>
                     </div>
                     <div class="column3">
-                        <p:autoComplete id="jogadorUm" value="#{managerTeam.team.membroTime}"
+                        <p:autoComplete id="jogadorAutoComplete" value="#{managerTeam.membro}"
                                         forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
                                         itemLabel="#{player.nome}" completeMethod="#{managerTeam.autoCompletarPlayer()}"
                                         converter="player_converter" required="true" requiredMessage="Jogador é obrigatório"/>
-                        
                     </div>
-                    
-                    <div class="column2 bold">
-                        <p:outputLabel value="Selecionar jogador 2:"
-                                       for="jogadorDois"/>
-                    </div>
-                    <div class="column3">
-                        <p:autoComplete id="jogadorDois" value="#{managerTeam.team.membroTime}"
-                                        forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
-                                        itemLabel="#{player.nome}" completeMethod="#{managerTeam.autoCompletarPlayer()}"
-                                        converter="player_converter" required="true" requiredMessage="Jogador é obrigatório"/>
-                        
-                    </div>
-                </div>
-                
+                    <p:commandButton value="Adicionar" actionListener="#{managerTeam.adicionarMembro()}"
+                                     update="@form" process="@form"/>
 
+                </div>
             </p:fieldset>
+
+
 
             <div class="actions">
 

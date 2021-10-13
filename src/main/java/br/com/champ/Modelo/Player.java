@@ -7,6 +7,7 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,8 +29,8 @@ public class Player extends ModeloGenerico implements Serializable {
     private Long id;
     private String nome;
     private String nick;
-//    @OneToOne
-//    private Team team;
+    @ManyToOne
+    private Team team;
 
     public String getNome() {
         return nome;
@@ -55,14 +56,44 @@ public class Player extends ModeloGenerico implements Serializable {
         this.id = id;
     }
 
-//    public Team getTeam() {
-//        return team;
-//    }
-//
-//    public void setTeam(Team team) {
-//        this.team = team;
-//    }
-    
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+   
     
 
 }

@@ -56,8 +56,6 @@ public class ManagerPlayer implements Serializable{
         this.player = player;
     }
 
-   
-
     public List<Player> getPlayers() {
         return players;
     }

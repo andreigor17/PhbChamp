@@ -8,6 +8,7 @@ package br.com.champ.Modelo;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,8 +28,8 @@ public class Team extends ModeloGenerico implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    @OneToMany(cascade= CascadeType.ALL)
-    private List<MembroTime> membroTime;
+    @OneToMany
+    private List<Player> players;
 
     public Long getId() {
         return id;
@@ -46,13 +47,45 @@ public class Team extends ModeloGenerico implements Serializable{
         this.nome = nome;
     }
 
-    public List<MembroTime> getMembroTime() {
-        return membroTime;
+    public List<Player> getPlayers() {
+        return players;
     }
 
-    public void setMembroTime(List<MembroTime> membroTime) {
-        this.membroTime = membroTime;
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Team other = (Team) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" + "id=" + id + ", nome=" + nome + ", players=" + players + '}';
+    }
+
+   
 
    
 }

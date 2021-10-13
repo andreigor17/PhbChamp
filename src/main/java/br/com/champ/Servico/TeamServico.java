@@ -6,24 +6,18 @@ import br.com.champ.Modelo.Team;
 import java.util.List;
 import javax.persistence.Query;
 
-
 /**
  *
  * @author andre
  */
 @Stateless
-public class TeamServico extends ServicoGenerico<Team>{
-    
-    private Team team;
-    
-    public void instanciar(){
-        this.team = new Team();
-    }
-    
-    public TeamServico(){
+public class TeamServico extends ServicoGenerico<Team> {
+
+
+    public TeamServico() {
         super(Team.class);
     }
-    
+
     public void salvar(Team team) {
         if (team.getId() == null) {
             save(team);
@@ -42,14 +36,13 @@ public class TeamServico extends ServicoGenerico<Team>{
 
         String sql = "select t from Team t where ";
 
-        sql += "t.ativo = true";
+        sql += "t.ativo = true and t.nome like '" + team.getNome() + "'";
 
         Query query = getEntityManager().createQuery(sql);
 
         return query.getResultList();
 
     }
-    
 
     public List<Team> autoCompleteTime() {
         return buscaTimes();
