@@ -40,7 +40,7 @@
                                        for="jogadorUm"/>
                     </div>
                     <div class="column3">
-                        <p:autoComplete id="jogadorUm" value="#{managerTeam.playerOne}"
+                        <p:autoComplete id="jogadorUm" value="#{managerTeam.team.membroTime}"
                                         forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
                                         itemLabel="#{player.nome}" completeMethod="#{managerTeam.autoCompletarPlayer()}"
                                         converter="player_converter" required="true" requiredMessage="Jogador é obrigatório"/>
@@ -52,7 +52,7 @@
                                        for="jogadorDois"/>
                     </div>
                     <div class="column3">
-                        <p:autoComplete id="jogadorDois" value="#{managerTeam.playerTwo}"
+                        <p:autoComplete id="jogadorDois" value="#{managerTeam.team.membroTime}"
                                         forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
                                         itemLabel="#{player.nome}" completeMethod="#{managerTeam.autoCompletarPlayer()}"
                                         converter="player_converter" required="true" requiredMessage="Jogador é obrigatório"/>

@@ -7,12 +7,14 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -26,8 +28,8 @@ public class Player extends ModeloGenerico implements Serializable {
     private Long id;
     private String nome;
     private String nick;
-    @ManyToOne
-    private Team team;
+//    @OneToOne
+//    private Team team;
 
     public String getNome() {
         return nome;
@@ -53,14 +55,14 @@ public class Player extends ModeloGenerico implements Serializable {
         this.id = id;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
+//    public Team getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(Team team) {
+//        this.team = team;
+//    }
+    
     
 
 }

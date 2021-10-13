@@ -28,7 +28,7 @@ public class Team extends ModeloGenerico implements Serializable{
     private Long id;
     private String nome;
     @OneToMany(cascade= CascadeType.ALL)
-    private List<Player> players;
+    private List<MembroTime> membroTime;
 
     public Long getId() {
         return id;
@@ -46,13 +46,13 @@ public class Team extends ModeloGenerico implements Serializable{
         this.nome = nome;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<MembroTime> getMembroTime() {
+        return membroTime;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
+    public void setMembroTime(List<MembroTime> membroTime) {
+        this.membroTime = membroTime;
     }
 
-    
+   
 }

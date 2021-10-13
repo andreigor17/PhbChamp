@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import br.com.champ.Modelo.Team;
+import br.com.champ.Modelo.MembroTime;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
@@ -27,11 +28,11 @@ public class ManagerTeam implements Serializable {
     TeamServico teamServico;
     @EJB
     PlayerServico playerServico;
-    private Player playerOne;
-    private Player playerTwo;
 
     private Team team;
     private List<Team> times;
+    private MembroTime membro;
+    private List<MembroTime> membroTime;
 
     @PostConstruct
     public void init() {
@@ -67,15 +68,16 @@ public class ManagerTeam implements Serializable {
     }
 
     public void salvarTeam() {
+        for (MembroTime membro : this.membroTime) {
 
-        if (playerOne != null && playerTwo != null) {
-            List<Player> jogadores = new ArrayList<>();
-            jogadores.add(playerOne);
-            jogadores.add(playerTwo);
-            this.team.setPlayers(jogadores);
+            Player player = membro.getPlayer();
+
+            this.team.setMembroTime(this.membroTime);
+
+            this.teamServico.salvar(this.team);
+            Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
         }
-        this.teamServico.salvar(this.team);
-        Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
+
     }
 
     public void pesquisarTime() {
@@ -94,22 +96,6 @@ public class ManagerTeam implements Serializable {
 
     public List<Player> autoCompletarPlayer() {
         return playerServico.autoCompletePlayer();
-    }
-
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public void setPlayerOne(Player playerOne) {
-        this.playerOne = playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-
-    public void setPlayerTwo(Player playerTwo) {
-        this.playerTwo = playerTwo;
     }
 
 }
