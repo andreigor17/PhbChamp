@@ -44,12 +44,26 @@
                         <p:autoComplete id="jogadorAutoComplete" value="#{managerTeam.membro}"
                                         forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
                                         itemLabel="#{player.nome}" completeMethod="#{managerTeam.autoCompletarPlayer()}"
-                                        converter="player_converter" required="true" requiredMessage="Jogador é obrigatório"/>
+                                        converter="player_converter"  requiredMessage="Jogador é obrigatório"/>
                     </div>
+                </div>
+                <div class="command">
                     <p:commandButton value="Adicionar" actionListener="#{managerTeam.adicionarMembro()}"
-                                     update="@form" process="@form"/>
+                                     update="formTime:dadosFieldset" process="formTime:dadosFieldset"/>
 
                 </div>
+                <p:dataTable id="playersDataTable" value="#{ managerTeam.membros }" var="player"
+                             rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum player adicionado">
+
+                    <p:column headerText="Nome" width="50%">
+                        <h:outputText value="#{ player.nome }" />
+                    </p:column>
+                    <p:column headerText="Nick" width="50%">
+                        <h:outputText value="#{ player.nick }" />
+                    </p:column>
+
+                </p:dataTable>
+
             </p:fieldset>
 
 

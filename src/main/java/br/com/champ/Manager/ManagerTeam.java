@@ -50,6 +50,7 @@ public class ManagerTeam implements Serializable {
         this.team = new Team();
         this.times = new ArrayList<>();
         this.membros = new ArrayList<Player>();
+        this.membro = new Player();
     }
     
     public Team getTeam() {
@@ -71,10 +72,11 @@ public class ManagerTeam implements Serializable {
     public void adicionarMembro() {
         System.out.println("aqui " + membro.getNome());
         System.out.println(membros);
-        this.membros.add(membro);
+        this.membros.add(this.membro);
+        //this.membro = new Player();
         
     }
-    
+     
     public void salvarTeam() {
         this.team.setPlayers(this.membros);
         for (Player players : this.membros) {
