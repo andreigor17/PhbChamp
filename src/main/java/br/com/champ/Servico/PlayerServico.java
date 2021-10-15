@@ -71,7 +71,7 @@ public class PlayerServico extends ServicoGenerico<Player> {
     }
 
     public List<Player> buscarPorPlayer() {
-        String sql = "select p from Player p where p.ativo = true and p.team is null ";
+        String sql = "select p from Player p where p.ativo = true and p.possuiTime = false";
 
         Query query = getEntityManager().createQuery(sql);
 

@@ -73,16 +73,16 @@ public class ManagerTeam implements Serializable {
         System.out.println("aqui " + membro.getNome());
         System.out.println(membros);
         this.membros.add(this.membro);
-        //this.membro = new Player();
+        System.out.println("tamanho " + membros.size());
         
     }
-     
+    
     public void salvarTeam() {
-        this.team.setPlayers(this.membros);
         for (Player players : this.membros) {
-            players.setTeam(this.team);
-            this.playerServico.update(membro);
+            players.setPossuiTime(true);
+            this.playerServico.update(players);
         }
+        this.team.setPlayers(this.membros);
         this.teamServico.salvar(this.team);
         Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
         

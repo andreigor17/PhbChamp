@@ -9,6 +9,7 @@ import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +30,10 @@ public class Player extends ModeloGenerico implements Serializable {
     private Long id;
     private String nome;
     private String nick;
-    @ManyToOne
-    private Team team;
+    @Column(columnDefinition = "boolean default false")
+    private boolean possuiTime = false;
+    @Column(columnDefinition = "boolean default false")
+    private boolean capitao;
 
     public String getNome() {
         return nome;
@@ -56,12 +59,20 @@ public class Player extends ModeloGenerico implements Serializable {
         this.id = id;
     }
 
-    public Team getTeam() {
-        return team;
+    public Boolean getPossuiTime() {
+        return possuiTime;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setPossuiTime(Boolean possuiTime) {
+        this.possuiTime = possuiTime;
+    }
+
+    public Boolean getCapitao() {
+        return capitao;
+    }
+
+    public void setCapitao(Boolean capitao) {
+        this.capitao = capitao;
     }
 
     @Override
@@ -93,7 +104,5 @@ public class Player extends ModeloGenerico implements Serializable {
         }
         return true;
     }
-   
-    
 
 }
