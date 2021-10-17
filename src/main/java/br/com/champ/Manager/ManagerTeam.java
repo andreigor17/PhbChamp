@@ -8,11 +8,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import br.com.champ.Modelo.Team;
-import br.com.champ.Modelo.MembroTime;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 
@@ -70,10 +68,9 @@ public class ManagerTeam implements Serializable {
     }
     
     public void adicionarMembro() {
-        System.out.println("aqui " + membro.getNome());
         System.out.println(membros);
         this.membros.add(this.membro);
-        System.out.println("tamanho " + membros.size());
+        this.membro = new Player();
         
     }
     
