@@ -1,0 +1,95 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+
+    <ui:define name="title">
+        Visualizar Campeonato
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formVisualizarCamp"
+                >
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+
+            <div  class="actions">
+
+                <p:commandButton title="Remover Campeonato"
+                                 value="Excluir"
+                                 icon="ui-icon-close" 
+                                 styleClass="ui-priority-primary-red left"
+                                 process="@this"
+                                 update="@form"
+                                 oncomplete="PF('confirmarRemoverCampDialog').show();">
+                    <f:setPropertyActionListener value="#{campeonato}"
+                                                 target="#{managerCampeonato.camp}"/>
+                </p:commandButton>
+                <p:button value="Editar" outcome="criarCampeonato.xhtml"
+                          icon="ui-icon-pencil"  >
+                    <f:param value="#{ managerCampeonato.camp.id }" name="id"/>
+                </p:button>
+
+                <p:button value="Pesquisar" outcome="pesquisarCampeonato.xhtml"
+                          icon="ui-icon-search"  />
+
+            </div>
+            <p:fieldset legend="Dados">
+
+                <div class="row">
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Nome:" for="nomeCampeonato"/>
+                    </div>
+                    <div class="column4 text" >
+                        <p:outputLabel id="nomeCampeonato"
+                                       value="#{managerCampeonato.camp.nome}"/>
+                    </div>
+                </div>
+                
+                
+
+
+            </p:fieldset>
+
+            <p:dialog id="confirmarRemoverCampDialog"
+                      widgetVar="confirmarRemoverCampDialog"
+                      header="Atenção!"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+
+
+                <center>
+
+                    <p:commandButton value="Não"
+                                     title="Cancelar Remoção"
+                                     icon="fa fa-ban"
+                                     oncomplete="PF('confirmarRemoverCampDialog').hide();"
+                                     styleClass="btn btn-default"/>
+
+                    <p:commandButton value="Sim"
+                                     title="Confirmar Remoção"
+                                     icon="fa fa-check"
+                                     process="@this"
+                                     update="@form"
+                                     actionListener="#{managerCampeonato.removeCamp()}"
+                                     styleClass="btn btn-info"/>
+
+                </center>
+
+            </p:dialog>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
