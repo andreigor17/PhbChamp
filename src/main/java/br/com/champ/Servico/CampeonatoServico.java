@@ -3,6 +3,7 @@ package br.com.champ.Servico;
 import br.com.champ.Generico.ServicoGenerico;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Tabela;
 
 /**
  *
@@ -43,6 +44,17 @@ public class CampeonatoServico extends ServicoGenerico<Campeonato> {
 
         return query.getResultList();
 
+    }
+    
+    public List<Object> gerarTabela(Long id) {
+        System.out.println("----------------------------------------------------------1");
+        String sql = "select t.nome, stats.roundsganhos, stats.roundsperdidos, stats.partidas, stats.pontos, stats.kill, stats.death, stats.assists from team t inner join estatisticas as stats on t.id = stats.team_id where stats.campeonato_id = "+id;
+        Query query = getEntityManager().createQuery(sql);
+        System.out.println("----------------------------------------------------------2");
+        List<Object> tabela = query.getResultList();
+        System.out.println("----------------------------------------------------------");
+        System.out.println(tabela.get(0).toString());
+        return tabela;
     }
    
     

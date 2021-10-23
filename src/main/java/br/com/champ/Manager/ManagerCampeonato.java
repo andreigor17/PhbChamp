@@ -2,6 +2,7 @@ package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
+import br.com.champ.Modelo.Tabela;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.PlayerServico;
@@ -35,6 +36,7 @@ public class ManagerCampeonato implements Serializable {
     private List<Campeonato> camps;
     private List<Team> times;
     private Team time;
+    private List<Object> tabela;
 
     @PostConstruct
     public void init() {
@@ -47,6 +49,9 @@ public class ManagerCampeonato implements Serializable {
             this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
         }
         
+        if(this.camp.getId() != null){
+            this.gerarTabela();
+        }
     }
 
     public void instanciar() {
@@ -92,6 +97,7 @@ public class ManagerCampeonato implements Serializable {
         this.camp.setTeams(this.times);
         this.campeonatoServico.salvar(this.camp);
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
+        this.gerarTabela();
     }
 
     public List<Team> autoCompletarTime() {
@@ -102,6 +108,10 @@ public class ManagerCampeonato implements Serializable {
         this.times.add(this.time);
         this.time = new Team();
 
+    }
+    
+    public void gerarTabela() {
+        this.tabela = this.campeonatoServico.gerarTabela(this.camp.getId());
     }
     
      public void limpar() {

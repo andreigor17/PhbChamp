@@ -2,6 +2,7 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +19,17 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "integer default 0")
     private Integer kills;
+    @Column(columnDefinition = "integer default 0")
     private Integer deaths;
+    @Column(columnDefinition = "integer default 0")
     private Integer assists;
+    @Column(columnDefinition = "integer default 0")
     private Integer roundsGanhos;
+    @Column(columnDefinition = "integer default 0")
     private Integer roundsPerdidos;
+    @Column(columnDefinition = "integer default 0")
     private Integer partidas;
     @ManyToOne
     private Team team;
