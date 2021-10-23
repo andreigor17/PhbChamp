@@ -21,10 +21,85 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     private Integer kills;
     private Integer deaths;
     private Integer assists;
-    private Integer adr;
-    private Integer mvp;
-    private Integer hs;
+    private Integer roundsGanhos;
+    private Integer roundsPerdidos;
+    private Integer partidas;
     @ManyToOne
-    private Player player;
+    private Team team;
+    @ManyToOne
+    private Campeonato campeonato;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getKills() {
+        return kills;
+    }
+
+    public void setKills(Integer kills) {
+        this.kills = kills;
+    }
+
+    public Integer getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(Integer deaths) {
+        this.deaths = deaths;
+    }
+
+    public Integer getAssists() {
+        return assists;
+    }
+
+    public void setAssists(Integer assists) {
+        this.assists = assists;
+    }
+
+    public Integer getRoundsGanhos() {
+        return roundsGanhos;
+    }
+
+    public void setRoundsGanhos(Integer roundsGanhos) {
+        this.roundsGanhos = roundsGanhos;
+    }
+
+    public Integer getRoundsPerdidos() {
+        return roundsPerdidos;
+    }
+
+    public void setRoundsPerdidos(Integer roundsPerdidos) {
+        this.roundsPerdidos = roundsPerdidos;
+    }
+
+    public Integer getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(Integer partidas) {
+        this.partidas = partidas;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Campeonato getCampeonato() {
+        return campeonato;
+    }
+
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
+    }
+    
+     
 }

@@ -1,6 +1,7 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.PlayerServico;
@@ -45,6 +46,7 @@ public class ManagerCampeonato implements Serializable {
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
         }
+        
     }
 
     public void instanciar() {
@@ -100,10 +102,6 @@ public class ManagerCampeonato implements Serializable {
         this.times.add(this.time);
         this.time = new Team();
 
-    }
-    
-    public void gerarTabela(){
-            
     }
     
      public void limpar() {

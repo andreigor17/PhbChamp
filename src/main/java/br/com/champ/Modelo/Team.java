@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -30,6 +31,8 @@ public class Team extends ModeloGenerico implements Serializable{
     private String nome;
     @OneToMany
     private List<Player> players;
+    @OneToMany
+    private List<Estatisticas> estatisticas;
 
     public Long getId() {
         return id;
@@ -83,6 +86,14 @@ public class Team extends ModeloGenerico implements Serializable{
     @Override
     public String toString() {
         return "Team{" + "id=" + id + ", nome=" + nome + ", players=" + players + '}';
+    }
+
+    public List<Estatisticas> getEstatisticas() {
+        return estatisticas;
+    }
+
+    public void setEstatisticas(List<Estatisticas> estatisticas) {
+        this.estatisticas = estatisticas;
     }
 
    
