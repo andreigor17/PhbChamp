@@ -16,10 +16,10 @@ import javax.persistence.Query;
  * @author andre
  */
 @Stateless
-public class EstatisticaServico extends ServicoGenerico<Estatisticas>{
-    
+public class EstatisticaServico extends ServicoGenerico<Estatisticas> {
+
     private Estatisticas estatisticas;
-    
+
     public void instanciar() {
         this.estatisticas = new Estatisticas();
 
@@ -43,11 +43,19 @@ public class EstatisticaServico extends ServicoGenerico<Estatisticas>{
         super.remove(estatistica);
     }
 
-    public List<Estatisticas> pesquisar(Estatisticas estatistica) {
+    public List<Estatisticas> estatisticaPorTime(Long id, Long id2) {
 
-        String sql = "select p from Player p where ";
+        String sql = "select est from Estatisticas est where ";
 
-        sql += "p.ativo = true";
+        sql += "est.ativo = true";
+
+        if (id != null) {
+            sql += " and team_id = " + id;
+        }
+
+        if (id2 != null) {
+            sql += " and est.campeonato_id =" + id2;
+        }
 
         Query query = getEntityManager().createQuery(sql);
 
@@ -55,6 +63,4 @@ public class EstatisticaServico extends ServicoGenerico<Estatisticas>{
 
     }
 
-    
-    
 }

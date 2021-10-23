@@ -50,11 +50,19 @@
                                        value="#{managerCampeonato.camp.nome}"/>
                     </div>
                 </div>
-                
-                
-
 
             </p:fieldset>
+
+            <p:dataTable id="timesDataTable" value="#{ managerCampeonato.camp.times }" var="team"
+                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+
+                <p:column headerText="Nome" width="50%">
+                    <h:outputText value="#{ team.nome }" />
+                </p:column>
+                
+
+
+            </p:dataTable>
 
             <p:dialog id="confirmarRemoverCampDialog"
                       widgetVar="confirmarRemoverCampDialog"

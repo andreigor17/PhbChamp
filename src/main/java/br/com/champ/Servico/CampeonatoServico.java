@@ -38,7 +38,7 @@ public class CampeonatoServico extends ServicoGenerico<Campeonato> {
 
         String sql = "select camp from Campeonato camp where ";
 
-        sql += "camp.ativo = true and t.nome like '" + camp.getNome() + "'";
+        sql += "camp.ativo = true";
 
         Query query = getEntityManager().createQuery(sql);
 
@@ -46,16 +46,6 @@ public class CampeonatoServico extends ServicoGenerico<Campeonato> {
 
     }
     
-    public List<Object> gerarTabela(Long id) {
-        System.out.println("----------------------------------------------------------1");
-        String sql = "select t.nome, stats.roundsganhos, stats.roundsperdidos, stats.partidas, stats.pontos, stats.kill, stats.death, stats.assists from team t inner join estatisticas as stats on t.id = stats.team_id where stats.campeonato_id = "+id;
-        Query query = getEntityManager().createQuery(sql);
-        System.out.println("----------------------------------------------------------2");
-        List<Object> tabela = query.getResultList();
-        System.out.println("----------------------------------------------------------");
-        System.out.println(tabela.get(0).toString());
-        return tabela;
-    }
    
     
 }
