@@ -5,6 +5,7 @@ import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Tabela;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
+import br.com.champ.Servico.EstatisticaServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
@@ -31,12 +32,15 @@ public class ManagerCampeonato implements Serializable {
     PlayerServico playerServico;
     @EJB
     CampeonatoServico campeonatoServico;
+    @EJB
+    EstatisticaServico estatisticaServico;
 
     private Campeonato camp;
     private List<Campeonato> camps;
     private List<Team> times;
     private Team time;
-    private List<Object> tabela;
+    private List<Estatisticas> estatisticasTime;
+    private Estatisticas estatistica;
 
     @PostConstruct
     public void init() {
@@ -49,9 +53,9 @@ public class ManagerCampeonato implements Serializable {
             this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
         }
         
-        if(this.camp.getId() != null){
-            this.gerarTabela();
-        }
+//        if(this.camp.getId() != null){
+//            this.gerarTabela();
+//        };
     }
 
     public void instanciar() {
@@ -59,6 +63,8 @@ public class ManagerCampeonato implements Serializable {
         this.camps = new ArrayList<>();
         this.time = new Team();
         this.times = new ArrayList<>();
+        this.estatisticasTime =  new ArrayList<>();
+        
     }
 
     public Campeonato getCamp() {
@@ -93,11 +99,38 @@ public class ManagerCampeonato implements Serializable {
         this.time = time;
     }
 
+    public List<Estatisticas> getEstatisticasTime() {
+        return estatisticasTime;
+    }
+
+    public void setEstatisticasTime(List<Estatisticas> estatisticasTime) {
+        this.estatisticasTime = estatisticasTime;
+    }
+
+    public Estatisticas getEstatistica() {
+        return estatistica;
+    }
+
+    public void setEstatistica(Estatisticas estatistica) {
+        this.estatistica = estatistica;
+    }
+    
+    
+
     public void salvarCampeonato() {
         this.camp.setTeams(this.times);
         this.campeonatoServico.salvar(this.camp);
+        for (Team timess : this.camp.getTeams()) {
+            this.estatistica = new Estatisticas();
+            this.estatistica.setTeam(timess);
+            this.estatistica.setCampeonato_id(this.camp.getId());
+            this.estatisticaServico.salvar(estatistica);
+            this.estatisticasTime.add(estatistica);
+            timess.setEstatisticas(estatisticasTime);
+            this.teamServico.update(timess);
+    }
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
-        this.gerarTabela();
+//        this.gerarTabela();
     }
 
     public List<Team> autoCompletarTime() {
@@ -110,10 +143,10 @@ public class ManagerCampeonato implements Serializable {
 
     }
     
-    public void gerarTabela() {
-        this.tabela = this.campeonatoServico.gerarTabela(this.camp.getId());
-    }
-    
+//    public void gerarTabela() {
+//        this.tabela = this.campeonatoServico.gerarTabela(this.camp.getId());
+//    }
+//    
      public void limpar() {
         instanciar();
     }

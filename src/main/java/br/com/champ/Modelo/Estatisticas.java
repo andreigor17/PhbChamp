@@ -20,21 +20,20 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(columnDefinition = "integer default 0")
-    private Integer kills;
+    private Integer kills = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer deaths;
+    private Integer deaths = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer assists;
+    private Integer assists = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer roundsGanhos;
+    private Integer roundsGanhos = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer roundsPerdidos;
+    private Integer roundsPerdidos = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer partidas;
+    private Integer partidas = 0;
     @ManyToOne
     private Team team;
-    @ManyToOne
-    private Campeonato campeonato;
+    private Long campeonato_id;
 
     public Long getId() {
         return id;
@@ -100,13 +99,13 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
         this.team = team;
     }
 
-    public Campeonato getCampeonato() {
-        return campeonato;
+    public Long getCampeonato_id() {
+        return campeonato_id;
     }
 
-    public void setCampeonato(Campeonato campeonato) {
-        this.campeonato = campeonato;
+    public void setCampeonato_id(Long campeonato_id) {
+        this.campeonato_id = campeonato_id;
     }
-    
-     
+
+   
 }
