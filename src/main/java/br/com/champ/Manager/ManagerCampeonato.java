@@ -102,6 +102,10 @@ public class ManagerCampeonato implements Serializable {
 
     }
     
+    public void gerarTabela(){
+            
+    }
+    
      public void limpar() {
         instanciar();
     }

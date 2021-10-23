@@ -23,9 +23,12 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     @OneToMany
     private List<Team> Teams;
     private String nome;
-    @OneToOne
-    private Tabela tabela;
-    private Integer quantidadeTimes;
+    private int partidas;
+    private int roundsGanhos;
+    private int roundsPerdidos;
+    private int roundsSaldo;
+    private int pontos;
+    private String record;
 
     public Long getId() {
         return id;
@@ -51,22 +54,53 @@ public class Campeonato extends ModeloGenerico implements Serializable{
         this.nome = nome;
     }
 
-    public Tabela getTabela() {
-        return tabela;
+    public int getPartidas() {
+        return partidas;
     }
 
-    public void setTabela(Tabela tabela) {
-        this.tabela = tabela;
+    public void setPartidas(int partidas) {
+        this.partidas = partidas;
     }
 
-    public Integer getQuantidadeTimes() {
-        return quantidadeTimes;
+    public int getRoundsGanhos() {
+        return roundsGanhos;
     }
 
-    public void setQuantidadeTimes(Integer quantidadeTimes) {
-        this.quantidadeTimes = quantidadeTimes;
+    public void setRoundsGanhos(int roundsGanhos) {
+        this.roundsGanhos = roundsGanhos;
     }
-    
-    
-    
+
+    public int getRoundsPerdidos() {
+        return roundsPerdidos;
+    }
+
+    public void setRoundsPerdidos(int roundsPerdidos) {
+        this.roundsPerdidos = roundsPerdidos;
+    }
+
+    public int getRoundsSaldo() {
+        return roundsSaldo;
+    }
+
+    public void setRoundsSaldo(int roundsSaldo) {
+        this.roundsSaldo = roundsSaldo;
+    }
+
+    public int getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(int pontos) {
+        this.pontos = pontos;
+    }
+
+    public String getRecord() {
+        return record;
+    }
+
+    public void setRecord(String record) {
+        this.record = record;
+    }
+
+        
 }

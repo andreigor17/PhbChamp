@@ -19,50 +19,60 @@
             <p:growl id="messages"
                      showDetail="false"/>
 
-            <p:fieldset legend="Dados" id="dadosFieldset">
+            <p:tabView id="tabview" styleClass="row" >
+                <p:tab id="tabCriacao" title="Dados do Campeonato" >
 
-                <div class="row">
-                    <div class="column2 bold">
-                        <p:outputLabel value="Nome do Campeonato:"
-                                       for="nomeCamp"/>
-                    </div>
-                    <div class="column3 text">
-                        <p:inputText id="nomeCamp"
-                                     value="#{managerCampeonato.camp.nome}"
-                                     required="true"
-                                     requiredMessage="Informe o nome do campeonato!"/>
-                    </div>
-                </div>
+                    <p:fieldset legend="Dados" id="dadosFieldset">
+
+                        <div class="row">
+                            <div class="column2 bold">
+                                <p:outputLabel value="Nome do Campeonato:"
+                                               for="nomeCamp"/>
+                            </div>
+                            <div class="column3 text">
+                                <p:inputText id="nomeCamp"
+                                             value="#{managerCampeonato.camp.nome}"
+                                             required="true"
+                                             requiredMessage="Informe o nome do campeonato!"/>
+                            </div>
+                        </div>
 
 
-                <div class="row">
-                    <div class="column2 bold">
-                        <p:outputLabel value="Selecionar time"
-                                       for="timeAutoComplete"/>
-                    </div>
-                    <div class="column3">
-                        <p:autoComplete id="timeAutoComplete" value="#{managerCampeonato.time}"
-                                        forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
-                                        itemLabel="#{team.nome}" completeMethod="#{managerCampeonato.autoCompletarTime()}"
-                                        converter="time_converter"  requiredMessage="Time é obrigatório"/>
-                    </div>
-                </div>
-                <div class="command">
-                    <p:commandButton value="Adicionar" actionListener="#{managerCampeonato.adicionarCamp()}"
-                                     update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
+                        <div class="row">
+                            <div class="column2 bold">
+                                <p:outputLabel value="Selecionar time"
+                                               for="timeAutoComplete"/>
+                            </div>
+                            <div class="column3">
+                                <p:autoComplete id="timeAutoComplete" value="#{managerCampeonato.time}"
+                                                forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
+                                                itemLabel="#{team.nome}" completeMethod="#{managerCampeonato.autoCompletarTime()}"
+                                                converter="time_converter"  requiredMessage="Time é obrigatório"/>
+                            </div>
+                        </div>
+                        <div class="command">
+                            <p:commandButton value="Adicionar" actionListener="#{managerCampeonato.adicionarCamp()}"
+                                             update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
 
-                </div>
-                <p:dataTable id="timesDataTable" value="#{ managerCampeonato.times }" var="team"
-                             rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+                        </div>
+                        <p:dataTable id="timesDataTable" value="#{ managerCampeonato.times }" var="team"
+                                     rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
-                    <p:column headerText="Nome" width="50%">
-                        <h:outputText value="#{ team.nome }" />
-                    </p:column>
-                    
+                            <p:column headerText="Nome" width="50%">
+                                <h:outputText value="#{ team.nome }" />
+                            </p:column>
 
-                </p:dataTable>
 
-            </p:fieldset>
+                        </p:dataTable>
+                        <div class="actions">
+                            <center>
+                                <p:commandButton value="Gerar tabela" />
+                            </center>
+                        </div>
+
+                    </p:fieldset>
+                </p:tab>
+            </p:tabView>
 
 
 
