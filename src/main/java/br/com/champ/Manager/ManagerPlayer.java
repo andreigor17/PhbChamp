@@ -39,7 +39,7 @@ public class ManagerPlayer implements Serializable{
                 .getRequestParameter("id");
 
         if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
+            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));            
         }
     }
     

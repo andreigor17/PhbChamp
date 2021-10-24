@@ -31,8 +31,7 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     private Integer roundsPerdidos = 0;
     @Column(columnDefinition = "integer default 0")
     private Integer partidas = 0;
-    @ManyToOne
-    private Team team;
+    private Long team_id;
     private Long campeonato_id;
 
     public Long getId() {
@@ -91,13 +90,14 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
         this.partidas = partidas;
     }
 
-    public Team getTeam() {
-        return team;
+    public Long getTeam_id() {
+        return team_id;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeam_id(Long team_id) {
+        this.team_id = team_id;
     }
+
 
     public Long getCampeonato_id() {
         return campeonato_id;

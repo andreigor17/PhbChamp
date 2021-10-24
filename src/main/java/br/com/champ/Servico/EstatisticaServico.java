@@ -50,7 +50,7 @@ public class EstatisticaServico extends ServicoGenerico<Estatisticas> {
         sql += "est.ativo = true";
 
         if (id != null) {
-            sql += " and team_id = " + id;
+            sql += " and est.team_id = " + id;
         }
 
         if (id2 != null) {

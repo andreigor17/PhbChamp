@@ -2,7 +2,6 @@ package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
-import br.com.champ.Modelo.Tabela;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
@@ -24,7 +23,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerCampeonato implements Serializable {
+public class ManagerCamp implements Serializable {
 
     @EJB
     TeamServico teamServico;
@@ -52,9 +51,13 @@ public class ManagerCampeonato implements Serializable {
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
         }
-
-        this.estatisticasTime = estatisticaServico.estatisticaPorTime(this.time.getId(), this.camp.getId());
-        this.time.setEstatisticas(estatisticasTime);
+        for (Team timeCamp : this.camp.getTeams()) {
+            this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
+            for (Estatisticas estats : this.estatisticasTime) {
+                estats = estatisticaServico.find(estats.getId());
+            }
+            timeCamp.setEstatisticas(estatisticasTime);
+        }
     }
 
     public void instanciar() {
@@ -119,7 +122,7 @@ public class ManagerCampeonato implements Serializable {
         this.campeonatoServico.salvar(this.camp);
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
-            this.estatistica.setTeam(timess);
+            this.estatistica.setTeam_id(timess.getId());
             this.estatistica.setCampeonato_id(this.camp.getId());
             this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);

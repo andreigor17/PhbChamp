@@ -28,11 +28,11 @@
                                  update="@form"
                                  oncomplete="PF('confirmarRemoverCampDialog').show();">
                     <f:setPropertyActionListener value="#{campeonato}"
-                                                 target="#{managerCampeonato.camp}"/>
+                                                 target="#{managerCamp.camp}"/>
                 </p:commandButton>
                 <p:button value="Editar" outcome="criarCampeonato.xhtml"
                           icon="ui-icon-pencil"  >
-                    <f:param value="#{ managerCampeonato.camp.id }" name="id"/>
+                    <f:param value="#{ managerCamp.camp.id }" name="id"/>
                 </p:button>
 
                 <p:button value="Pesquisar" outcome="pesquisarCampeonato.xhtml"
@@ -47,18 +47,25 @@
                     </div>
                     <div class="column4 text" >
                         <p:outputLabel id="nomeCampeonato"
-                                       value="#{managerCampeonato.camp.nome}"/>
+                                       value="#{managerCamp.camp.nome}"/>
                     </div>
                 </div>
 
             </p:fieldset>
 
-            <p:dataTable id="timesDataTable" value="#{ managerCampeonato.camp.times }" var="team"
+            <p:dataTable id="timesDataTable" value="#{ managerCamp.camp.teams }" var="team"
                          rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
                 <p:column headerText="Nome" width="50%">
                     <h:outputText value="#{ team.nome }" />
                 </p:column>
+                <p:column headerText="teste id" width="50%">
+                    <h:outputText value="#{ team.estatisticas.get(0).id}" />
+                </p:column>
+                <p:column headerText="teste deaths" width="50%">
+                    <h:outputText value="#{ team.estatisticas.get(0).deaths}" />
+                </p:column>
+                
                 
 
 
@@ -89,7 +96,7 @@
                                      icon="fa fa-check"
                                      process="@this"
                                      update="@form"
-                                     actionListener="#{managerCampeonato.removeCamp()}"
+                                     actionListener="#{managerCamp.removeCamp()}"
                                      styleClass="btn btn-info"/>
 
                 </center>
