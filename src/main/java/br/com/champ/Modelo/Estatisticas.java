@@ -31,6 +31,8 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     private Integer roundsPerdidos = 0;
     @Column(columnDefinition = "integer default 0")
     private Integer partidas = 0;
+    @Column(columnDefinition = "integer default 0")
+    private Integer pontos = 0;
     private Long team_id;
     private Long campeonato_id;
 
@@ -106,6 +108,16 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     public void setCampeonato_id(Long campeonato_id) {
         this.campeonato_id = campeonato_id;
     }
+
+    public Integer getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(Integer pontos) {
+        this.pontos = pontos;
+    }
+    
+    
 
    
 }

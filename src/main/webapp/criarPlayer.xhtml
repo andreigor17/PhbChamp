@@ -32,8 +32,40 @@
                                      required="true"
                                      requiredMessage="Informe o nome do player!"/>
                     </div>
+                    <div class="column2 bold">
+                        <p:outputLabel value="Sobrenome"
+                                       for="sobreNomePlayer"/>
+                    </div>
+                    <div class="column3 text">
+                        <p:inputText id="sobreNomePlayer"
+                                     value="#{managerPlayer.player.sobreNome}"
+                                     required="true"
+                                     requiredMessage="Informe o nome do player!"/>
+                    </div>
                 </div>
-                
+                <div class="row" >
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Nick: "
+                                       for="nickPlayer"/>
+                    </div>
+                    <div class="column3">
+                        <p:inputText id="nickPlayer"
+                                     value="#{managerPlayer.player.nick}"
+                                     required="true"
+                                     requiredMessage="Informe o nome do player!"/>
+                    </div>
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Função: "
+                                       for="funcaoPlayer"/>
+                    </div>
+                    <div class="column3">
+                        <p:selectOneMenu id="funcaoPlayer" value="#{ managerPlayer.player.funcao }"
+                                          required="true">
+                            <f:selectItems value="#{ enums.funcoes() }" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+
 
             </p:fieldset>
 
