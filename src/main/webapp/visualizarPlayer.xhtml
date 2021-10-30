@@ -47,7 +47,14 @@
                     </div>
                     <div class="column4 text" >
                         <p:outputLabel id="nomePlayer"
-                                       value="#{managerPlayer.player.nome}"/>
+                                       value="#{managerPlayer.player.nome}   '#{managerPlayer.player.nick}' #{managerPlayer.player.sobreNome} "/>
+                    </div>
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Função:" for="funcaoPlayer"/>
+                    </div>
+                    <div class="column4 text" >
+                        <p:outputLabel id="funcaoPlayer"
+                                       value="#{managerPlayer.player.funcao.nome}"/>
                     </div>
                 </div>
 

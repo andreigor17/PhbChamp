@@ -30,7 +30,7 @@
                             </div>
                             <div class="column3 text">
                                 <p:inputText id="nomeCamp"
-                                             value="#{managerCriarCamp.camp.nome}"
+                                             value="#{managerCriarCampeonato.camp.nome}"
                                              required="true"
                                              requiredMessage="Informe o nome do campeonato!"/>
                             </div>
@@ -43,18 +43,18 @@
                                                for="timeAutoComplete"/>
                             </div>
                             <div class="column3">
-                                <p:autoComplete id="timeAutoComplete" value="#{managerCriarCamp.time}"
+                                <p:autoComplete id="timeAutoComplete" value="#{managerCriarCampeonato.time}"
                                                 forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
-                                                itemLabel="#{team.nome}" completeMethod="#{managerCriarCamp.autoCompletarTime()}"
+                                                itemLabel="#{team.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarTime()}"
                                                 converter="time_converter"  requiredMessage="Time é obrigatório"/>
                             </div>
                         </div>
                         <div class="command">
-                            <p:commandButton value="Adicionar" actionListener="#{managerCriarCamp.adicionarCamp()}"
+                            <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarCamp()}"
                                              update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
 
                         </div>
-                        <p:dataTable id="timesDataTable" value="#{ managerCriarCamp.times }" var="team"
+                        <p:dataTable id="timesDataTable" value="#{ managerCriarCampeonato.times }" var="team"
                                      rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
                             <p:column headerText="Nome" width="50%">
@@ -83,7 +83,7 @@
                                      icon="ui-icon-check"
                                      process="@form"
                                      update="@form"
-                                     actionListener="#{managerCriarCamp.salvarCampeonato()}"
+                                     actionListener="#{managerCriarCampeonato.salvarCampeonato()}"
                                      />
 
                 </center>

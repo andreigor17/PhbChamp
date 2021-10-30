@@ -78,5 +78,14 @@ public class PlayerServico extends ServicoGenerico<Player> {
         return query.getResultList();
 
     }
+    
+//    public List<Player> buscaCampPorPlayer(Long id){
+//        
+//        String sql = "select c camp from Campeonato wher"
+//        
+//         Query query = getEntityManager().createQuery(sql);
+//
+//        return query.getResultList();
+//    }
 
 }

@@ -2,6 +2,7 @@ package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
+import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
@@ -23,7 +24,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerCriarCamp implements Serializable {
+public class ManagerCriarCampeonato implements Serializable {
 
     @EJB
     TeamServico teamServico;
@@ -51,7 +52,7 @@ public class ManagerCriarCamp implements Serializable {
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
         }
-       
+
     }
 
     public void instanciar() {
@@ -111,6 +112,19 @@ public class ManagerCriarCamp implements Serializable {
         this.estatistica = estatistica;
     }
 
+    public void setarPlayers() {
+        List<Player> jogadores = new ArrayList<>();
+        for (Team teams : this.camp.getTeams()) {
+            teams = teamServico.find(teams.getId());
+            for (Player playerss : this.camp.getPlayers()) {
+                playerss = playerServico.find(playerss.getId());
+                jogadores.add(playerss);
+            }
+            this.camp.setPlayers(jogadores);
+            this.campeonatoServico.update(this.camp);
+        }
+    }
+
     public void salvarCampeonato() {
         this.camp.setTeams(this.times);
         this.campeonatoServico.salvar(this.camp);
@@ -122,6 +136,8 @@ public class ManagerCriarCamp implements Serializable {
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             this.teamServico.update(timess);
+            this.setarPlayers();
+
         }
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
     }

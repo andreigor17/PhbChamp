@@ -28,7 +28,7 @@
                     </div>
                     <div class="column3 text">
                         <p:inputText id="nomePlayer"
-                                     value="#{managerPlayer.player.nome}"
+                                     value="#{managerCriarPlayer.player.nome}"
                                      required="true"
                                      requiredMessage="Informe o nome do player!"/>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="column3 text">
                         <p:inputText id="sobreNomePlayer"
-                                     value="#{managerPlayer.player.sobreNome}"
+                                     value="#{managerCriarPlayer.player.sobreNome}"
                                      required="true"
                                      requiredMessage="Informe o nome do player!"/>
                     </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="column3">
                         <p:inputText id="nickPlayer"
-                                     value="#{managerPlayer.player.nick}"
+                                     value="#{managerCriarPlayer.player.nick}"
                                      required="true"
                                      requiredMessage="Informe o nome do player!"/>
                     </div>
@@ -59,7 +59,7 @@
                                        for="funcaoPlayer"/>
                     </div>
                     <div class="column3">
-                        <p:selectOneMenu id="funcaoPlayer" value="#{ managerPlayer.player.funcao }"
+                        <p:selectOneMenu id="funcaoPlayer" value="#{ managerCriarPlayer.player.funcao }"
                                           required="true">
                             <f:selectItems value="#{ enums.funcoes() }" />
                         </p:selectOneMenu>
@@ -85,7 +85,7 @@
                                      icon="ui-icon-check"
                                      process="@form"
                                      update="@form"
-                                     actionListener="#{managerPlayer.salvarPlayer()}"
+                                     actionListener="#{managerCriarPlayer.salvarPlayer()}"
                                      />
 
                 </center>
