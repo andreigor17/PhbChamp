@@ -112,20 +112,19 @@ public class ManagerCriarCampeonato implements Serializable {
         this.estatistica = estatistica;
     }
 
-    public void setarPlayers() {
-        List<Player> jogadores = new ArrayList<>();
-        for (Team teams : this.camp.getTeams()) {
-            teams = teamServico.find(teams.getId());
-            for (Player playerss : this.camp.getPlayers()) {
-                playerss = playerServico.find(playerss.getId());
-                jogadores.add(playerss);
-            }
-            this.camp.setPlayers(jogadores);
-            this.campeonatoServico.update(this.camp);
-        }
-    }
+   
 
     public void salvarCampeonato() {
+        List<Player> j = new ArrayList<>();
+        for (Team t : this.times) {
+            t = teamServico.find(t.getId());
+            for (Player p : t.getPlayers()) {
+                p = playerServico.find(p.getId());
+                j.add(p);
+            }
+        }
+        this.camp.setPlayers(j);
+
         this.camp.setTeams(this.times);
         this.campeonatoServico.salvar(this.camp);
         for (Team timess : this.camp.getTeams()) {
@@ -135,8 +134,7 @@ public class ManagerCriarCampeonato implements Serializable {
             this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
-            this.teamServico.update(timess);
-            this.setarPlayers();
+            this.teamServico.update(timess);            
 
         }
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
