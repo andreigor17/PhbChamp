@@ -60,6 +60,41 @@
 
 
             </p:fieldset>
+            
+            <p:dataTable id="campDataTable"
+                         value="#{managerPlayer.camps}"
+                         var="campeonato"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         currentPageReportTemplate="{currentPage} de {totalPages}"
+                         rows="10"
+                         rowsPerPageTemplate="5,10,15"
+                         emptyMessage="Nenhum Campeonato encontrado...">
+
+                <f:facet name="header">
+                    <p:outputLabel value="Campeonatos Atuais" />
+                </f:facet>
+
+                <p:column headerText="Opções" width="10%">
+                    <div class="options2">
+                        <p:button title="Visualizar Camp"
+                                  icon="ui-icon-search"
+                                  href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
+                       
+                    </div>
+
+                </p:column>
+
+                <p:column headerText="Nome" width="60%">
+                    <p:outputLabel value="#{campeonato.nome}" />
+                </p:column>
+
+        
+
+
+
+            </p:dataTable>
 
             <p:dialog id="confirmarRemoverPlayerDialog"
                       widgetVar="confirmarRemoverPlayerDialog"

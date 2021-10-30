@@ -5,7 +5,9 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Player;
+import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
@@ -23,29 +25,35 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerPlayer implements Serializable{
-    
+public class ManagerPlayer implements Serializable {
+
     @EJB
     PlayerServico playerServico;
-    
+    @EJB
+    CampeonatoServico campServico;
+
     private Player player;
     private List<Player> players;
-    
+    private List<Campeonato> camps;
+
     @PostConstruct
-    public void init(){
+    public void init() {
         instanciar();
-        
+
         String visualizarPlayerId = FacesUtil
                 .getRequestParameter("id");
 
         if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));            
+            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
         }
+
+        this.camps = campServico.buscaCampPorPlayer(this.player);
     }
-    
-    public void instanciar(){
+
+    public void instanciar() {
         this.player = new Player();
         this.players = new ArrayList<>();
+        this.camps = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -64,25 +72,33 @@ public class ManagerPlayer implements Serializable{
         this.players = players;
     }
 
+    public List<Campeonato> getCamps() {
+        return camps;
+    }
+
+    public void setCamps(List<Campeonato> camps) {
+        this.camps = camps;
+    }
     
     
-    public void salvarPlayer(){
+
+    public void salvarPlayer() {
         this.playerServico.salvar(this.player);
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
     }
-    
-    public void pesquisarPlayer(){
+
+    public void pesquisarPlayer() {
         this.players = playerServico.pesquisar(this.player);
     }
-    
+
     public void limpar() {
         instanciar();
     }
-    
+
     public void removerPlayer() {
         this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }
-    
+
 }

@@ -31,7 +31,7 @@
                         <p:outputLabel value="Nome do Player" for="nomePlayer" />
                     </div>
                     <div class="column9">
-                        <p:inputText id="nomePlayer" value="#{ managerPlayer.player.nome}"/>
+                        <p:inputText id="nomePlayer" value="#{ managerCriarPlayer.player.nome}"/>
                     </div>
                 </div>
 
@@ -41,13 +41,13 @@
                 <p:commandButton
                     id="pesquisarcommandButton" value="Pesquisar" icon="ui-icon-search"                                 
 
-                    update="@form" actionListener="#{ managerPlayer.pesquisarPlayer() }" />
+                    update="@form" actionListener="#{ managerCriarPlayer.pesquisarPlayer() }" />
                 <p:commandButton value="Limpar" icon="ui-icon-close" update="@form" actionListener="#{ managerPlayer.limpar() }" />
             </div>
 
 
             <p:dataTable id="playerDataTable"
-                         value="#{managerPlayer.players}"
+                         value="#{managerCriarPlayer.players}"
                          var="player"
                          paginator="true"
                          paginatorPosition="bottom"
@@ -73,7 +73,7 @@
                                          update="@form"
                                          oncomplete="PF('confirmarRemoverPlayerDialog').show();">
                             <f:setPropertyActionListener value="#{player}"
-                                                         target="#{managerPlayer.player}"/>
+                                                         target="#{managerCriarPlayer.player}"/>
                         </p:commandButton>
                     </div>
 
@@ -115,7 +115,7 @@
                                      icon="ui-icon-check"
                                      process="@this"
                                      update="@form"
-                                     actionListener="#{managerPlayer.removerPlayer()}"
+                                     actionListener="#{managerCriarPlayer.removerPlayer()}"
                                      styleClass="btn btn-info"/>
 
                 </div>

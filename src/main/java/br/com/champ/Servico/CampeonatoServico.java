@@ -3,6 +3,7 @@ package br.com.champ.Servico;
 import br.com.champ.Generico.ServicoGenerico;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Tabela;
 
 /**
@@ -11,16 +12,15 @@ import br.com.champ.Modelo.Tabela;
  */
 import java.util.List;
 import javax.persistence.Query;
+
 @Stateless
 public class CampeonatoServico extends ServicoGenerico<Campeonato> {
-    
-    
-    
-    public CampeonatoServico(){
+
+    public CampeonatoServico() {
         super(Campeonato.class);
     }
-    
-     public void salvar(Campeonato camp) {
+
+    public void salvar(Campeonato camp) {
         if (camp.getId() == null) {
             save(camp);
         } else {
@@ -45,7 +45,18 @@ public class CampeonatoServico extends ServicoGenerico<Campeonato> {
         return query.getResultList();
 
     }
-    
-   
-    
+
+    public List<Campeonato> buscaCampPorPlayer(Player player) {
+
+        String sql = "select campeonato from Campeonato campeonato join campeonato.players player "
+                + "where player = :player";
+
+        Query query = getEntityManager().createQuery(sql);
+
+        query.setParameter("player", player);
+
+        return query.getResultList();
+
+    }
+
 }
