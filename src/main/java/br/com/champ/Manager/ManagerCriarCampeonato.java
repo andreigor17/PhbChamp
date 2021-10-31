@@ -1,5 +1,6 @@
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Player;
@@ -126,6 +127,7 @@ public class ManagerCriarCampeonato implements Serializable {
         this.camp.setPlayers(j);
 
         this.camp.setTeams(this.times);
+        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
         this.campeonatoServico.salvar(this.camp);
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();

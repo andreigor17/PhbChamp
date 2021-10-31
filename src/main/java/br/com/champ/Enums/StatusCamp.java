@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.champ.Enums;
 
 /**
  *
  * @author andre
  */
-public enum Funcoes {
+public enum StatusCamp {
     
-    RIFLER(1, "Rifler"),
-    AWPER(2, "Awper"),
-    LURKER(3, "Lurker"),
-    IGL(4, "Igl"),
-    COACH(5, "Coach"),
-    ENTRY(5, "Entry");
+    EM_ANDAMENTO(1, "Em Andamento"),
+    FINALIZADO(2, "Finalizado");
     
     private String nome;
     private Integer valor;
@@ -31,7 +22,7 @@ public enum Funcoes {
     
     
 
-    private Funcoes(Integer valor, String nome) {
+    private StatusCamp(Integer valor, String nome) {
         this.nome = nome;
         this.valor = valor;
     }

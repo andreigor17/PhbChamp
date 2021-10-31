@@ -1,9 +1,12 @@
 package br.com.champ.Modelo;
 
+import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +27,8 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     @ManyToMany
     private List<Player> players;
     private String nome;
+    @Enumerated(EnumType.STRING)
+    private StatusCamp status;
 
     public Long getId() {
         return id;
@@ -55,6 +60,14 @@ public class Campeonato extends ModeloGenerico implements Serializable{
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public StatusCamp getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusCamp status) {
+        this.status = status;
     }
     
     

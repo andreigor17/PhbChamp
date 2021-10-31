@@ -83,8 +83,13 @@
                 <p:column headerText="Nome" width="60%">
                     <p:outputLabel value="#{campeonato.nome}" />
                 </p:column>
+                <p:column headerText="Status" width="15%" style="text-align: center;">
+                    <span class="#{ campeonato.status }">
+                        <p:outputLabel value="#{campeonato.status.nome}" />
+                    </span>
+                </p:column>
 
-        
+
 
 
 
