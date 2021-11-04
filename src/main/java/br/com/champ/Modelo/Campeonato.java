@@ -4,6 +4,7 @@ import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +31,7 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     private String nome;
     @Enumerated(EnumType.STRING)
     private StatusCamp status;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Partida> partidas;
 
     public List<Partida> getPartidas() {

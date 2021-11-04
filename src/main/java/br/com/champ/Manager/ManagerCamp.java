@@ -2,9 +2,11 @@ package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
+import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
+import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
@@ -33,6 +35,8 @@ public class ManagerCamp implements Serializable {
     CampeonatoServico campeonatoServico;
     @EJB
     EstatisticaServico estatisticaServico;
+    @EJB
+    PartidaServico partidaServico;
 
     private Campeonato camp;
     private List<Campeonato> camps;
@@ -40,6 +44,7 @@ public class ManagerCamp implements Serializable {
     private Team time;
     private List<Estatisticas> estatisticasTime;
     private Estatisticas estatistica;
+    private List<Partida> partidas;
 
     @PostConstruct
     public void init() {
@@ -58,6 +63,8 @@ public class ManagerCamp implements Serializable {
             }
             timeCamp.setEstatisticas(estatisticasTime);
         }
+        this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
+               
     }
 
     public void instanciar() {
@@ -66,6 +73,7 @@ public class ManagerCamp implements Serializable {
         this.time = new Team();
         this.times = new ArrayList<>();
         this.estatisticasTime = new ArrayList<>();
+        this.partidas = new ArrayList<>();
 
     }
 
@@ -116,6 +124,16 @@ public class ManagerCamp implements Serializable {
     public void setEstatistica(Estatisticas estatistica) {
         this.estatistica = estatistica;
     }
+
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
+    }
+    
+    
 
     public void salvarCampeonato() {
         this.camp.setTeams(this.times);

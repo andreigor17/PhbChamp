@@ -7,6 +7,7 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +24,9 @@ import javax.persistence.ManyToOne;
 public class Partida extends ModeloGenerico implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Campeonato campeonato;
     
     @ManyToOne
@@ -38,13 +39,18 @@ public class Partida extends ModeloGenerico implements Serializable{
     
     private int scoreT2;
 
-    public long getId() {
+    public Partida() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
+   
 
     public Campeonato getCampeonato() {
         return campeonato;

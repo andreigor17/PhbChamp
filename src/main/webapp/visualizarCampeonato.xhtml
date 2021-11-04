@@ -78,10 +78,10 @@
                         <p:column headerText="Deaths" width="50%">
                             <h:outputText value="#{ team.estatisticas.get(0).deaths}" />
                         </p:column>
-                         <p:column headerText="Rounds Ganhos" width="50%">
+                        <p:column headerText="Rounds Ganhos" width="50%">
                             <h:outputText value="#{ team.estatisticas.get(0).roundsGanhos}" />
                         </p:column>
-                         <p:column headerText="Rounds Perdidos" width="50%">
+                        <p:column headerText="Rounds Perdidos" width="50%">
                             <h:outputText value="#{ team.estatisticas.get(0).roundsPerdidos}" />
                         </p:column>
 
@@ -92,6 +92,18 @@
 
                 </p:tab>
                 <p:tab id="jogos" title="Jogos">
+
+                   
+                        <ui:repeat value="#{managerCamp.partidas}" var="partida">
+                            <div class="row">
+                                <div class="column12">
+
+                                    <p:inputText 
+                                        value="#{partida.team1}"/>
+                                </div>
+                            </div>
+                        </ui:repeat>
+
 
                 </p:tab>
             </p:tabView>

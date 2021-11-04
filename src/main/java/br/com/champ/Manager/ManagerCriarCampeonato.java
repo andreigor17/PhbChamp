@@ -8,6 +8,7 @@ import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
+import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
@@ -36,6 +37,8 @@ public class ManagerCriarCampeonato implements Serializable {
     CampeonatoServico campeonatoServico;
     @EJB
     EstatisticaServico estatisticaServico;
+    @EJB
+    PartidaServico partidaServico;
 
     private Campeonato camp;
     private List<Campeonato> camps;
@@ -160,7 +163,9 @@ public class ManagerCriarCampeonato implements Serializable {
         for(int i = 0; i < this.getCamp().getTeams().size() - 1; i++){
             for(int j = i + 1; j < this.getCamp().getTeams().size(); j++){
                 match = new Partida(this.getCamp(), this.getCamp().getTeams().get(i), this.getCamp().getTeams().get(j));
+                this.partidaServico.salvar(match);
                 matches.add(match);
+                
             }
         }
         this.camp.setPartidas(matches);
