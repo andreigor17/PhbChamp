@@ -3,6 +3,7 @@ package br.com.champ.Manager;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
+import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
@@ -128,6 +129,7 @@ public class ManagerCriarCampeonato implements Serializable {
 
         this.camp.setTeams(this.times);
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
+        gerarPartidas();
         this.campeonatoServico.salvar(this.camp);
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
@@ -150,6 +152,18 @@ public class ManagerCriarCampeonato implements Serializable {
         this.times.add(this.time);
         this.time = new Team();
 
+    }
+    
+    public void gerarPartidas() {
+        List<Partida> matches = new ArrayList<>();
+        Partida match;
+        for(int i = 0; i < this.getCamp().getTeams().size() - 1; i++){
+            for(int j = i + 1; j < this.getCamp().getTeams().size(); j++){
+                match = new Partida(this.getCamp(), this.getCamp().getTeams().get(i), this.getCamp().getTeams().get(j));
+                matches.add(match);
+            }
+        }
+        this.camp.setPartidas(matches);
     }
 
     public void limpar() {

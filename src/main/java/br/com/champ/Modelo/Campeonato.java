@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -29,6 +30,16 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     private String nome;
     @Enumerated(EnumType.STRING)
     private StatusCamp status;
+    @OneToMany
+    private List<Partida> partidas;
+
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
+    }
 
     public Long getId() {
         return id;
