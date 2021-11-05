@@ -117,23 +117,20 @@ public class ManagerCriarCampeonato implements Serializable {
         this.estatistica = estatistica;
     }
 
-   
-
     public void salvarCampeonato() {
-        List<Player> j = new ArrayList<>();
+        List<Player> jog = new ArrayList<>();
         for (Team t : this.times) {
             t = teamServico.find(t.getId());
             for (Player p : t.getPlayers()) {
                 p = playerServico.find(p.getId());
-                j.add(p);
+                jog.add(p);
             }
         }
-        this.camp.setPlayers(j);
-
+        this.camp.setPlayers(jog);
         this.camp.setTeams(this.times);
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
-        gerarPartidas();
         this.campeonatoServico.salvar(this.camp);
+        gerarPartidas();
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
@@ -141,7 +138,7 @@ public class ManagerCriarCampeonato implements Serializable {
             this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
-            this.teamServico.update(timess);            
+            this.teamServico.update(timess);
 
         }
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
@@ -156,19 +153,18 @@ public class ManagerCriarCampeonato implements Serializable {
         this.time = new Team();
 
     }
-    
+
     public void gerarPartidas() {
         List<Partida> matches = new ArrayList<>();
         Partida match;
-        for(int i = 0; i < this.getCamp().getTeams().size() - 1; i++){
-            for(int j = i + 1; j < this.getCamp().getTeams().size(); j++){
-                match = new Partida(this.getCamp(), this.getCamp().getTeams().get(i), this.getCamp().getTeams().get(j));
+        for (int i = 0; i < this.camp.getTeams().size() - 1; i++) {
+            for (int j = i + 1; j < this.camp.getTeams().size(); j++) {
+                match = new Partida(this.camp.getId(), this.camp.getTeams().get(i), this.camp.getTeams().get(j));
                 this.partidaServico.salvar(match);
-                matches.add(match);
-                
+                //matches.add(match);
             }
         }
-        this.camp.setPartidas(matches);
+        //this.camp.setPartidas(matches);
     }
 
     public void limpar() {

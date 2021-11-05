@@ -6,6 +6,7 @@
 package br.com.champ.Servico;
 
 import br.com.champ.Generico.ServicoGenerico;
+import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Partida;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -53,10 +54,10 @@ public class PartidaServico extends ServicoGenerico<Partida>{
 
         sql += "p.ativo = true";
         
-        sql += " AND p.campeonato = " + id;
+        sql += " AND p.campeonato_id = " + id;
 
         Query query = getEntityManager().createQuery(sql);
-
+        
         return query.getResultList();
     }
     

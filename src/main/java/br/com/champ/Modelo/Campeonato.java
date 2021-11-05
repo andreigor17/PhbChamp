@@ -31,10 +31,9 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     private String nome;
     @Enumerated(EnumType.STRING)
     private StatusCamp status;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Partida> partidas;
-
-    public List<Partida> getPartidas() {
+   public List<Partida> getPartidas() {
         return partidas;
     }
 

@@ -96,10 +96,10 @@
                    
                         <ui:repeat value="#{managerCamp.partidas}" var="partida">
                             <div class="row">
-                                <div class="column12">
+                                <div class="column2 text">
 
                                     <p:inputText 
-                                        value="#{partida.team1}"/>
+                                        value="#{partida.team1.nome} x #{partida.team2.nome}"/>
                                 </div>
                             </div>
                         </ui:repeat>
