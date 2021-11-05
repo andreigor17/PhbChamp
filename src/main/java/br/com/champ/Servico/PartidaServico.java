@@ -49,14 +49,16 @@ public class PartidaServico extends ServicoGenerico<Partida>{
         super.remove(partida);
     }
     
-    public List<Partida> partidaPorCamp(Long id) {
+    public List<Partida> partidaPorCamp(Campeonato camp) {
         String sql = "select p from Partida p where ";
 
         sql += "p.ativo = true";
         
-        sql += " AND p.campeonato_id = " + id;
+        sql += " AND p.camp = :campeonato";
 
         Query query = getEntityManager().createQuery(sql);
+        
+        query.setParameter("campeonato", camp);
         
         return query.getResultList();
     }

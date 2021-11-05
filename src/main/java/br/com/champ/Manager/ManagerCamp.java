@@ -63,7 +63,7 @@ public class ManagerCamp implements Serializable {
             }
             timeCamp.setEstatisticas(estatisticasTime);
         }
-        this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
+        this.partidas = partidaServico.partidaPorCamp(this.camp);
                
     }
 

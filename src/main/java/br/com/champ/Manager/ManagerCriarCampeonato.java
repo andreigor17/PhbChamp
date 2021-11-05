@@ -129,8 +129,9 @@ public class ManagerCriarCampeonato implements Serializable {
         this.camp.setPlayers(jog);
         this.camp.setTeams(this.times);
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
-        this.campeonatoServico.salvar(this.camp);
         gerarPartidas();
+        this.campeonatoServico.salvar(this.camp);
+
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
@@ -159,12 +160,11 @@ public class ManagerCriarCampeonato implements Serializable {
         Partida match;
         for (int i = 0; i < this.camp.getTeams().size() - 1; i++) {
             for (int j = i + 1; j < this.camp.getTeams().size(); j++) {
-                match = new Partida(this.camp.getId(), this.camp.getTeams().get(i), this.camp.getTeams().get(j));
-                this.partidaServico.salvar(match);
-                //matches.add(match);
+                match = new Partida(this.camp, this.camp.getTeams().get(i), this.camp.getTeams().get(j));
+                matches.add(match);
             }
         }
-        //this.camp.setPartidas(matches);
+        this.camp.setPartidas(matches);
     }
 
     public void limpar() {

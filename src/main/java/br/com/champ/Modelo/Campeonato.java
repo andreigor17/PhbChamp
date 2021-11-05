@@ -19,8 +19,8 @@ import javax.persistence.OneToMany;
  * @author andre
  */
 @Entity
-public class Campeonato extends ModeloGenerico implements Serializable{
-    
+public class Campeonato extends ModeloGenerico implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,9 +31,10 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     private String nome;
     @Enumerated(EnumType.STRING)
     private StatusCamp status;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Partida> partidas;
-   public List<Partida> getPartidas() {
+
+    public List<Partida> getPartidas() {
         return partidas;
     }
 
@@ -80,7 +81,5 @@ public class Campeonato extends ModeloGenerico implements Serializable{
     public void setStatus(StatusCamp status) {
         this.status = status;
     }
-    
-    
-        
+
 }

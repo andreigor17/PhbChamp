@@ -27,8 +27,8 @@ public class Partida extends ModeloGenerico implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    
-    private Long campeonato_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Campeonato camp;
     
     @ManyToOne
     private Team team1;
@@ -49,14 +49,6 @@ public class Partida extends ModeloGenerico implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCampeonato_id() {
-        return campeonato_id;
-    }
-
-    public void setCampeonato_id(Long campeonato_id) {
-        this.campeonato_id = campeonato_id;
     }
 
 
@@ -92,8 +84,8 @@ public class Partida extends ModeloGenerico implements Serializable{
         this.scoreT2 = scoreT2;
     }
 
-    public Partida(Long id, Team team1, Team team2) {
-        this.id = id;
+    public Partida(Campeonato camp, Team team1, Team team2) {
+        this.camp = camp;
         this.team1 = team1;
         this.team2 = team2;
     }
