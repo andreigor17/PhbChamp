@@ -1,5 +1,6 @@
 package br.com.champ.Servico;
 
+import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ServicoGenerico;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
@@ -54,6 +55,27 @@ public class CampeonatoServico extends ServicoGenerico<Campeonato> {
         Query query = getEntityManager().createQuery(sql);
 
         query.setParameter("player", player);
+
+        return query.getResultList();
+
+    }
+    
+    public List<Campeonato> autoCompleteCamps() {
+        return pesquisarCampsAtuais();
+    }
+
+    
+    public List<Campeonato> pesquisarCampsAtuais() {
+
+        String sql = "select camp from Campeonato camp where ";
+
+        sql += "camp.ativo = true";
+        
+        sql += " AND camp.status = :status";
+
+        Query query = getEntityManager().createQuery(sql);
+        
+        query.setParameter("status", StatusCamp.EM_ANDAMENTO);
 
         return query.getResultList();
 

@@ -7,9 +7,48 @@
                 >
 
     <ui:define name="title">
-        Página Principal
+        PhbChamp
     </ui:define>
     <ui:define name="content">
+
+        <h:form id="formIndex"
+                enctype="multipart/form-data"
+                class="form-horizontal">
+
+            <p:growl id="messages"
+                     showDetail="false"/> 
+
+            <p:fieldset legend="Filtros" id="dadosFieldset">                    
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Campeonatos em andamento"
+                                       for="campAutoComplete"/>
+                    </div>
+                    <div class="column3">
+                        <p:autoComplete id="campAutoComplete" value="#{managerIndex.camp}"
+                                        forceSelection="true" dropdown="true" var="campeonato" itemValue="#{campeonato}" scrollHeight="200"
+                                        itemLabel="#{campeonato.nome}" completeMethod="#{managerIndex.autoCompletarCamps()}"
+                                        converter="camp_converter"  requiredMessage="Time é obrigatório"/>
+                    </div>
+                </div>
+                <div class="command">
+                    <p:commandButton
+                        id="pesquisarcommandButton" value="Pesquisar" icon="ui-icon-search"                                 
+                        update="@form" actionListener="#{ managerIndex.mostrarCampeonato() }" />
+
+                </div>
+
+            </p:fieldset>
+
+
+            <div class="row" >
+                <div class="column2 text" >
+                    <p:outputLabel value="#{managerIndex.camp.nome}"/>
+                </div>
+            </div>
+        </h:form>
+
+
     </ui:define>
 
 </ui:composition>
