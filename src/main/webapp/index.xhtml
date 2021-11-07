@@ -41,11 +41,41 @@
             </p:fieldset>
 
 
-            <div class="row" >
-                <div class="column2 text" >
-                    <p:outputLabel value="#{managerIndex.camp.nome}"/>
-                </div>
-            </div>
+           <p:tabView id="tabview" styleClass="row" >
+                <p:tab id="tabela" title="Tabela" >
+
+                    <p:dataTable id="timesDataTable" value="#{ managerIndex.camp.teams }" var="team"
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+
+                        <p:column headerText="Nome" width="50%">
+                            <h:outputText value="#{ team.nome }" />
+                        </p:column>
+                        <p:column headerText="Pontos" width="50%">
+                            <h:outputText value="#{ team.estatisticas.get(0).pontos}" />
+                        </p:column>
+                        <p:column headerText="Kills" width="50%">
+                            <h:outputText value="#{ team.estatisticas.get(0).kills}" />
+                        </p:column>
+                        <p:column headerText="Deaths" width="50%">
+                            <h:outputText value="#{ team.estatisticas.get(0).deaths}" />
+                        </p:column>
+                        <p:column headerText="Rounds Ganhos" width="50%">
+                            <h:outputText value="#{ team.estatisticas.get(0).roundsGanhos}" />
+                        </p:column>
+                        <p:column headerText="Rounds Perdidos" width="50%">
+                            <h:outputText value="#{ team.estatisticas.get(0).roundsPerdidos}" />
+                        </p:column>
+
+
+
+
+                    </p:dataTable>
+
+                </p:tab>
+                <p:tab id="jogos" title="Jogos">
+
+                                   </p:tab>
+            </p:tabView>
         </h:form>
 
 

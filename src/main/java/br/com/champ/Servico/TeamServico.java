@@ -36,7 +36,7 @@ public class TeamServico extends ServicoGenerico<Team> {
 
         String sql = "select t from Team t where ";
 
-        sql += "t.ativo = true and t.nome like '" + team.getNome() + "'";
+        sql += "t.ativo = true";
 
         Query query = getEntityManager().createQuery(sql);
 

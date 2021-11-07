@@ -1,6 +1,7 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,17 +23,18 @@ public class ManagerIndex implements Serializable{
     
     private Campeonato camp;
     private List<Campeonato> campsAtuais;
+    private List<Team> times;
     
     @PostConstruct
     public void init() {
         instanciar();        
-        //this.campsAtuais = campServico.pesquisarCampsAtuais();        
-        
+            
     }
     
     public void instanciar(){
         this.camp = new Campeonato();
         this.campsAtuais = new ArrayList<>();
+        this.times = new ArrayList<>();
     }
 
     public Campeonato getCamp() {
@@ -50,6 +52,15 @@ public class ManagerIndex implements Serializable{
     public void setCampsAtuais(List<Campeonato> campsAtuais) {
         this.campsAtuais = campsAtuais;
     }
+
+    public List<Team> getTimes() {
+        return times;
+    }
+
+    public void setTimes(List<Team> times) {
+        this.times = times;
+    }
+    
     
     public List<Campeonato> autoCompletarCamps() {
         return campServico.autoCompleteCamps();
