@@ -5,10 +5,13 @@
  */
 package br.com.champ.Modelo;
 
+import br.com.champ.Enums.Maps;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +42,8 @@ public class Partida extends ModeloGenerico implements Serializable{
     private int scoreT1;
     
     private int scoreT2;
+    @Enumerated(EnumType.STRING)
+    private Maps mapas;
 
     public Partida() {
     }

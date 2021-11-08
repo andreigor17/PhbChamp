@@ -61,7 +61,10 @@
 
             </p:fieldset>
             
-            <p:dataTable id="campDataTable"
+             <p:tabView id="tabview" styleClass="row" >
+                <p:tab id="campeonatos" title="Campeonatos" >
+
+                     <p:dataTable id="campDataTable"
                          value="#{managerPlayer.camps}"
                          var="campeonato"
                          paginator="true"
@@ -73,7 +76,7 @@
                          emptyMessage="Nenhum Campeonato encontrado...">
 
                 <f:facet name="header">
-                    <p:outputLabel value="Campeonatos Atuais" />
+                    <p:outputLabel value="Campeonatos" />
                 </f:facet>
 
                 <p:column headerText="Opções" width="10%">
@@ -95,6 +98,17 @@
 
 
             </p:dataTable>
+
+                </p:tab>
+                <p:tab id="estatisticas" title="Estatisticas">
+
+                   
+                   
+
+                </p:tab>
+            </p:tabView>
+            
+           
 
             <p:dialog id="confirmarRemoverPlayerDialog"
                       widgetVar="confirmarRemoverPlayerDialog"
