@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map"
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
 
     <ui:define name="title">
         Visualizar Player
@@ -58,57 +59,57 @@
                     </div>
                 </div>
 
-
+               
             </p:fieldset>
-            
-             <p:tabView id="tabview" styleClass="row" >
+
+            <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="campeonatos" title="Campeonatos" >
 
-                     <p:dataTable id="campDataTable"
-                         value="#{managerPlayer.camps}"
-                         var="campeonato"
-                         paginator="true"
-                         paginatorPosition="bottom"
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         currentPageReportTemplate="{currentPage} de {totalPages}"
-                         rows="10"
-                         rowsPerPageTemplate="5,10,15"
-                         emptyMessage="Nenhum Campeonato encontrado...">
+                    <p:dataTable id="campDataTable"
+                                 value="#{managerPlayer.camps}"
+                                 var="campeonato"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum Campeonato encontrado...">
 
-                <f:facet name="header">
-                    <p:outputLabel value="Campeonatos" />
-                </f:facet>
+                        <f:facet name="header">
+                            <p:outputLabel value="Campeonatos" />
+                        </f:facet>
 
-                <p:column headerText="Opções" width="10%">
-                    <div class="options2">
-                        <p:button title="Visualizar Camp"
-                                  icon="ui-icon-search"
-                                  href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
-                       
-                    </div>
+                        <p:column headerText="Opções" width="10%">
+                            <div class="options2">
+                                <p:button title="Visualizar Camp"
+                                          icon="ui-icon-search"
+                                          href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
 
-                </p:column>
+                            </div>
 
-                <p:column headerText="Nome" width="60%">
-                    <p:outputLabel value="#{campeonato.nome}" />
-                </p:column>
+                        </p:column>
 
-        
+                        <p:column headerText="Nome" width="60%">
+                            <p:outputLabel value="#{campeonato.nome}" />
+                        </p:column>
 
 
 
-            </p:dataTable>
+
+
+                    </p:dataTable>
 
                 </p:tab>
                 <p:tab id="estatisticas" title="Estatisticas">
 
-                   
-                   
+
+
 
                 </p:tab>
             </p:tabView>
-            
-           
+
+
 
             <p:dialog id="confirmarRemoverPlayerDialog"
                       widgetVar="confirmarRemoverPlayerDialog"

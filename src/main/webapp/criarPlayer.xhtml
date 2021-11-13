@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map"
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
 
     <ui:define name="title">
         Criar Player 
@@ -60,9 +61,19 @@
                     </div>
                     <div class="column3">
                         <p:selectOneMenu id="funcaoPlayer" value="#{ managerCriarPlayer.player.funcao }"
-                                          required="true">
+                                         required="true">
                             <f:selectItems value="#{ enums.funcoes() }" />
                         </p:selectOneMenu>
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="column2 bold">
+                        <p:outputLabel value="Anexar foto"/>
+                    </div>
+                    <div class="column3">
+                        <p:fileUpload fileUploadListener="#{managerAnexo.doUpload}"
+                                      label="Procurar..." auto="true"/>
                     </div>
                 </div>
 

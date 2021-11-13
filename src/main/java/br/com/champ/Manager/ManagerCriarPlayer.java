@@ -6,16 +6,22 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Player;
+import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  *
@@ -23,27 +29,29 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerCriarPlayer implements Serializable{
-    
+public class ManagerCriarPlayer implements Serializable {
+
     @EJB
     PlayerServico playerServico;
-    
+    @EJB
+    AnexoServico anexoServico;
+
     private Player player;
     private List<Player> players;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         instanciar();
-        
+
         String visualizarPlayerId = FacesUtil
                 .getRequestParameter("id");
 
         if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));            
+            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
         }
     }
-    
-    public void instanciar(){
+
+    public void instanciar() {
         this.player = new Player();
         this.players = new ArrayList<>();
     }
@@ -64,25 +72,24 @@ public class ManagerCriarPlayer implements Serializable{
         this.players = players;
     }
 
-    
-    
-    public void salvarPlayer(){
+    public void salvarPlayer() {
         this.playerServico.salvar(this.player);
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
     }
-    
-    public void pesquisarPlayer(){
+
+    public void pesquisarPlayer() {
         this.players = playerServico.pesquisar(this.player);
     }
-    
+
     public void limpar() {
         instanciar();
     }
-    
+
     public void removerPlayer() {
         this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }
+
     
 }
