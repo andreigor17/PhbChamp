@@ -11,6 +11,7 @@ import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,15 +22,20 @@ import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author andre
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class ManagerCriarPlayer implements Serializable {
 
@@ -40,7 +46,9 @@ public class ManagerCriarPlayer implements Serializable {
 
     private Player player;
     private List<Player> players;
-    private ManagerAnexo arquivo = new ManagerAnexo();
+    ManagerAnexo arquivo = new ManagerAnexo();
+    private UploadedFile file;
+    private StreamedContent imagem;
 
     @PostConstruct
     public void init() {
@@ -74,19 +82,41 @@ public class ManagerCriarPlayer implements Serializable {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-    
-    public void uploadAction (FileUploadEvent event){
-        this.arquivo.fileUpload(event, ".png",  "/image/");
-        this.player.setAvatar(this.arquivo.getNome());        
+
+    public UploadedFile getFile() {
+        return file;
     }
-    
-    
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public StreamedContent getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(StreamedContent imagem) {
+        this.imagem = imagem;
+    }
+
+    public void doUpload(FileUploadEvent event) {
+        try {
+            this.arquivo.fileUpload(event, ".png", "/image/");
+            this.player.setAvatar(this.arquivo.getNome());
+            imagem = new DefaultStreamedContent(event.getFile().getInputstream());
+            this.setFile(event.getFile());
+        } catch (IOException e) {
+            //Tratamento de exceção.
+        }
+
+    }
+
     public void salvarPlayer() {
 
         this.playerServico.salvar(this.player);
         this.arquivo.gravar();
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
-
+        player = new Player();
     }
 
     public void pesquisarPlayer() {
