@@ -58,8 +58,16 @@
                                        value="#{managerPlayer.player.funcao.nome}"/>
                     </div>
                 </div>
+                <div class="row" >
+                    <div class="column2 bold">
+                        <p:outputLabel value="Foto:" />
+                    </div>
+                    <div class="column4">
+                        <h:graphicImage value="./image/#{managerPlayer.player.avatar}" width="200px" height="200px"/>
+                    </div>
+                </div>
 
-               
+
             </p:fieldset>
 
             <p:tabView id="tabview" styleClass="row" >
@@ -142,6 +150,20 @@
                 </center>
 
             </p:dialog>
+
+            <p:dialog widgetVar="exibirAvatar" id="exibirAvatarDialog" closable="false" header="#{managerPlayer.player.nick}" >
+
+                <p:graphicImage value="#{managerPlayer.fotoDoPlayer}"/>
+
+                <h:outputText rendered="#{managerPlayer.fotoDoPlayer}" value="Nenhuma imagem cadastrada."/>
+
+                <br />
+
+                <p:commandButton process="@this" style="margin-top:20px;" onclick="PF('exibirAvatar').hide();" value="OK"/>
+
+            </p:dialog>
+
+
 
         </h:form>
 

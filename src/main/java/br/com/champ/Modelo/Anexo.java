@@ -19,6 +19,7 @@ public class Anexo extends ModeloGenerico implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private byte[] imagem;
     private String nome;
     private String nomeExibicao;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -54,6 +55,14 @@ public class Anexo extends ModeloGenerico implements Serializable{
 
     public void setDataArquivo(Date dataArquivo) {
         this.dataArquivo = dataArquivo;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
     
     

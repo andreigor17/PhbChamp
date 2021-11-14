@@ -40,8 +40,9 @@ public class Player extends ModeloGenerico implements Serializable {
     private boolean capitao;
     @Enumerated(EnumType.STRING)
     private Funcoes funcao;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Anexo foto;
+    private String avatar;
 
     public String getNome() {
         return nome;
@@ -122,7 +123,15 @@ public class Player extends ModeloGenerico implements Serializable {
     public void setFoto(Anexo foto) {
         this.foto = foto;
     }
-    
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     
 
     @Override

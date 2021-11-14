@@ -3,7 +3,9 @@ package br.com.champ.Servico;
 import br.com.champ.Generico.ServicoGenerico;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Anexo;
+import br.com.champ.Modelo.Player;
 import br.com.champ.Utilitario.Mensagem;
+import javax.persistence.Query;
 
 
 /**
@@ -33,5 +35,7 @@ public class AnexoServico extends ServicoGenerico<Anexo> {
         anexo.setAtivo(false);
         super.remove(anexo);
     }
+    
+    
 
 }

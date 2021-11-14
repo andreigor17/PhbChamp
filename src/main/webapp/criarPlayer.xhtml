@@ -71,9 +71,9 @@
                     <div class="column2 bold">
                         <p:outputLabel value="Anexar foto"/>
                     </div>
-                    <div class="column3">
-                        <p:fileUpload fileUploadListener="#{managerAnexo.doUpload}"
-                                      label="Procurar..." auto="true"/>
+                    <div class="column2">
+                       <p:fileUpload id="upload" 
+                                     fileUploadListener="#{managerCriarPlayer.uploadAction}" auto="true"/>
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                                      title="Salvar Player"
                                      icon="ui-icon-check"
                                      process="@form"
-                                     update="@form"
+                                     update="@form"                                     
                                      actionListener="#{managerCriarPlayer.salvarPlayer()}"
                                      />
 

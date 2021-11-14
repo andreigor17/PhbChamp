@@ -6,6 +6,7 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Player;
+import br.com.champ.Modelo.Anexo;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
@@ -22,6 +23,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -38,6 +40,7 @@ public class ManagerCriarPlayer implements Serializable {
 
     private Player player;
     private List<Player> players;
+    private ManagerAnexo arquivo = new ManagerAnexo();
 
     @PostConstruct
     public void init() {
@@ -71,10 +74,19 @@ public class ManagerCriarPlayer implements Serializable {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+    
+    public void uploadAction (FileUploadEvent event){
+        this.arquivo.fileUpload(event, ".png", "/image/");
+        this.player.setAvatar(this.arquivo.getNome());
+    }
+
 
     public void salvarPlayer() {
+
         this.playerServico.salvar(this.player);
+        this.arquivo.gravar();
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
+
     }
 
     public void pesquisarPlayer() {
@@ -91,5 +103,4 @@ public class ManagerCriarPlayer implements Serializable {
         init();
     }
 
-    
 }
