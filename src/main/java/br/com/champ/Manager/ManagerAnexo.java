@@ -3,12 +3,15 @@ package br.com.champ.Manager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -24,6 +27,7 @@ public class ManagerAnexo implements Serializable {
     private String caminho;
     private byte[] arquivo;
     private String nome;
+    public String REAL_PATH_OPT = "/opt/uploads";
 
     public ManagerAnexo() {
     }
@@ -32,26 +36,14 @@ public class ManagerAnexo implements Serializable {
         return nome;
     }
 
-    public String getRealPath() {
-        ExternalContext externalContext
-                = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletResponse response
-                = (HttpServletResponse) externalContext.getResponse();
-
-        FacesContext aFacesContext = FacesContext.getCurrentInstance();
-        ServletContext context
-                = (ServletContext) aFacesContext.getExternalContext().getContext();
-
-        return context.getRealPath("/");
-    }
-
-    public void fileUpload(FileUploadEvent event, String type, String diretorio) {
+    public void fileUpload(FileUploadEvent event, String type,  String diretorio) {
         try {
-            this.nome = new java.util.Date().getTime() + type;
-            this.caminho = getRealPath() + diretorio + getNome();
+            Timestamp playerAvatar = new Timestamp(System.currentTimeMillis());
+            this.nome = playerAvatar + type;
+            this.caminho = REAL_PATH_OPT + diretorio + getNome();
             this.arquivo = event.getFile().getContents();
 
-            File file = new File(getRealPath() + diretorio);
+            File file = new File(REAL_PATH_OPT + diretorio);
             file.mkdirs();
 
         } catch (Exception ex) {
@@ -66,6 +58,7 @@ public class ManagerAnexo implements Serializable {
             FileOutputStream fos;
             fos = new FileOutputStream(this.caminho);
             fos.write(this.arquivo);
+            System.out.println("caminho do arquivo " + this.caminho);
             fos.close();
 
         } catch (Exception ex) {
@@ -73,5 +66,5 @@ public class ManagerAnexo implements Serializable {
         }
 
     }
-
+   
 }

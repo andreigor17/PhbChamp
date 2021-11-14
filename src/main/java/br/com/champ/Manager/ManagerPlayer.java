@@ -117,5 +117,5 @@ public class ManagerPlayer implements Serializable {
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }
-
+    
 }

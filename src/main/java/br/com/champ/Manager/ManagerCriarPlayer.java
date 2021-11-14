@@ -76,11 +76,11 @@ public class ManagerCriarPlayer implements Serializable {
     }
     
     public void uploadAction (FileUploadEvent event){
-        this.arquivo.fileUpload(event, ".png", "/image/");
-        this.player.setAvatar(this.arquivo.getNome());
+        this.arquivo.fileUpload(event, ".png",  "/image/");
+        this.player.setAvatar(this.arquivo.getNome());        
     }
-
-
+    
+    
     public void salvarPlayer() {
 
         this.playerServico.salvar(this.player);
