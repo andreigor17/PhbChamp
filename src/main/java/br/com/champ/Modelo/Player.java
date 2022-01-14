@@ -136,7 +136,7 @@ public class Player extends ModeloGenerico implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Player [id= " + id + ", name= " + nome + ", sobreNome= " + sobreNome + ", nick= " + nick +"]";
     }
 
     @Override

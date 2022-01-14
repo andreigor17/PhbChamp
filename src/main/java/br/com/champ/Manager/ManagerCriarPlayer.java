@@ -64,7 +64,7 @@ public class ManagerCriarPlayer implements Serializable {
 
     public void instanciar() {
         this.player = new Player();
-        this.players = new ArrayList<>();
+        this.players = null;
     }
 
     public Player getPlayer() {
@@ -119,7 +119,7 @@ public class ManagerCriarPlayer implements Serializable {
         player = new Player();
     }
 
-    public void pesquisarPlayer() {
+    public void pesquisarPlayer() throws Exception {
         this.players = playerServico.pesquisar(this.player);
     }
 

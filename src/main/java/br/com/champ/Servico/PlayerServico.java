@@ -8,9 +8,20 @@ package br.com.champ.Servico;
 import br.com.champ.Generico.ServicoGenerico;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -44,15 +55,49 @@ public class PlayerServico extends ServicoGenerico<Player> {
         super.remove(player);
     }
 
-    public List<Player> pesquisar(Player player) {
+    public List<Player> pesquisar(Player player) throws Exception {
 
-        String sql = "select p from Player p where ";
+        try {
+            String url = "http://localhost:8090/players";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            //print in String
+            System.out.println(response.toString());
+            //Read JSON response and print
+            Gson gson = new Gson();
+            List<Player> p = new ArrayList<>();
+            Player p1 = new Player();
 
-        sql += "p.ativo = true";
+            Player[] userArray = gson.fromJson(response.toString(), Player[].class);
 
-        Query query = getEntityManager().createQuery(sql);
+            for (Player user : userArray) {                
+                p.add(user);
+            }
 
-        return query.getResultList();
+            return p;
+        } catch (IOException iOException) {
+            System.err.println(iOException);
+        } catch (JSONException jSONException) {
+            System.err.println(jSONException);
+        } catch (NumberFormatException numberFormatException) {
+        }
+        return null;
 
     }
 
@@ -78,6 +123,5 @@ public class PlayerServico extends ServicoGenerico<Player> {
         return query.getResultList();
 
     }
-    
 
 }

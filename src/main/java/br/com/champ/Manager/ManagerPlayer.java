@@ -104,7 +104,7 @@ public class ManagerPlayer implements Serializable {
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
     }
 
-    public void pesquisarPlayer() {
+    public void pesquisarPlayer() throws Exception {
         this.players = playerServico.pesquisar(this.player);
     }
 
