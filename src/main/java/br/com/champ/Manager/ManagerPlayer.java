@@ -55,7 +55,7 @@ public class ManagerPlayer implements Serializable {
                 .getRequestParameter("id");
 
         if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
+            this.player = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
         }
 
         this.camps = campServico.buscaCampPorPlayer(this.player);
@@ -100,7 +100,7 @@ public class ManagerPlayer implements Serializable {
     }
 
     public void salvarPlayer() {
-        this.playerServico.salvar(this.player);
+        //this.playerServico.salvar(this.player);
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
     }
 
@@ -113,7 +113,7 @@ public class ManagerPlayer implements Serializable {
     }
 
     public void removerPlayer() {
-        this.playerServico.delete(this.player);
+        //this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }

@@ -77,7 +77,7 @@ public class ManagerTeam implements Serializable {
     public void salvarTeam() {
         for (Player players : this.membros) {
             players.setPossuiTime(true);
-            this.playerServico.update(players);
+            //this.playerServico.update(players);
         }
         this.team.setPlayers(this.membros);
         this.teamServico.salvar(this.team);
@@ -99,9 +99,9 @@ public class ManagerTeam implements Serializable {
         init();
     }
     
-    public List<Player> autoCompletarPlayer() {
-        return playerServico.autoCompletePlayer();
-    }
+//    public List<Player> autoCompletarPlayer() {
+//        //return playerServico.autoCompletePlayer();
+//    }
     
     public List<Player> getMembros() {
         return membros;

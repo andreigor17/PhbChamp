@@ -57,9 +57,9 @@ public class ManagerCriarPlayer implements Serializable {
         String visualizarPlayerId = FacesUtil
                 .getRequestParameter("id");
 
-        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
-        }
+//        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
+//            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
+//        }
     }
 
     public void instanciar() {
@@ -113,7 +113,7 @@ public class ManagerCriarPlayer implements Serializable {
 
     public void salvarPlayer() {
 
-        this.playerServico.salvar(this.player);
+        //this.playerServico.salvar(this.player);
         this.arquivo.gravar();
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
         player = new Player();
@@ -128,7 +128,7 @@ public class ManagerCriarPlayer implements Serializable {
     }
 
     public void removerPlayer() {
-        this.playerServico.delete(this.player);
+        //this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }

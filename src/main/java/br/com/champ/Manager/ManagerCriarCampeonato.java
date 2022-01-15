@@ -122,7 +122,7 @@ public class ManagerCriarCampeonato implements Serializable {
         for (Team t : this.times) {
             t = teamServico.find(t.getId());
             for (Player p : t.getPlayers()) {
-                p = playerServico.find(p.getId());
+                p = playerServico.buscaPlayer(p.getId());
                 jog.add(p);
             }
         }
