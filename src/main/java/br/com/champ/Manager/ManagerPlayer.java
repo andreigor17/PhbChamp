@@ -58,7 +58,7 @@ public class ManagerPlayer implements Serializable {
             this.player = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
         }
 
-        this.camps = campServico.buscaCampPorPlayer(this.player);
+        //this.camps = campServico.buscaCampPorPlayer(this.player);
     }
 
     public void instanciar() {
@@ -101,7 +101,7 @@ public class ManagerPlayer implements Serializable {
 
     public void salvarPlayer() {
         //this.playerServico.salvar(this.player);
-        Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
+        //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
     }
 
     public void pesquisarPlayer() throws Exception {

@@ -29,8 +29,8 @@ public class Team extends ModeloGenerico implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    @OneToMany
-    private List<Player> players;
+//    @OneToMany
+//    private List<Player> players;
     @OneToMany
     private List<Estatisticas> estatisticas;
 
@@ -50,13 +50,13 @@ public class Team extends ModeloGenerico implements Serializable{
         this.nome = nome;
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
+//    public List<Player> getPlayers() {
+//        return players;
+//    }
+//
+//    public void setPlayers(List<Player> players) {
+//        this.players = players;
+//    }
 
     @Override
     public int hashCode() {
@@ -83,10 +83,7 @@ public class Team extends ModeloGenerico implements Serializable{
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Team{" + "id=" + id + ", nome=" + nome + ", players=" + players + '}';
-    }
+    
 
     public List<Estatisticas> getEstatisticas() {
         return estatisticas;

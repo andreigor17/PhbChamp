@@ -118,15 +118,15 @@ public class ManagerCriarCampeonato implements Serializable {
     }
 
     public void salvarCampeonato() {
-        List<Player> jog = new ArrayList<>();
-        for (Team t : this.times) {
-            t = teamServico.find(t.getId());
-            for (Player p : t.getPlayers()) {
-                p = playerServico.buscaPlayer(p.getId());
-                jog.add(p);
-            }
-        }
-        this.camp.setPlayers(jog);
+//        List<Player> jog = new ArrayList<>();
+//        for (Team t : this.times) {
+//            t = teamServico.find(t.getId());
+//            for (Player p : t.getPlayers()) {
+//                p = playerServico.buscaPlayer(p.getId());
+//                jog.add(p);
+//            }
+//        }
+//        this.camp.setPlayers(jog);
         this.camp.setTeams(this.times);
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
         gerarPartidas();

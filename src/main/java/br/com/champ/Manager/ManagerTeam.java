@@ -79,7 +79,7 @@ public class ManagerTeam implements Serializable {
             players.setPossuiTime(true);
             //this.playerServico.update(players);
         }
-        this.team.setPlayers(this.membros);
+        //this.team.setPlayers(this.membros);
         this.teamServico.salvar(this.team);
         Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
         

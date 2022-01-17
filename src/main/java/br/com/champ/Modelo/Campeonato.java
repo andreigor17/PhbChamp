@@ -26,8 +26,8 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private Long id;
     @ManyToMany
     private List<Team> Teams;
-    @ManyToMany
-    private List<Player> players;
+//    @ManyToMany
+//    private List<Player> players;
     private String nome;
     @Enumerated(EnumType.STRING)
     private StatusCamp status;
@@ -66,13 +66,13 @@ public class Campeonato extends ModeloGenerico implements Serializable {
         this.nome = nome;
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
+//    public List<Player> getPlayers() {
+//        return players;
+//    }
+//
+//    public void setPlayers(List<Player> players) {
+//        this.players = players;
+//    }
 
     public StatusCamp getStatus() {
         return status;

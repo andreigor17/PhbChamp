@@ -11,15 +11,28 @@ import br.com.champ.Modelo.Team;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
+import static javax.ws.rs.client.Entity.json;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +44,13 @@ import org.json.JSONObject;
 @Stateless
 public class PlayerServico implements Serializable {
 
-//    public void salvar(Player player) {
+//    public void salvar(Player player) throws Exception {
 //        if (player.getId() == null) {
 //            save(player);
 //        } else {
 //            update(player);
 //        }
+//    }
 //    }
 //    @Override
 //    public void delete(Player player) {
@@ -178,16 +192,63 @@ public class PlayerServico implements Serializable {
         }
         return null;
     }
-//
-//    public List<Player> autoCompletePlayer() {
-//        return buscarPorPlayer();
-//    }
-//    public List<Player> buscarPorPlayer() {
-//        String sql = "select p from Player p where p.ativo = true and p.possuiTime = false";
-//
-//        Query query = getEntityManager().createQuery(sql);
-//
-//        return query.getResultList();
-//
-//    }
+
+
+    public String save(Player player) throws Exception {
+        String url = "http://localhost:8090/players";
+
+        try {
+        // Cria um objeto HttpURLConnection:
+        HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
+
+        try {
+            // Define que a conexão pode enviar informações e obtê-las de volta:
+            request.setDoOutput(true);
+            request.setDoInput(true);
+
+            // Define o content-type:
+            request.setRequestProperty("Content-Type", "application/json");
+
+            // Define o método da requisição:
+            request.setRequestMethod("POST");
+
+            // Conecta na URL:
+            request.connect();
+            Gson gson = new Gson();
+            String json = gson.toJson(player);
+
+            // Escreve o objeto JSON usando o OutputStream da requisição:
+            try (OutputStream outputStream = request.getOutputStream()) {
+                outputStream.write(json.getBytes("UTF-8"));
+            }
+
+            // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
+            //int response = request.getResponseCode();
+
+            return readResponse(request);
+        } finally {
+            request.disconnect();
+        }
+    } catch (IOException ex) {
+            System.err.println(ex);
+    }
+        return null;
+}
+    
+    private String readResponse(HttpURLConnection request) throws IOException {
+    ByteArrayOutputStream os;
+    try (InputStream is = request.getInputStream()) {
+        os = new ByteArrayOutputStream();
+        int b;
+        while ((b = is.read()) != -1) {
+            os.write(b);
+        }
+    }
+    return new String(os.toByteArray());
+}
+    
+
+    private void update(Player player) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

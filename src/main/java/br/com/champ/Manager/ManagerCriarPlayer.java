@@ -99,23 +99,23 @@ public class ManagerCriarPlayer implements Serializable {
         this.imagem = imagem;
     }
 
-    public void doUpload(FileUploadEvent event) {
-        try {
-            this.arquivo.fileUpload(event, ".png", "/image/");
-            this.player.setAvatar(this.arquivo.getNome());
-            imagem = new DefaultStreamedContent(event.getFile().getInputstream());
-            this.setFile(event.getFile());
-        } catch (IOException e) {
-            //Tratamento de exceção.
-        }
+//    public void doUpload(FileUploadEvent event) {
+//        try {
+//            this.arquivo.fileUpload(event, ".png", "/image/");
+//            this.player.setAvatar(this.arquivo.getNome());
+//            imagem = new DefaultStreamedContent(event.getFile().getInputstream());
+//            this.setFile(event.getFile());
+//        } catch (IOException e) {
+//            //Tratamento de exceção.
+//        }
+//
+//    }
 
-    }
+    public void salvarPlayer() throws Exception {
 
-    public void salvarPlayer() {
-
-        //this.playerServico.salvar(this.player);
-        this.arquivo.gravar();
-        Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
+        this.playerServico.save(this.player);
+//        this.arquivo.gravar();
+        //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
         player = new Player();
     }
 
