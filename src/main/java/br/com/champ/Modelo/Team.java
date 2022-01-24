@@ -22,25 +22,11 @@ import javax.persistence.OneToMany;
  *
  * @author andre
  */
-@Entity
 public class Team extends ModeloGenerico implements Serializable{
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String nome;
-//    @OneToMany
-//    private List<Player> players;
-    @OneToMany
+    private List<Player> players;
     private List<Estatisticas> estatisticas;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -50,39 +36,13 @@ public class Team extends ModeloGenerico implements Serializable{
         this.nome = nome;
     }
 
-//    public List<Player> getPlayers() {
-//        return players;
-//    }
-//
-//    public void setPlayers(List<Player> players) {
-//        this.players = players;
-//    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + Objects.hashCode(this.id);
-        return hash;
+    public List<Player> getPlayers() {
+        return players;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Team other = (Team) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
-
     
 
     public List<Estatisticas> getEstatisticas() {

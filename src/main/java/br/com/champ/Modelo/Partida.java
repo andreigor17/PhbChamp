@@ -24,39 +24,24 @@ import javax.persistence.ManyToOne;
  * @author gustavo
  */
 
-@Entity
 public class Partida extends ModeloGenerico implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    
     private Campeonato camp;
     
-    @ManyToOne
     private Team team1;
     
-    @ManyToOne
     private Team team2;
     
     private int scoreT1;
     
     private int scoreT2;
-    @Enumerated(EnumType.STRING)
+
     private Maps mapas;
 
     public Partida() {
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
+    
     public Team getTeam1() {
         return team1;
     }

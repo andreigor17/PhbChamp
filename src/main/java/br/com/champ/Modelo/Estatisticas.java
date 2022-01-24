@@ -13,36 +13,17 @@ import javax.persistence.ManyToOne;
  *
  * @author andre
  */
-@Entity
 public class Estatisticas extends ModeloGenerico implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(columnDefinition = "integer default 0")
+    
     private Integer kills = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer deaths = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer assists = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer roundsGanhos = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer roundsPerdidos = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer partidas = 0;
-    @Column(columnDefinition = "integer default 0")
     private Integer pontos = 0;
     private Long team_id;
     private Long campeonato_id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getKills() {
         return kills;
@@ -100,7 +81,6 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
         this.team_id = team_id;
     }
 
-
     public Long getCampeonato_id() {
         return campeonato_id;
     }
@@ -116,8 +96,5 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     public void setPontos(Integer pontos) {
         this.pontos = pontos;
     }
-    
-    
 
-   
 }

@@ -35,9 +35,7 @@ public class Player implements Serializable {
     private boolean possuiTime = false;
     @Column(columnDefinition = "boolean default false")
     private boolean capitao;
-//    @OneToOne(cascade = CascadeType.PERSIST)
-//    private Anexo foto;
-//    private String avatar;
+    private String avatar;
 
     public String getNome() {
         return nome;
@@ -102,6 +100,15 @@ public class Player implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
     
     
 }

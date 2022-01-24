@@ -44,19 +44,7 @@ import org.json.JSONObject;
 @Stateless
 public class PlayerServico implements Serializable {
 
-//    public void salvar(Player player) throws Exception {
-//        if (player.getId() == null) {
-//            save(player);
-//        } else {
-//            update(player);
-//        }
-//    }
-//    }
-//    @Override
-//    public void delete(Player player) {
-//        player.setAtivo(false);
-//        super.remove(player);
-//    }
+
     public List<Player> pesquisar(Player player) throws Exception {
 
         try {

@@ -40,7 +40,7 @@ public class ManagerTeam implements Serializable {
                 .getRequestParameter("id");
         
         if (visualizarTeamId != null && !visualizarTeamId.isEmpty()) {
-            this.team = this.teamServico.find(Long.parseLong(visualizarTeamId));
+            this.team = this.teamServico.buscaTeam(Long.parseLong(visualizarTeamId));
         }
     }
     
@@ -74,18 +74,18 @@ public class ManagerTeam implements Serializable {
         
     }
     
-    public void salvarTeam() {
-        for (Player players : this.membros) {
-            players.setPossuiTime(true);
-            //this.playerServico.update(players);
-        }
-        //this.team.setPlayers(this.membros);
-        this.teamServico.salvar(this.team);
-        Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
+    public void salvarTeam() throws Exception {
+//        for (Player players : this.membros) {
+//            players.setPossuiTime(true);
+//            //this.playerServico.update(players);
+//        }
+        this.team.setPlayers(this.membros);
+        this.teamServico.save(this.team);
+        //Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
         
     }
     
-    public void pesquisarTime() {
+    public void pesquisarTime() throws Exception {
         this.times = teamServico.pesquisar(this.team);
     }
     
@@ -93,15 +93,15 @@ public class ManagerTeam implements Serializable {
         instanciar();
     }
     
-    public void removeTime() {
-        this.teamServico.delete(this.team);
-        Mensagem.successAndRedirect("pesquisarTime.xhtml");
-        init();
-    }
-    
-//    public List<Player> autoCompletarPlayer() {
-//        //return playerServico.autoCompletePlayer();
+//    public void removeTime() {
+//        this.teamServico.delete(this.team);
+//        Mensagem.successAndRedirect("pesquisarTime.xhtml");
+//        init();
 //    }
+    
+    public List<Player> autoCompletarPlayer() {
+        return playerServico.autoCompletePessoa();
+    }
     
     public List<Player> getMembros() {
         return membros;

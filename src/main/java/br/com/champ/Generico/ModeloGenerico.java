@@ -17,9 +17,11 @@ import javax.persistence.Version;
  * @author andre
  */
 @MappedSuperclass
-public abstract class ModeloGenerico implements Serializable{
-    
-    
+public abstract class ModeloGenerico implements Serializable {
+
+
+    private Long id;
+
     /**
      * Quando false, o objeto encontra-se excluido/cancelado. Caso contrário
      * encontra-se ativo
@@ -29,13 +31,10 @@ public abstract class ModeloGenerico implements Serializable{
      * Controle de versionamento da entidade, faz o controle de alterações
      * concorrentes
      */
-    @Version
     private int versao;
 
     public ModeloGenerico() {
     }
-
-   
 
     public Boolean getAtivo() {
         return ativo;
@@ -52,7 +51,15 @@ public abstract class ModeloGenerico implements Serializable{
     public void setVersao(int versao) {
         this.versao = versao;
     }
-    
-    
-}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
+
+}

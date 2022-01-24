@@ -58,7 +58,7 @@ public class ManagerPlayer implements Serializable {
             this.player = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
         }
 
-        //this.camps = campServico.buscaCampPorPlayer(this.player);
+        this.camps = campServico.buscaCampPorPlayer(this.player);
     }
 
     public void instanciar() {

@@ -139,13 +139,13 @@ public class ManagerCriarCampeonato implements Serializable {
             this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
-            this.teamServico.update(timess);
+            //this.teamServico.update(timess);
 
         }
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
     }
 
-    public List<Team> autoCompletarTime() {
+    public List<Team> autoCompletarTime() throws Exception {
         return teamServico.autoCompleteTime();
     }
 
