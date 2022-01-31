@@ -55,7 +55,7 @@ public class ManagerCriarCampeonato implements Serializable {
                 .getRequestParameter("id");
 
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
-            this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
+            this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
         }
 
     }
@@ -117,7 +117,7 @@ public class ManagerCriarCampeonato implements Serializable {
         this.estatistica = estatistica;
     }
 
-    public void salvarCampeonato() {
+    public void salvarCampeonato() throws Exception {
 //        List<Player> jog = new ArrayList<>();
 //        for (Team t : this.times) {
 //            t = teamServico.find(t.getId());
@@ -130,13 +130,13 @@ public class ManagerCriarCampeonato implements Serializable {
         this.camp.setTeams(this.times);
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
         gerarPartidas();
-        this.campeonatoServico.salvar(this.camp);
+        this.campeonatoServico.save(this.camp);
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
             this.estatistica.setCampeonato_id(this.camp.getId());
-            this.estatisticaServico.salvar(estatistica);
+            //this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             //this.teamServico.update(timess);
@@ -171,13 +171,13 @@ public class ManagerCriarCampeonato implements Serializable {
         instanciar();
     }
 
-    public void removeCamp() {
-        this.campeonatoServico.delete(this.camp);
-        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
-        init();
-    }
+//    public void removeCamp() {
+//        this.campeonatoServico.delete(this.camp);
+//        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
+//        init();
+//    }
 
-    public void pesquisarCamp() {
+    public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar(this.camp);
     }
 

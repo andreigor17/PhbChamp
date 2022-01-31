@@ -54,7 +54,7 @@ public class ManagerCamp implements Serializable {
                 .getRequestParameter("id");
 
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
-            this.camp = this.campeonatoServico.find(Long.parseLong(visualizarCampId));
+            this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
         }
         for (Team timeCamp : this.camp.getTeams()) {
             this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
@@ -135,14 +135,14 @@ public class ManagerCamp implements Serializable {
     
     
 
-    public void salvarCampeonato() {
+    public void salvarCampeonato() throws Exception {
         this.camp.setTeams(this.times);
-        this.campeonatoServico.salvar(this.camp);
+        this.campeonatoServico.save(this.camp);
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
             this.estatistica.setCampeonato_id(this.camp.getId());
-            this.estatisticaServico.salvar(estatistica);
+            //this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             //this.teamServico.update(timess);
@@ -164,13 +164,13 @@ public class ManagerCamp implements Serializable {
         instanciar();
     }
 
-    public void removeCamp() {
-        this.campeonatoServico.delete(this.camp);
-        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
-        init();
-    }
+//    public void removeCamp() {
+//        this.campeonatoServico.delete(this.camp);
+//        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
+//        init();
+//    }
 
-    public void pesquisarCamp() {
+    public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar(this.camp);
     }
 

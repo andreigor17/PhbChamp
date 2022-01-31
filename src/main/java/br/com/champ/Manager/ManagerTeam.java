@@ -81,7 +81,7 @@ public class ManagerTeam implements Serializable {
 //        }
         this.team.setPlayers(this.membros);
         this.teamServico.save(this.team);
-        //Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
+        Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
         
     }
     

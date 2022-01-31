@@ -67,7 +67,7 @@ public class ManagerIndex implements Serializable{
     }
     
     public void mostrarCampeonato(){
-        this.camp = campServico.find(this.camp.getId());
+        this.camp = campServico.buscaCamp(this.camp.getId());
         
     }
     

@@ -5,12 +5,14 @@ import br.com.champ.Modelo.Player;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Team;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,7 +56,12 @@ public class TeamServico  {
             Gson gson = new Gson();
             List<Team> t = new ArrayList<>();
 
-            Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            
+            Type userListType = new TypeToken<ArrayList<Team>>() {
+            }.getType();
+
+            ArrayList<Team> userArray = gson.fromJson(response.toString(), userListType);
 
             for (Team time : userArray) {
                 t.add(time);
@@ -105,7 +112,12 @@ public class TeamServico  {
             Gson gson = new Gson();
             List<Team> t = new ArrayList<>();
 
-            Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            
+            Type userListType = new TypeToken<ArrayList<Team>>() {
+            }.getType();
+
+            ArrayList<Team> userArray = gson.fromJson(response.toString(), userListType);
 
             for (Team time : userArray) {
                 t.add(time);
@@ -219,4 +231,6 @@ public class TeamServico  {
     }
     return new String(os.toByteArray());
 }
+    
+    
 }
