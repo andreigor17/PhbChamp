@@ -27,7 +27,6 @@ import javax.persistence.ManyToOne;
 public class Partida extends ModeloGenerico implements Serializable{
     
     
-    private Campeonato camp;
     
     private Team team1;
     
@@ -74,8 +73,7 @@ public class Partida extends ModeloGenerico implements Serializable{
         this.scoreT2 = scoreT2;
     }
 
-    public Partida(Campeonato camp, Team team1, Team team2) {
-        this.camp = camp;
+    public Partida(Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
     }

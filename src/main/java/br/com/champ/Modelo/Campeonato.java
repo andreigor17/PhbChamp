@@ -11,9 +11,8 @@ import java.util.List;
  */
 public class Campeonato extends ModeloGenerico implements Serializable {
     
-    private List<Team> Teams;    
-    private List<Player> players;
     private String nome;    
+    private List<Team> teams;
     private StatusCamp status;
     private List<Partida> partidas;
     
@@ -27,11 +26,11 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     }
 
     public List<Team> getTeams() {
-        return Teams;
+        return teams;
     }
 
-    public void setTeams(List<Team> Teams) {
-        this.Teams = Teams;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public String getNome() {
@@ -40,14 +39,6 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public StatusCamp getStatus() {

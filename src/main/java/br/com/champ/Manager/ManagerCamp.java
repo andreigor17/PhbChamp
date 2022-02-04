@@ -54,12 +54,13 @@ public class ManagerCamp implements Serializable {
                 .getRequestParameter("id");
 
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
+            System.out.println("id " + visualizarCampId);
             this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
         }
         for (Team timeCamp : this.camp.getTeams()) {
             this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
             for (Estatisticas estats : this.estatisticasTime) {
-                estats = estatisticaServico.find(estats.getId());
+                estats = estatisticaServico.pesquisar(estats.getId());
             }
             timeCamp.setEstatisticas(estatisticasTime);
         }

@@ -16,10 +16,15 @@ import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -118,30 +123,25 @@ public class ManagerCriarCampeonato implements Serializable {
     }
 
     public void salvarCampeonato() throws Exception {
-//        List<Player> jog = new ArrayList<>();
-//        for (Team t : this.times) {
-//            t = teamServico.find(t.getId());
-//            for (Player p : t.getPlayers()) {
-//                p = playerServico.buscaPlayer(p.getId());
-//                jog.add(p);
-//            }
-//        }
-//        this.camp.setPlayers(jog);
+
         this.camp.setTeams(this.times);
-        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
-        gerarPartidas();
-        this.campeonatoServico.save(this.camp);
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
             this.estatistica.setCampeonato_id(this.camp.getId());
-            //this.estatisticaServico.salvar(estatistica);
+            this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             //this.teamServico.update(timess);
 
         }
+
+        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
+        this.camp.setPartidas(gerarPartidas());
+
+        this.campeonatoServico.save(this.camp);
+
         Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
     }
 
@@ -155,16 +155,17 @@ public class ManagerCriarCampeonato implements Serializable {
 
     }
 
-    public void gerarPartidas() {
+    public List<Partida> gerarPartidas() {
         List<Partida> matches = new ArrayList<>();
-        Partida match;
-        for (int i = 0; i < this.camp.getTeams().size() - 1; i++) {
-            for (int j = i + 1; j < this.camp.getTeams().size(); j++) {
-                match = new Partida(this.camp, this.camp.getTeams().get(i), this.camp.getTeams().get(j));
+        Partida match = new Partida();
+        for (int i = 0; i < this.times.size() - 1; i++) {
+            for (int j = i + 1; j < this.times.size(); j++) {
+                match = new Partida(this.times.get(i), this.times.get(j));
                 matches.add(match);
             }
         }
-        this.camp.setPartidas(matches);
+        System.out.println("Partidas " + matches);
+        return matches;
     }
 
     public void limpar() {
@@ -176,7 +177,6 @@ public class ManagerCriarCampeonato implements Serializable {
 //        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
 //        init();
 //    }
-
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar(this.camp);
     }

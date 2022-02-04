@@ -140,7 +140,7 @@ public class CampeonatoServico {
     
     public String save(Campeonato camp) throws Exception {
         String url = "http://localhost:8090/campeonatos";
-
+        
         try {
         // Cria um objeto HttpURLConnection:
         HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
@@ -159,7 +159,7 @@ public class CampeonatoServico {
             // Conecta na URL:
             request.connect();
             // Montando o  Json
-            Gson gson = new Gson();
+            Gson gson = new Gson();            
             String json = gson.toJson(camp);
             System.out.println("Montagem do campeonato: " + json);
 
