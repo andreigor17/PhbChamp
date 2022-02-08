@@ -44,7 +44,7 @@ public class ManagerCriarPlayer implements Serializable {
     @EJB
     AnexoServico anexoServico;
 
-    private Player player;
+    private Player p;
     private List<Player> players;
     ManagerAnexo arquivo = new ManagerAnexo();
     private UploadedFile file;
@@ -53,27 +53,22 @@ public class ManagerCriarPlayer implements Serializable {
     @PostConstruct
     public void init() {
         instanciar();
-
-        String visualizarPlayerId = FacesUtil
-                .getRequestParameter("id");
-
-//        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-//            this.player = this.playerServico.find(Long.parseLong(visualizarPlayerId));
-//        }
     }
 
     public void instanciar() {
-        this.player = new Player();
+        this.p = new Player();
         this.players = null;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Player getP() {
+        return p;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setP(Player p) {
+        this.p = p;
     }
+
+    
 
     public List<Player> getPlayers() {
         return players;
@@ -102,7 +97,7 @@ public class ManagerCriarPlayer implements Serializable {
     public void doUpload(FileUploadEvent event) {
         try {
             this.arquivo.fileUpload(event, ".png", "/image/");
-            this.player.setAvatar(this.arquivo.getNome());
+            this.p.setAvatar(this.arquivo.getNome());
             imagem = new DefaultStreamedContent(event.getFile().getInputstream());
             this.setFile(event.getFile());
         } catch (IOException e) {
@@ -113,14 +108,16 @@ public class ManagerCriarPlayer implements Serializable {
 
     public void salvarPlayer() throws Exception {
 
-        this.playerServico.save(this.player);
+        this.playerServico.save(this.p);
+        System.out.println("carai " + p.toString());
 //        this.arquivo.gravar();
         //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
-        player = new Player();
+        
+        //layer = new Player();
     }
 
     public void pesquisarPlayer() throws Exception {
-        this.players = playerServico.pesquisar(this.player);
+        this.players = playerServico.pesquisar(this.p);
     }
 
     public void limpar() {

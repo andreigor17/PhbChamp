@@ -137,62 +137,66 @@ public class CampeonatoServico {
         return null;
 
     }
-    
-    public String save(Campeonato camp) throws Exception {
+
+    public Campeonato save(Campeonato camp) throws Exception {
         String url = "http://localhost:8090/campeonatos";
-        
-        try {
-        // Cria um objeto HttpURLConnection:
-        HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
 
         try {
-            // Define que a conexão pode enviar informações e obtê-las de volta:
-            request.setDoOutput(true);
-            request.setDoInput(true);
+            // Cria um objeto HttpURLConnection:
+            HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
 
-            // Define o content-type:
-            request.setRequestProperty("Content-Type", "application/json");
+            try {
+                // Define que a conexão pode enviar informações e obtê-las de volta:
+                request.setDoOutput(true);
+                request.setDoInput(true);
 
-            // Define o método da requisição:
-            request.setRequestMethod("POST");
+                // Define o content-type:
+                request.setRequestProperty("Content-Type", "application/json");
 
-            // Conecta na URL:
-            request.connect();
-            // Montando o  Json
-            Gson gson = new Gson();            
-            String json = gson.toJson(camp);
-            System.out.println("Montagem do campeonato: " + json);
+                // Define o método da requisição:
+                request.setRequestMethod("POST");
 
-            // Escreve o objeto JSON usando o OutputStream da requisição:
-            try (OutputStream outputStream = request.getOutputStream()) {
-                outputStream.write(json.getBytes("UTF-8"));
+                // Conecta na URL:
+                request.connect();
+                // Montando o  Json
+                Gson gson = new Gson();
+                String json = gson.toJson(camp);
+                System.out.println("Montagem do campeonato: " + json);
+
+                // Escreve o objeto JSON usando o OutputStream da requisição:
+                try (OutputStream outputStream = request.getOutputStream()) {
+                    outputStream.write(json.getBytes("UTF-8"));
+                }
+
+                // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
+                //int response = request.getResponseCode();            
+                Campeonato c = new Campeonato();
+
+                Campeonato userArray = gson.fromJson(readResponse(request), Campeonato.class);
+                c = userArray;
+
+                return c;
+            } finally {
+                request.disconnect();
             }
-
-            // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
-            //int response = request.getResponseCode();
-
-            return readResponse(request);
-        } finally {
-            request.disconnect();
-        }
-    } catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println(ex);
-    }
-        return null;
-}
-    
-    private String readResponse(HttpURLConnection request) throws IOException {
-    ByteArrayOutputStream os;
-    try (InputStream is = request.getInputStream()) {
-        os = new ByteArrayOutputStream();
-        int b;
-        while ((b = is.read()) != -1) {
-            os.write(b);
         }
+        return null;
     }
-    return new String(os.toByteArray());
-}
-    
+
+    private String readResponse(HttpURLConnection request) throws IOException {
+        ByteArrayOutputStream os;
+        try (InputStream is = request.getInputStream()) {
+            os = new ByteArrayOutputStream();
+            int b;
+            while ((b = is.read()) != -1) {
+                os.write(b);
+            }
+        }
+        return new String(os.toByteArray());
+    }
+
     public Campeonato buscaCamp(Long id) {
         try {
             String url = "http://localhost:8090/campeonatos/" + id;
@@ -234,6 +238,5 @@ public class CampeonatoServico {
         return null;
 
     }
-    
 
 }

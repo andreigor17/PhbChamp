@@ -18,29 +18,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 /**
  *
  * @author gustavo
  */
+public class Partida extends ModeloGenerico implements Serializable {
 
-public class Partida extends ModeloGenerico implements Serializable{
-    
-    
-    
     private Team team1;
-    
+
     private Team team2;
-    
+
+    private Campeonato camp;
+
     private int scoreT1;
-    
+
     private int scoreT2;
 
     private Maps mapas;
 
     public Partida() {
     }
-    
+
     public Team getTeam1() {
         return team1;
     }
@@ -77,7 +75,5 @@ public class Partida extends ModeloGenerico implements Serializable{
         this.team1 = team1;
         this.team2 = team2;
     }
-    
-    
-    
+
 }

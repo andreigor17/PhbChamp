@@ -20,7 +20,7 @@ import javax.persistence.Version;
 public abstract class ModeloGenerico implements Serializable {
 
 
-    private Long id;
+    public Long id;
 
     /**
      * Quando false, o objeto encontra-se excluido/cancelado. Caso contrário

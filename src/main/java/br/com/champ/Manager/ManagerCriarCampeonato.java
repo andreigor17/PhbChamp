@@ -137,12 +137,13 @@ public class ManagerCriarCampeonato implements Serializable {
 
         }
 
-        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
+        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);        
         this.camp.setPartidas(gerarPartidas());
 
-        this.campeonatoServico.save(this.camp);
+        Campeonato c =  new Campeonato();
+        c = campeonatoServico.save(this.camp);
 
-        Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
+        Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + c.getId());
     }
 
     public List<Team> autoCompletarTime() throws Exception {
@@ -155,12 +156,13 @@ public class ManagerCriarCampeonato implements Serializable {
 
     }
 
-    public List<Partida> gerarPartidas() {
+    public List<Partida> gerarPartidas() throws Exception {
         List<Partida> matches = new ArrayList<>();
         Partida match = new Partida();
         for (int i = 0; i < this.times.size() - 1; i++) {
             for (int j = i + 1; j < this.times.size(); j++) {
                 match = new Partida(this.times.get(i), this.times.get(j));
+                //this.partidaServico.salvar(match);
                 matches.add(match);
             }
         }
