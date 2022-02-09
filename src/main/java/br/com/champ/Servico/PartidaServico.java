@@ -34,7 +34,7 @@ import org.json.JSONException;
 public class PartidaServico {
     
 
-    public String salvar(Partida partida) throws Exception {
+    public Partida salvar(Partida partida) throws Exception {
         String url = "http://localhost:8090/partidas";
 
         try {
@@ -66,7 +66,13 @@ public class PartidaServico {
 
                 // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
                 //int response = request.getResponseCode();
-                return readResponse(request);
+                Partida c = new Partida();
+
+                Partida userArray = gson.fromJson(readResponse(request), Partida.class);
+                c = userArray;
+
+                return c;
+                                
             } finally {
                 request.disconnect();
             }
@@ -143,9 +149,9 @@ public class PartidaServico {
 
     }
     
-    public List<Partida> partidaPorCamp(Campeonato camp) {
+    public List<Partida> partidaPorCamp(Long id) {        
         try {
-            String url = "http://localhost:8090/partidas/partidaPorCamp";
+            String url = "http://localhost:8090/partidas/partidasPorCamp/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

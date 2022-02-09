@@ -70,10 +70,11 @@ public class Partida extends ModeloGenerico implements Serializable {
     public void setScoreT2(int scoreT2) {
         this.scoreT2 = scoreT2;
     }
-
+    
     public Partida(Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
+        
     }
 
 }

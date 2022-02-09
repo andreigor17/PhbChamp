@@ -54,8 +54,9 @@ public class ManagerCamp implements Serializable {
                 .getRequestParameter("id");
 
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
-            System.out.println("id " + visualizarCampId);
             this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
+            
+            this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
         }
         for (Team timeCamp : this.camp.getTeams()) {
             this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
@@ -64,7 +65,7 @@ public class ManagerCamp implements Serializable {
             }
             timeCamp.setEstatisticas(estatisticasTime);
         }
-        this.partidas = partidaServico.partidaPorCamp(this.camp);
+        
                
     }
 
