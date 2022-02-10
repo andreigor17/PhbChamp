@@ -55,11 +55,36 @@
                                      required="true"
                                      requiredMessage="Informe o sobrenome do player!"/>
                     </div>
-                    
-                    
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Função: "
+                                       for="funcaoPlayer"/>
+                    </div>
+                    <div class="column3">
+                        <p:selectOneMenu id="funcaoPlayer" value="#{ managerCriarPlayer.p.funcao }"
+                                         required="true">
+                            <f:selectItems value="#{ enums.funcoes() }" />
+                        </p:selectOneMenu>
+                    </div>
                 </div>
 
-             
+                <div class="row" >
+                    <div class="column2 bold">
+                        <p:outputLabel value="Anexar foto"/>
+                    </div>
+                    <div class="column2">
+                        <p:fileUpload id="upload" 
+                                      fileUploadListener="#{managerCriarPlayer.doUpload}"
+                                      value="#{managerCriarPlayer.file}"
+                                      update="imagemPlayer"
+                                      auto="true"
+                                      />
+                    </div>
+                </div>
+                <h:panelGroup id="imagemPlayer">
+                    <p:graphicImage  style="max-width: 100px;max-height: 100px;" cache="false" value="#{managerCriarPlayer.imagem}">
+                    </p:graphicImage><br/>
+                </h:panelGroup>
+
 
 
             </p:fieldset>

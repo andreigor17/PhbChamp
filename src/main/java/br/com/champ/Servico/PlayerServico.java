@@ -192,7 +192,7 @@ public class PlayerServico implements Serializable {
         return null;
     }
 
-    public String save(Player player) throws Exception {
+    public Player save(Player player) throws Exception {
         String url = "http://localhost:8090/players";
 
         try {
@@ -220,10 +220,14 @@ public class PlayerServico implements Serializable {
                 try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
+                
+                Player p =  new Player();
+                Player userArray = gson.fromJson(readResponse(request), Player.class);
+                p =  userArray;
+                return p;
 
                 // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
                 //int response = request.getResponseCode();
-                return readResponse(request);
             } finally {
                 request.disconnect();
             }

@@ -50,10 +50,30 @@
                                        value="#{managerTeam.team.nome}"/>
                     </div>
                 </div>
-                
-                
 
 
+
+
+            </p:fieldset>
+
+            <p:fieldset legend="Players">
+
+                <ui:repeat value="#{managerTeam.team.players}" var="player">
+
+                    <div class="column2 text">
+                        <p:outputLabel value="#{player.nome}   '#{player.nick}' #{player.sobreNome} "/>
+                    </div>
+
+                    <div class="column2 ">
+                        <h:graphicImage value="image/#{player.avatar}" width="100px" height="100px"/>
+                    </div>
+
+
+                </ui:repeat>
+            </p:fieldset>
+            
+            <p:fieldset legend="Campeonatos">
+                
             </p:fieldset>
 
             <p:dialog id="confirmarRemoverTimeDialog"

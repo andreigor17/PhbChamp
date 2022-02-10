@@ -108,12 +108,13 @@ public class ManagerCriarPlayer implements Serializable {
 
     public void salvarPlayer() throws Exception {
 
-        this.playerServico.save(this.p);
-        System.out.println("carai " + p.toString());
-//        this.arquivo.gravar();
-        //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
+        Player player = new Player();
+        player = playerServico.save(this.p);
         
-        //layer = new Player();
+
+        this.arquivo.gravar();
+        Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + player.getId());
+        
     }
 
     public void pesquisarPlayer() throws Exception {

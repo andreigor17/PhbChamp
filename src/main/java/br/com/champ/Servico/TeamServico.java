@@ -25,10 +25,9 @@ import org.json.JSONException;
  * @author andre
  */
 @Stateless
-public class TeamServico  {
+public class TeamServico {
 
-
-       public List<Team> pesquisar(Team team) throws Exception {
+    public List<Team> pesquisar(Team team) throws Exception {
 
         try {
             String url = "http://localhost:8090/teams";
@@ -57,7 +56,6 @@ public class TeamServico  {
             List<Team> t = new ArrayList<>();
 
             //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
-            
             Type userListType = new TypeToken<ArrayList<Team>>() {
             }.getType();
 
@@ -78,7 +76,6 @@ public class TeamServico  {
         return null;
 
     }
-    
 
     public List<Team> autoCompleteTime() throws Exception {
         return buscaTimes();
@@ -113,7 +110,6 @@ public class TeamServico  {
             List<Team> t = new ArrayList<>();
 
             //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
-            
             Type userListType = new TypeToken<ArrayList<Team>>() {
             }.getType();
 
@@ -134,7 +130,7 @@ public class TeamServico  {
         return null;
 
     }
-    
+
     public Team buscaTeam(Long id) {
         try {
             String url = "http://localhost:8090/teams/" + id;
@@ -176,61 +172,65 @@ public class TeamServico  {
         return null;
 
     }
-    
-    public String save(Team team) throws Exception {
+
+    public Team save(Team team) throws Exception {
         String url = "http://localhost:8090/teams";
 
         try {
-        // Cria um objeto HttpURLConnection:
-        HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
+            // Cria um objeto HttpURLConnection:
+            HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
 
-        try {
-            // Define que a conexão pode enviar informações e obtê-las de volta:
-            request.setDoOutput(true);
-            request.setDoInput(true);
+            try {
+                // Define que a conexão pode enviar informações e obtê-las de volta:
+                request.setDoOutput(true);
+                request.setDoInput(true);
 
-            // Define o content-type:
-            request.setRequestProperty("Content-Type", "application/json");
+                // Define o content-type:
+                request.setRequestProperty("Content-Type", "application/json");
 
-            // Define o método da requisição:
-            request.setRequestMethod("POST");
+                // Define o método da requisição:
+                request.setRequestMethod("POST");
 
-            // Conecta na URL:
-            request.connect();
-            // Montando o  Json
-            Gson gson = new Gson();
-            String json = gson.toJson(team);
-            System.out.println("Montagem do time: " + json);
+                // Conecta na URL:
+                request.connect();
+                // Montando o  Json
+                Gson gson = new Gson();
+                String json = gson.toJson(team);
+                System.out.println("Montagem do time: " + json);
 
-            // Escreve o objeto JSON usando o OutputStream da requisição:
-            try (OutputStream outputStream = request.getOutputStream()) {
-                outputStream.write(json.getBytes("UTF-8"));
+                // Escreve o objeto JSON usando o OutputStream da requisição:
+                try (OutputStream outputStream = request.getOutputStream()) {
+                    outputStream.write(json.getBytes("UTF-8"));
+                }
+
+                Team t = new Team();
+
+                Team userArray = gson.fromJson(readResponse(request), Team.class);
+                t = userArray;
+
+                return t;
+                // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
+                //int response = request.getResponseCode();
+
+            } finally {
+                request.disconnect();
             }
-
-            // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
-            //int response = request.getResponseCode();
-
-            return readResponse(request);
-        } finally {
-            request.disconnect();
-        }
-    } catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println(ex);
-    }
-        return null;
-}
-    
-    private String readResponse(HttpURLConnection request) throws IOException {
-    ByteArrayOutputStream os;
-    try (InputStream is = request.getInputStream()) {
-        os = new ByteArrayOutputStream();
-        int b;
-        while ((b = is.read()) != -1) {
-            os.write(b);
         }
+        return null;
     }
-    return new String(os.toByteArray());
-}
-    
-    
+
+    private String readResponse(HttpURLConnection request) throws IOException {
+        ByteArrayOutputStream os;
+        try (InputStream is = request.getInputStream()) {
+            os = new ByteArrayOutputStream();
+            int b;
+            while ((b = is.read()) != -1) {
+                os.write(b);
+            }
+        }
+        return new String(os.toByteArray());
+    }
+
 }

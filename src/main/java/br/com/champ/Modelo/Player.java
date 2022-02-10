@@ -21,6 +21,7 @@ public class Player extends ModeloGenerico implements Serializable {
     private boolean possuiTime = false;
     private boolean capitao;
     private String avatar;
+    private Funcoes funcao;
 
     public String getNome() {
         return nome;
@@ -85,6 +86,16 @@ public class Player extends ModeloGenerico implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public Funcoes getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcoes funcao) {
+        this.funcao = funcao;
+    }
+    
+    
 
     @Override
     public String toString() {

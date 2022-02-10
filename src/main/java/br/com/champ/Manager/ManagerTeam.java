@@ -75,9 +75,10 @@ public class ManagerTeam implements Serializable {
     }
     
     public void salvarTeam() throws Exception {
+        Team t = new Team();
         this.team.setPlayers(this.membros);
-        this.teamServico.save(this.team);
-        Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + this.team.getId());
+        t = teamServico.save(this.team);
+        Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + t.getId());
         
     }
     
