@@ -63,7 +63,7 @@
             <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="tabela" title="Tabela" >
 
-                    <p:dataTable id="timesDataTable" value="#{ managerCamp.camp.teams }" var="team"
+                    <p:dataTable id="timesDataTable" value="#{ managerCamp.timesVisualizar }" var="team"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
                         <p:column headerText="Nome" width="50%">
@@ -93,16 +93,19 @@
                 </p:tab>
                 <p:tab id="jogos" title="Jogos">
 
-                   
-                        <ui:repeat value="#{managerCamp.partidas}" var="partida">
-                            <div class="row">
-                                <div class="column2 text">
 
-                                    <p:inputText 
-                                        value="#{partida.team1.nome} x #{partida.team2.nome}"/>
-                                </div>
+                    <ui:repeat value="#{managerCamp.partidas}" var="partida">
+                        <div class="row">
+                            <div class="column2 text">
+                                <p:inputText 
+                                    value="#{partida.team1.nome} x #{partida.team2.nome}"/>
                             </div>
-                        </ui:repeat>
+                            <p:commandButton value="Atualizar" 
+                                             oncomplete="PF('atualizarPartidaDialog').show();"
+                                             process="@this"
+                                             update="@form"/>
+                        </div>
+                    </ui:repeat>
 
 
                 </p:tab>
@@ -110,18 +113,14 @@
 
             <p:dialog id="confirmarRemoverCampDialog"
                       widgetVar="confirmarRemoverCampDialog"
-                      header="Atenção!"
+                      header="Deseja cancelar esse campeonato?"
                       modal="true"
                       resizable="false"
                       draggable="false"
                       closeOnEscape="true"
                       showEffect="fade"
                       hideEffect="fade">
-
-
-
                 <center>
-
                     <p:commandButton value="Não"
                                      title="Cancelar Remoção"
                                      icon="fa fa-ban"
@@ -139,6 +138,51 @@
                 </center>
 
             </p:dialog>
+
+            <p:dialog widgetVar="atualizarPartidaDialog"
+                      header="Atualizar Partida"
+                      modal="true"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+                <center>
+                    <div class="column2">
+                        <p:outputLabel value="#{partida.team1.nome}"/>
+                    </div>
+                    <div class="column1">
+                        <p:inputText value="#{managerCamp.s1}"/>
+                    </div>
+                    <div class="column2">
+                        x
+                    </div>
+                    <div class="column2">
+                        <p:outputLabel value="#{partida.team2.nome}"/>
+                    </div>
+                    <div class="column1">
+                        <p:inputText value="#{managerCamp.s2}"/>
+                    </div>
+                    <div class="row">
+
+                        <p:commandButton value="Cancelar"
+                                         title="Cancelar"
+                                         icon="fa fa-ban"
+                                         oncomplete="PF('atualizarPartidaDialog').hide();"
+                                         styleClass="btn btn-default"/>
+
+                        <p:commandButton value="Atualizar Partida"
+                                         title="Atualizar Partida"
+                                         icon="fa fa-check"
+                                         process="@this"
+                                         update="@form"
+                                         actionListener="#{managerCamp.atualizarPartida(partida)}"
+                                         styleClass="btn btn-info"/>
+                    </div>
+                </center>               
+            </p:dialog>
+
+
 
         </h:form>
 

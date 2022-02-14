@@ -93,7 +93,7 @@ public class EstatisticaServico {
     public List<Estatisticas> estatisticaPorTime(Long id, Long id2) {
 
         try {
-            String url = "http://localhost:8090/estatisticas/estatisticasPorTime";
+            String url = "http://localhost:8090/estatisticas/estatisticasPorTime/" + id + "/" + id2;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

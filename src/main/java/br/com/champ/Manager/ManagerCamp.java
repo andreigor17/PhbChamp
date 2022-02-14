@@ -45,6 +45,10 @@ public class ManagerCamp implements Serializable {
     private List<Estatisticas> estatisticasTime;
     private Estatisticas estatistica;
     private List<Partida> partidas;
+    private List<Estatisticas> ests;
+    private List<Team> timesVisualizar;
+    private int s1;
+    private int s2;
 
     @PostConstruct
     public void init() {
@@ -55,18 +59,20 @@ public class ManagerCamp implements Serializable {
 
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
-            
+
             this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
         }
+
         for (Team timeCamp : this.camp.getTeams()) {
             this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
             for (Estatisticas estats : this.estatisticasTime) {
-                estats = estatisticaServico.pesquisar(estats.getId());
+                //estats = estatisticaServico.pesquisar(estats.getId());
+                this.ests.add(estats);
             }
-            timeCamp.setEstatisticas(estatisticasTime);
+            timeCamp.setEstatisticas(this.ests);
+            this.timesVisualizar.add(timeCamp);
         }
-        
-               
+
     }
 
     public void instanciar() {
@@ -74,8 +80,10 @@ public class ManagerCamp implements Serializable {
         this.camps = new ArrayList<>();
         this.time = new Team();
         this.times = new ArrayList<>();
+        this.timesVisualizar = new ArrayList<>();
         this.estatisticasTime = new ArrayList<>();
         this.partidas = new ArrayList<>();
+        this.ests = new ArrayList<>();
 
     }
 
@@ -134,8 +142,38 @@ public class ManagerCamp implements Serializable {
     public void setPartidas(List<Partida> partidas) {
         this.partidas = partidas;
     }
-    
-    
+
+    public int getS1() {
+        return s1;
+    }
+
+    public void setS1(int s1) {
+        this.s1 = s1;
+    }
+
+    public int getS2() {
+        return s2;
+    }
+
+    public void setS2(int s2) {
+        this.s2 = s2;
+    }
+
+    public List<Estatisticas> getEsts() {
+        return ests;
+    }
+
+    public void setEsts(List<Estatisticas> ests) {
+        this.ests = ests;
+    }
+
+    public List<Team> getTimesVisualizar() {
+        return timesVisualizar;
+    }
+
+    public void setTimesVisualizar(List<Team> timesVisualizar) {
+        this.timesVisualizar = timesVisualizar;
+    }
 
     public void salvarCampeonato() throws Exception {
         this.camp.setTeams(this.times);
@@ -171,9 +209,14 @@ public class ManagerCamp implements Serializable {
 //        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
 //        init();
 //    }
-
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar(this.camp);
+    }
+
+    public void atualizarPartida(Partida partida) {
+        partida.setScoreT1(s1);
+        partida.setScoreT2(s2);
+        System.out.println("aqui " + partida.getTeam1().getNome());
     }
 
 }
