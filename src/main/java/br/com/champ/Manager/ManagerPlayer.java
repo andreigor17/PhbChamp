@@ -20,12 +20,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -46,25 +50,36 @@ public class ManagerPlayer implements Serializable {
     private List<Player> players;
     private List<Campeonato> camps;
     private String fotoDoPlayer;
+    private List<Player> allPlayers;
+    private List<Player> selectedPlayers;
+    private DualListModel<Player> playerGroupList;
 
     @PostConstruct
     public void init() {
-        instanciar();
+        try {
+            instanciar();
 
-        String visualizarPlayerId = FacesUtil
-                .getRequestParameter("id");
+            String visualizarPlayerId = FacesUtil
+                    .getRequestParameter("id");
 
-        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.player = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+            if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
+                this.player = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+            }
+
+            this.camps = campServico.buscaCampPorPlayer(this.player);
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        this.camps = campServico.buscaCampPorPlayer(this.player);
     }
 
-    public void instanciar() {
+    public void instanciar() throws Exception {
         this.player = new Player();
         this.players = new ArrayList<>();
         this.camps = new ArrayList<>();
+        this.selectedPlayers = new ArrayList<Player >();
+        this.allPlayers = playerServico.pesquisar(this.player);
+        this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
+
     }
 
     public Player getPlayer() {
@@ -99,6 +114,30 @@ public class ManagerPlayer implements Serializable {
         this.fotoDoPlayer = fotoDoPlayer;
     }
 
+    public DualListModel<Player> getPlayerGroupList() {
+        return playerGroupList;
+    }
+
+    public void setPlayerGroupList(DualListModel<Player> playerGroupList) {
+        this.playerGroupList = playerGroupList;
+    }
+
+    public List<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public void setAllPlayers(List<Player> allPlayers) {
+        this.allPlayers = allPlayers;
+    }
+
+    public List<Player> getSelectedPlayers() {
+        return selectedPlayers;
+    }
+
+    public void setSelectedPlayers(List<Player> selectedPlayers) {
+        this.selectedPlayers = selectedPlayers;
+    }
+
     public void salvarPlayer() {
         //this.playerServico.salvar(this.player);
         //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
@@ -108,14 +147,26 @@ public class ManagerPlayer implements Serializable {
         this.players = playerServico.pesquisar(this.player);
     }
 
-    public void limpar() {
+    public void limpar() throws Exception {
         instanciar();
     }
 
-    public void removerPlayer() {
+    public void removerPlayer() throws Exception {
         //this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }
-    
+
+    public void sorteioX5() {
+        
+        this.selectedPlayers = this.playerGroupList.getTarget();
+        System.out.println("players selecionados: " + this.selectedPlayers.size());
+//        Collections.shuffle(this.selectedPlayers);
+//        for (int i = 0; i < 5; i++) {
+//            System.out.println(this.selectedPlayers.get(i));
+//
+//        }
+
+    }
+
 }

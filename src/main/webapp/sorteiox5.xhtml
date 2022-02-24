@@ -1,0 +1,58 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+
+    <ui:define name="title">
+        Sorteio x5
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formPesquisarPlayers"
+                enctype="multipart/form-data"
+                class="form-horizontal">
+
+            <p:growl id="messages"
+                     showDetail="false"/> 
+
+
+            <div class="actions">
+                <p:button value="Cadastrar Player" outcome="criarPlayer.xhtml"
+                          icon="ui-icon-plus" styleClass="ui-priority-primary" />
+            </div>
+
+            <p:fieldset legend="Sorteio" id="dadosFieldset">                    
+                <div class="row" >
+                    <div class="column12">
+                        <style>
+                            .ui-picklist .ui-picklist-list{
+                                width: 350px;
+                            }
+                        </style> 
+                        <p:pickList id="grupoPickList" value="#{ managerPlayer.playerGroupList }" var="player"
+                                    filterMatchMode="contains" showSourceFilter="true" showTargetFilter="true"
+                                    itemValue="#{ player }" itemLabel="#{ player.nome }" converter="player_converter">
+                            <f:facet name="sourceCaption">Players</f:facet>
+                            <f:facet name="targetCaption">Selected Players</f:facet>
+                        </p:pickList>
+                    </div>                  
+                </div>
+
+                <center>
+                    <p:commandButton value="Sortear!"  icon="ui-icon-plus" styleClass="ui-priority-primary"
+                                     actionListener="#{managerPlayer.sorteioX5()}"
+                                     process="@this" />
+
+                </center>
+
+            </p:fieldset>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
