@@ -97,8 +97,7 @@
                     <ui:repeat value="#{managerCamp.partidas}" var="partida">
                         <div class="row">
                             <div class="column2 text">
-                                <p:inputText 
-                                    value="#{partida.team1.nome} x #{partida.team2.nome}"/>
+                                <p:inputText value="#{partida.team1.nome} x #{partida.team2.nome}"/>
                             </div>
                             <p:commandButton value="Atualizar" 
                                              oncomplete="PF('atualizarPartidaDialog').show();"

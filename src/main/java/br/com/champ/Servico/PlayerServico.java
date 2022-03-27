@@ -75,7 +75,6 @@ public class PlayerServico implements Serializable {
             List<Player> p = new ArrayList<>();
 
             //Player[] userArray = gson.fromJson(response.toString(), Player[].class);
-            
             Type userListType = new TypeToken<ArrayList<Player>>() {
             }.getType();
 
@@ -108,7 +107,6 @@ public class PlayerServico implements Serializable {
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
             System.out.println("Response Code : " + responseCode);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -171,7 +169,6 @@ public class PlayerServico implements Serializable {
             List<Player> p = new ArrayList<>();
 
             //Player[] userArray = gson.fromJson(response.toString(), Player[].class);
-
             Type userListType = new TypeToken<ArrayList<Player>>() {
             }.getType();
 
@@ -192,9 +189,14 @@ public class PlayerServico implements Serializable {
         return null;
     }
 
-    public Player save(Player player) throws Exception {
-        String url = "http://localhost:8090/players";
+    public Player save(Player player, Long id) throws Exception {
 
+        String url;
+        if (id != null) {
+            url = "http://localhost:8090/players/" + id;
+        } else {
+            url = "http://localhost:8090/players";
+        }
         try {
             // Cria um objeto HttpURLConnection:
             HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
@@ -208,7 +210,11 @@ public class PlayerServico implements Serializable {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                request.setRequestMethod("POST");
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();
@@ -220,10 +226,10 @@ public class PlayerServico implements Serializable {
                 try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
-                
-                Player p =  new Player();
+
+                Player p = new Player();
                 Player userArray = gson.fromJson(readResponse(request), Player.class);
-                p =  userArray;
+                p = userArray;
                 return p;
 
                 // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
@@ -245,7 +251,7 @@ public class PlayerServico implements Serializable {
             while ((b = is.read()) != -1) {
                 os.write(b);
             }
-        }        
+        }
         return new String(os.toByteArray());
     }
 

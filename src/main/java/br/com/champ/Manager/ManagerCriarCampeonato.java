@@ -136,7 +136,7 @@ public class ManagerCriarCampeonato implements Serializable {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam_id(timess.getId());
             this.estatistica.setCampeonato_id(c.getId());
-            this.estatisticaServico.salvar(estatistica);
+            this.estatisticaServico.salvar(estatistica, null);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             //this.teamServico.update(timess);

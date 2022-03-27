@@ -6,26 +6,17 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Player;
-import br.com.champ.Modelo.Anexo;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -35,7 +26,7 @@ import org.primefaces.model.UploadedFile;
  *
  * @author andre
  */
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class ManagerCriarPlayer implements Serializable {
 
@@ -53,6 +44,14 @@ public class ManagerCriarPlayer implements Serializable {
     @PostConstruct
     public void init() {
         instanciar();
+
+      String visualizarPlayerId = FacesUtil
+                .getRequestParameter("id");
+
+        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
+            this.p = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+        }
+
     }
 
     public void instanciar() {
@@ -67,8 +66,6 @@ public class ManagerCriarPlayer implements Serializable {
     public void setP(Player p) {
         this.p = p;
     }
-
-    
 
     public List<Player> getPlayers() {
         return players;
@@ -107,14 +104,18 @@ public class ManagerCriarPlayer implements Serializable {
     }
 
     public void salvarPlayer() throws Exception {
-
         Player player = new Player();
-        player = playerServico.save(this.p);
-        
 
-        this.arquivo.gravar();
-        Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + player.getId());
+        if (this.p.getId() == null) {
+            player = playerServico.save(this.p, null);
+            this.arquivo.gravar();
+        } else {
+            player = playerServico.save(this.p, this.p.getId());
+        }
+
         
+        Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + player.getId());
+
     }
 
     public void pesquisarPlayer() throws Exception {

@@ -5,8 +5,6 @@
  */
 package br.com.champ.Servico;
 
-import br.com.champ.Generico.ServicoGenerico;
-import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import org.json.JSONException;
 
 /**
@@ -32,8 +29,13 @@ import org.json.JSONException;
 @Stateless
 public class EstatisticaServico {
 
-    public String salvar(Estatisticas estatistica) throws Exception {
-        String url = "http://localhost:8090/estatisticas";
+    public String salvar(Estatisticas estatistica, Long id) throws Exception {
+        String url;
+        if (id != null) {
+            url = "http://localhost:8090/estatisticas/" + id;
+        } else {
+            url = "http://localhost:8090/estatisticas";
+        }
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -48,7 +50,11 @@ public class EstatisticaServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                request.setRequestMethod("POST");
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();
