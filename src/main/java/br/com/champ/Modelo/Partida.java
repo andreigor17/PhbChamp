@@ -8,15 +8,6 @@ package br.com.champ.Modelo;
 import br.com.champ.Enums.Maps;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -76,5 +67,12 @@ public class Partida extends ModeloGenerico implements Serializable {
         this.team2 = team2;
         
     }
+
+    @Override
+    public String toString() {
+        return "Partida{" + "team1=" + team1 + ", team2=" + team2 + ", camp=" + camp + ", scoreT1=" + scoreT1 + ", scoreT2=" + scoreT2 + ", mapas=" + mapas + '}';
+    }
+    
+    
 
 }

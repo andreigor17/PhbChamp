@@ -94,17 +94,42 @@
                 <p:tab id="jogos" title="Jogos">
 
 
-                    <ui:repeat value="#{managerCamp.partidas}" var="partida">
-                        <div class="row">
-                            <div class="column2 text">
-                                <p:inputText value="#{partida.team1.nome} x #{partida.team2.nome}"/>
+                    <p:dataTable id="partidasDataTable"
+                                 value="#{managerCamp.partidas}"
+                                 var="partida"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="Partidas" />
+                        </f:facet>
+
+                        <p:column headerText="Opções" width="10%">
+                            <div class="options2">                        
+
+                                <p:commandButton title="Atualizar Partida"  
+                                                 value="Atualizar Partida"
+                                                 process="@this"
+                                                 update="@form"
+                                                 oncomplete="PF('atualizarPartidaDialog').show();"
+                                                 >
+                                    <f:setPropertyActionListener value="#{partida}"
+                                                                 target="#{managerCamp.partida}"/>
+                                </p:commandButton>
                             </div>
-                            <p:commandButton value="Atualizar" 
-                                             oncomplete="PF('atualizarPartidaDialog').show();"
-                                             process="@this"
-                                             update="@form"/>
-                        </div>
-                    </ui:repeat>
+
+
+                        </p:column>
+
+                        <p:column headerText="Nome" width="60%">
+                            <p:outputLabel value="#{partida.team1.nome} x #{partida.team2.nome}"/>
+                        </p:column>
+
+                    </p:dataTable>
 
 
                 </p:tab>
@@ -148,19 +173,19 @@
 
                 <center>
                     <div class="column2">
-                        <p:outputLabel value="#{partida.team1.nome}"/>
+                        <p:outputLabel value="#{managerCamp.partida.team1.nome}"/>
                     </div>
                     <div class="column1">
-                        <p:inputText value="#{managerCamp.s1}"/>
+                        <p:inputText value="#{managerCamp.setS1(s1)}"/>
                     </div>
                     <div class="column2">
                         x
                     </div>
                     <div class="column2">
-                        <p:outputLabel value="#{partida.team2.nome}"/>
+                        <p:outputLabel value="#{managerCamp.partida.team2.nome}"/>
                     </div>
                     <div class="column1">
-                        <p:inputText value="#{managerCamp.s2}"/>
+                        <p:inputText value="#{managerCamp.setS2(s2)}"/>
                     </div>
                     <div class="row">
 
@@ -175,7 +200,7 @@
                                          icon="fa fa-check"
                                          process="@this"
                                          update="@form"
-                                         actionListener="#{managerCamp.atualizarPartida(partida)}"
+                                         actionListener="#{managerCamp.atualizarPartida()}"
                                          styleClass="btn btn-info"/>
                     </div>
                 </center>               

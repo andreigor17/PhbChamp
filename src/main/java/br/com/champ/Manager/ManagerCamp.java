@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -47,6 +48,7 @@ public class ManagerCamp implements Serializable {
     private List<Partida> partidas;
     private List<Estatisticas> ests;
     private List<Team> timesVisualizar;
+    private Partida partida;
     private int s1;
     private int s2;
 
@@ -84,6 +86,7 @@ public class ManagerCamp implements Serializable {
         this.estatisticasTime = new ArrayList<>();
         this.partidas = new ArrayList<>();
         this.ests = new ArrayList<>();
+        this.partida = new Partida();
 
     }
 
@@ -175,6 +178,14 @@ public class ManagerCamp implements Serializable {
         this.timesVisualizar = timesVisualizar;
     }
 
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
+    }
+
     public void salvarCampeonato() throws Exception {
         this.camp.setTeams(this.times);
         this.campeonatoServico.save(this.camp);
@@ -213,10 +224,12 @@ public class ManagerCamp implements Serializable {
         this.camps = campeonatoServico.pesquisar(this.camp);
     }
 
-    public void atualizarPartida(Partida partida) {
-        partida.setScoreT1(s1);
-        partida.setScoreT2(s2);
-        System.out.println("aqui " + partida.getTeam1().getNome());
+    public void atualizarPartida() throws Exception {
+
+        this.partida.setScoreT1(16);
+        this.partida.setScoreT2(12);
+        partidaServico.salvar(this.partida, this.partida.getId());
+
     }
 
 }

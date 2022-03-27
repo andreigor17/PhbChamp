@@ -5,9 +5,6 @@
  */
 package br.com.champ.Servico;
 
-import br.com.champ.Generico.ServicoGenerico;
-import br.com.champ.Modelo.Campeonato;
-import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Partida;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import org.json.JSONException;
 
 /**
@@ -32,10 +28,16 @@ import org.json.JSONException;
  */
 @Stateless
 public class PartidaServico {
-    
 
-    public Partida salvar(Partida partida) throws Exception {
-        String url = "http://localhost:8090/partidas";
+    public Partida salvar(Partida partida, Long id) throws Exception {
+
+        String url;
+
+        if (id != null) {
+            url = "http://localhost:8090/partidas/" + id;
+        } else {
+            url = "http://localhost:8090/partidas";
+        }
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -50,7 +52,11 @@ public class PartidaServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                request.setRequestMethod("POST");
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();
@@ -72,7 +78,7 @@ public class PartidaServico {
                 c = userArray;
 
                 return c;
-                                
+
             } finally {
                 request.disconnect();
             }
@@ -94,12 +100,10 @@ public class PartidaServico {
         return new String(os.toByteArray());
     }
 
-
     public void delete(Partida partida) {
-        
+
     }
-    
-    
+
     public List<Partida> pesquisarPartidas() {
         try {
             String url = "http://localhost:8090/partidas";
@@ -148,8 +152,8 @@ public class PartidaServico {
         return null;
 
     }
-    
-    public List<Partida> partidaPorCamp(Long id) {        
+
+    public List<Partida> partidaPorCamp(Long id) {
         try {
             String url = "http://localhost:8090/partidas/partidasPorCamp/" + id;
             URL obj = new URL(url);
@@ -196,7 +200,7 @@ public class PartidaServico {
         }
         return null;
     }
-    
+
     public Partida pesquisar(Long id) {
 
         try {
@@ -239,5 +243,5 @@ public class PartidaServico {
         return null;
 
     }
-    
+
 }
