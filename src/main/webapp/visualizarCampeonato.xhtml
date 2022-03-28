@@ -63,26 +63,26 @@
             <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="tabela" title="Tabela" >
 
-                    <p:dataTable id="timesDataTable" value="#{ managerCamp.timesVisualizar }" var="team"
+                    <p:dataTable id="timesDataTable" value="#{ managerCamp.ests }" var="ests"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
                         <p:column headerText="Nome" width="50%">
-                            <h:outputText value="#{ team.nome }" />
+                            <h:outputText value="#{ ests.team.nome }" />
                         </p:column>
                         <p:column headerText="Pontos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).pontos}" />
+                            <h:outputText value="#{ ests.pontos}" />
                         </p:column>
                         <p:column headerText="Kills" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).kills}" />
+                            <h:outputText value="#{ ests.kills}" />
                         </p:column>
                         <p:column headerText="Deaths" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).deaths}" />
+                            <h:outputText value="#{ ests.deaths}" />
                         </p:column>
                         <p:column headerText="Rounds Ganhos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).roundsGanhos}" />
+                            <h:outputText value="#{ ests.roundsGanhos}" />
                         </p:column>
                         <p:column headerText="Rounds Perdidos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).roundsPerdidos}" />
+                            <h:outputText value="#{ ests.roundsPerdidos}" />
                         </p:column>
 
 

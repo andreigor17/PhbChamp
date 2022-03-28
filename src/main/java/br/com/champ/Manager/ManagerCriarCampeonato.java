@@ -4,7 +4,6 @@ import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Partida;
-import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
@@ -16,15 +15,10 @@ import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -124,7 +118,7 @@ public class ManagerCriarCampeonato implements Serializable {
 
     public void salvarCampeonato() throws Exception {
 
-        this.camp.setTeams(this.times);
+        this.camp.setTeams(this.times);        
 
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);        
         this.camp.setPartidas(gerarPartidas());
@@ -134,8 +128,8 @@ public class ManagerCriarCampeonato implements Serializable {
         
          for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
-            this.estatistica.setTeam_id(timess.getId());
-            this.estatistica.setCampeonato_id(c.getId());
+            this.estatistica.setTeam(timess);
+            this.estatistica.setCampeonato(c);
             this.estatisticaServico.salvar(estatistica, null);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);

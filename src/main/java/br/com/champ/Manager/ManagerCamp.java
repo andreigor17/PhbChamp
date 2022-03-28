@@ -191,8 +191,8 @@ public class ManagerCamp implements Serializable {
         this.campeonatoServico.save(this.camp);
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
-            this.estatistica.setTeam_id(timess.getId());
-            this.estatistica.setCampeonato_id(this.camp.getId());
+            this.estatistica.setTeam(timess);
+            this.estatistica.setCampeonato(this.camp);
             //this.estatisticaServico.salvar(estatistica);
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
