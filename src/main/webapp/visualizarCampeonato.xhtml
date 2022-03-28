@@ -125,8 +125,17 @@
 
                         </p:column>
 
-                        <p:column headerText="Nome" width="60%">
-                            <p:outputLabel value="#{partida.team1.nome} x #{partida.team2.nome}"/>
+                        <p:column headerText="Time 1" width="15%">
+                            <p:outputLabel value="#{partida.team1.nome}"/>
+                        </p:column>
+                        <p:column headerText="Rounds" width="15%">
+                            <p:outputLabel value="#{partida.scoreT1}"/>
+                        </p:column>
+                        <p:column headerText="Time2" width="15%">
+                            <p:outputLabel value="#{partida.team2.nome}"/>
+                        </p:column>
+                        <p:column headerText="Rounds" width="15%">
+                            <p:outputLabel value="#{partida.scoreT2}"/>
                         </p:column>
 
                     </p:dataTable>
@@ -163,48 +172,51 @@
 
             </p:dialog>
 
-            <p:dialog widgetVar="atualizarPartidaDialog"
-                      header="Atualizar Partida"
-                      modal="true"
-                      draggable="false"
-                      closeOnEscape="true"
-                      showEffect="fade"
-                      hideEffect="fade">
+            <h:form id="formAtualizarPartida">
+                <p:dialog widgetVar="atualizarPartidaDialog"
+                          header="Atualizar Partida"
+                          modal="true"
+                          draggable="false"
+                          closeOnEscape="true"
+                          showEffect="fade"
+                          hideEffect="fade">
 
-                <center>
-                    <div class="column2">
-                        <p:outputLabel value="#{managerCamp.partida.team1.nome}"/>
-                    </div>
-                    <div class="column1">
-                        <p:inputText value="#{managerCamp.setS1(s1)}"/>
-                    </div>
-                    <div class="column2">
-                        x
-                    </div>
-                    <div class="column2">
-                        <p:outputLabel value="#{managerCamp.partida.team2.nome}"/>
-                    </div>
-                    <div class="column1">
-                        <p:inputText value="#{managerCamp.setS2(s2)}"/>
-                    </div>
-                    <div class="row">
+                    <center>
+                        <div class="column2">
+                            <p:outputLabel value="#{managerCamp.partida.team1.nome}"/>
+                        </div>
 
-                        <p:commandButton value="Cancelar"
-                                         title="Cancelar"
-                                         icon="fa fa-ban"
-                                         oncomplete="PF('atualizarPartidaDialog').hide();"
-                                         styleClass="btn btn-default"/>
+                        <div class="column1">
+                            <p:inputText value="#{managerCamp.partida.scoreT1}"/>
+                        </div>
+                        <div class="column2">
+                            x
+                        </div>
+                        <div class="column2">
+                            <p:outputLabel value="#{managerCamp.partida.team2.nome}"/>
+                        </div>
+                        <div class="column1">
+                            <p:inputText value="#{managerCamp.partida.scoreT2}"/>
+                        </div>
+                        <div class="row">
 
-                        <p:commandButton value="Atualizar Partida"
-                                         title="Atualizar Partida"
-                                         icon="fa fa-check"
-                                         process="@this"
-                                         update="@form"
-                                         actionListener="#{managerCamp.atualizarPartida()}"
-                                         styleClass="btn btn-info"/>
-                    </div>
-                </center>               
-            </p:dialog>
+                            <p:commandButton value="Cancelar"
+                                             title="Cancelar"
+                                             icon="fa fa-ban"
+                                             oncomplete="PF('atualizarPartidaDialog').hide();"
+                                             styleClass="btn btn-default"/>
+
+                            <p:commandButton value="Atualizar Partida"
+                                             title="Atualizar Partida"
+                                             icon="fa fa-check"
+                                             process="@form"
+                                             update="@form"
+                                             actionListener="#{managerCamp.atualizarPartida()}"
+                                             styleClass="btn btn-info"/>
+                        </div>
+                    </center>               
+                </p:dialog>
+            </h:form>
 
 
 

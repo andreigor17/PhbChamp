@@ -226,9 +226,28 @@ public class ManagerCamp implements Serializable {
 
     public void atualizarPartida() throws Exception {
 
-        this.partida.setScoreT1(16);
-        this.partida.setScoreT2(12);
-        partidaServico.salvar(this.partida, this.partida.getId());
+        try {
+            this.estatistica = estatisticaServico.estatisticaPorTime(this.partida.getTeam1().getId(), this.camp.getId()).get(0);
+            if (this.estatistica != null) {
+                this.estatistica.setRoundsGanhos(this.partida.getScoreT1());
+                this.estatistica.setRoundsPerdidos(this.partida.getScoreT2());
+                this.estatistica.setPontos(3);
+                estatisticaServico.salvar(this.estatistica, this.estatistica.getId());
+            }
+
+            this.estatistica = estatisticaServico.estatisticaPorTime(this.partida.getTeam2().getId(), this.camp.getId()).get(0);
+            if (this.estatistica != null) {
+                this.estatistica.setRoundsGanhos(this.partida.getScoreT2());
+                this.estatistica.setRoundsPerdidos(this.partida.getScoreT1());
+                this.estatistica.setPontos(0);
+                estatisticaServico.salvar(this.estatistica, this.estatistica.getId());
+            }
+
+            partidaServico.salvar(this.partida, this.partida.getId());
+            Mensagem.successAndRedirect("Partida atualizada com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
     }
 
