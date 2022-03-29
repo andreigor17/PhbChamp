@@ -64,7 +64,8 @@
                 <p:tab id="tabela" title="Tabela" >
 
                     <p:dataTable id="timesDataTable" value="#{ managerCamp.ests }" var="ests"
-                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
+                                 sortBy="#{ ests.pontos}" sortOrder="descending">
 
                         <p:column headerText="Nome" width="50%">
                             <h:outputText value="#{ ests.team.nome }" />
