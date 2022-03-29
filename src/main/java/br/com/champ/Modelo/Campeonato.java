@@ -3,6 +3,7 @@ package br.com.champ.Modelo;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private StatusCamp status;
     private List<Partida> partidas;
     private List<Estatisticas> estatisticas;
+    private Date data;
     
 
     public List<Partida> getPartidas() {
@@ -57,5 +59,13 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     public void setEstatisticas(List<Estatisticas> estatisticas) {
         this.estatisticas = estatisticas;
     }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }        
 
 }

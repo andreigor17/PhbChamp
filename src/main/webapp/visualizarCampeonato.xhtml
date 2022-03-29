@@ -54,7 +54,9 @@
                     </div>
                     <div class="column4 text" >
                         <p:outputLabel id="dataCamepeonato"
-                                       value="28/10/2021"/>
+                                       value="#{managerCamp.camp.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
                     </div>
                 </div>
 

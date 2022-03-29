@@ -14,6 +14,7 @@ import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -118,7 +119,7 @@ public class ManagerCriarCampeonato implements Serializable {
 
     public void salvarCampeonato() throws Exception {
 
-        this.camp.setTeams(this.times);        
+        this.camp.setTeams(this.times);          
 
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);        
         this.camp.setPartidas(gerarPartidas());

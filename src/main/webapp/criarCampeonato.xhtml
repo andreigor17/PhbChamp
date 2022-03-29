@@ -19,52 +19,59 @@
             <p:growl id="messages"
                      showDetail="false"/>
 
-           
-
-                    <p:fieldset legend="Dados" id="dadosFieldset">
-
-                        <div class="row">
-                            <div class="column2 bold">
-                                <p:outputLabel value="Nome do Campeonato:"
-                                               for="nomeCamp"/>
-                            </div>
-                            <div class="column3 text">
-                                <p:inputText id="nomeCamp"
-                                             value="#{managerCriarCampeonato.camp.nome}"
-                                             required="true"
-                                             requiredMessage="Informe o nome do campeonato!"/>
-                            </div>
-                        </div>
 
 
-                        <div class="row">
-                            <div class="column2 bold">
-                                <p:outputLabel value="Selecionar time"
-                                               for="timeAutoComplete"/>
-                            </div>
-                            <div class="column3">
-                                <p:autoComplete id="timeAutoComplete" value="#{managerCriarCampeonato.time}"
-                                                forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
-                                                itemLabel="#{team.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarTime()}"
-                                                converter="time_converter"  requiredMessage="Time é obrigatório"/>
-                            </div>
-                        </div>
-                        <div class="command">
-                            <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarCamp()}"
-                                             update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
+            <p:fieldset legend="Dados" id="dadosFieldset">
 
-                        </div>
-                        <p:dataTable id="timesDataTable" value="#{ managerCriarCampeonato.times }" var="team"
-                                     rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Nome do Campeonato:"
+                                       for="nomeCamp"/>
+                    </div>
+                    <div class="column3 text">
+                        <p:inputText id="nomeCamp"
+                                     value="#{managerCriarCampeonato.camp.nome}"
+                                     required="true"
+                                     requiredMessage="Informe o nome do campeonato!"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel for="dataCalendar" value="Data: "/>
+                    </div>
+                    <div class="column2">
+                        <p:calendar id="dataCalendar" value="#{managerCriarCampeonato.camp.data}" showOn="button"/>
+                    </div>
+                </div>
 
-                            <p:column headerText="Nome" width="50%">
-                                <h:outputText value="#{ team.nome }" />
-                            </p:column>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Selecionar integrantes"
+                                       for="timeAutoComplete"/>
+                    </div>
+                    <div class="column3">
+                        <p:autoComplete id="timeAutoComplete" value="#{managerCriarCampeonato.time}"
+                                        forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
+                                        itemLabel="#{team.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarTime()}"
+                                        converter="time_converter"  requiredMessage="Time é obrigatório"/>
+                    </div>
+                </div>
+                <div class="command">
+                    <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarCamp()}"
+                                     update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
+
+                </div>
+                <p:dataTable id="timesDataTable" value="#{ managerCriarCampeonato.times }" var="team"
+                             rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+
+                    <p:column headerText="Nome" width="50%">
+                        <h:outputText value="#{ team.nome }" />
+                    </p:column>
 
 
-                        </p:dataTable>
-                        
-                    </p:fieldset>
+                </p:dataTable>
+
+            </p:fieldset>
 
 
             <div class="actions">
