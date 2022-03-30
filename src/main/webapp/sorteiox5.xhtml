@@ -37,7 +37,7 @@
                                     filterMatchMode="contains" showSourceFilter="true" showTargetFilter="true"
                                     itemValue="#{ player }" itemLabel="#{ player.nome }" converter="player_converter">
                             <f:facet name="sourceCaption">Players</f:facet>
-                            <f:facet name="targetCaption">Selected Players</f:facet>
+                            <f:facet name="targetCaption">Players Selecionados</f:facet>
                         </p:pickList>
                     </div>                  
                 </div>
@@ -45,7 +45,7 @@
                 <center>
                     <p:commandButton value="Sortear!"  icon="ui-icon-plus" styleClass="ui-priority-primary"
                                      actionListener="#{managerPlayer.sorteioX5()}"
-                                     process="@this" />
+                                     process="@form" update="@form" />
 
                 </center>
 

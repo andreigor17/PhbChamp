@@ -1,0 +1,37 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="title">
+        Configurações
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formConfiguracoes"
+                enctype="multipart/form-data"
+                class="form-horizontal">
+
+            <p:growl id="messages"
+                     showDetail="false"/> 
+
+
+            <div class="card">
+        <h5>Opções</h5>
+        <p:menu>
+            <p:submenu label="Opções">
+                <p:menuitem value="API" actionListener="#{ managerConfiguracao.renderizarMenu( 'API' ) }" update="@form"
+                            icon="ui-icon-disk" />
+               
+            </p:submenu>
+        </p:menu>
+    </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

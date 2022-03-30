@@ -5,7 +5,6 @@
  */
 package br.com.champ.Manager;
 
-import br.com.champ.Modelo.Anexo;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Servico.AnexoServico;
@@ -13,14 +12,8 @@ import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -76,7 +68,7 @@ public class ManagerPlayer implements Serializable {
         this.player = new Player();
         this.players = new ArrayList<>();
         this.camps = new ArrayList<>();
-        this.selectedPlayers = new ArrayList<Player >();
+        this.selectedPlayers = new ArrayList<Player>();
         this.allPlayers = playerServico.pesquisar(this.player);
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
 
@@ -158,14 +150,21 @@ public class ManagerPlayer implements Serializable {
     }
 
     public void sorteioX5() {
-        
         this.selectedPlayers = this.playerGroupList.getTarget();
         System.out.println("players selecionados: " + this.selectedPlayers.size());
+
+        if (this.selectedPlayers.size() % 2 == 0) {
+            System.out.println("ok");
+        } else {
+            Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
+//        }
 //        Collections.shuffle(this.selectedPlayers);
 //        for (int i = 0; i < 5; i++) {
 //            System.out.println(this.selectedPlayers.get(i));
 //
 //        }
+
+        }
 
     }
 
