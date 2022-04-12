@@ -186,21 +186,6 @@ public class ManagerCamp implements Serializable {
         this.partida = partida;
     }
 
-    public void salvarCampeonato() throws Exception {
-        this.camp.setTeams(this.times);
-        this.campeonatoServico.save(this.camp);
-        for (Team timess : this.camp.getTeams()) {
-            this.estatistica = new Estatisticas();
-            this.estatistica.setTeam(timess);
-            this.estatistica.setCampeonato(this.camp);
-            //this.estatisticaServico.salvar(estatistica);
-            this.estatisticasTime.add(estatistica);
-            timess.setEstatisticas(estatisticasTime);
-            //this.teamServico.update(timess);
-        }
-        Mensagem.successAndRedirect("Campeonato cadastrado com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
-    }
-
     public List<Team> autoCompletarTime() throws Exception {
         return teamServico.autoCompleteTime();
     }
@@ -229,24 +214,23 @@ public class ManagerCamp implements Serializable {
         try {
             this.estatistica = estatisticaServico.estatisticaPorTime(this.partida.getTeam1().getId(), this.camp.getId()).get(0);
             if (this.estatistica != null) {
-                this.estatistica.setRoundsGanhos(this.partida.getScoreT1());
-                this.estatistica.setRoundsPerdidos(this.partida.getScoreT2());
-                this.estatistica.setPontos(3);
+                this.estatistica.setRoundsGanhos(this.estatistica.getRoundsGanhos() + this.partida.getScoreT1());
+                this.estatistica.setRoundsPerdidos(this.estatistica.getRoundsPerdidos() + this.partida.getScoreT2());
+                this.estatistica.setPontos(this.estatistica.getPontos() + 3);
                 estatisticaServico.salvar(this.estatistica, this.estatistica.getId());
             }
 
             this.estatistica = estatisticaServico.estatisticaPorTime(this.partida.getTeam2().getId(), this.camp.getId()).get(0);
             if (this.estatistica != null) {
-                this.estatistica.setRoundsGanhos(this.partida.getScoreT2());
-                this.estatistica.setRoundsPerdidos(this.partida.getScoreT1());
-                this.estatistica.setPontos(0);
+                this.estatistica.setRoundsGanhos(this.estatistica.getRoundsGanhos() + this.partida.getScoreT2());
+                this.estatistica.setRoundsPerdidos(this.estatistica.getRoundsPerdidos() + this.partida.getScoreT1());
                 estatisticaServico.salvar(this.estatistica, this.estatistica.getId());
             }
 
             partidaServico.salvar(this.partida, this.partida.getId());
             Mensagem.successAndRedirect("Partida atualizada com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
         } catch (Exception e) {
-            System.err.println(e);
+            System.err.println(e); 
         }
 
     }

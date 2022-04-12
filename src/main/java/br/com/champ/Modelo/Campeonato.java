@@ -3,7 +3,6 @@ package br.com.champ.Modelo;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,14 +10,14 @@ import java.util.List;
  * @author andre
  */
 public class Campeonato extends ModeloGenerico implements Serializable {
-    
-    private String nome;    
+
+    private String nome;
     private List<Team> teams;
     private StatusCamp status;
     private List<Partida> partidas;
-    private List<Estatisticas> estatisticas;
-    private Date data;
-    
+    private List<Estatisticas> estatisticas;        
+    private String dataCamp;
+    private String dataString;
 
     public List<Partida> getPartidas() {
         return partidas;
@@ -60,12 +59,21 @@ public class Campeonato extends ModeloGenerico implements Serializable {
         this.estatisticas = estatisticas;
     }
 
-    public Date getData() {
-        return data;
+    public String getDataCamp() {
+        return dataCamp;
     }
 
-    public void setData(Date data) {
-        this.data = data;
-    }        
+    public void setDataCamp(String dataCamp) {
+        this.dataCamp = dataCamp;
+    }
+
+
+    public String getDataString() {
+        return dataString;
+    }
+
+    public void setDataString(String dataString) {
+        this.dataString = dataString;
+    }
 
 }

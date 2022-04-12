@@ -13,6 +13,7 @@ import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ManagerCriarCampeonato implements Serializable {
     private Team time;
     private List<Estatisticas> estatisticasTime;
     private Estatisticas estatistica;
+    private Date dataCamp;
 
     @PostConstruct
     public void init() {
@@ -66,6 +68,7 @@ public class ManagerCriarCampeonato implements Serializable {
         this.time = new Team();
         this.times = new ArrayList<>();
         this.estatisticasTime = new ArrayList<>();
+        this.dataCamp = new Date();
 
     }
 
@@ -117,17 +120,33 @@ public class ManagerCriarCampeonato implements Serializable {
         this.estatistica = estatistica;
     }
 
+    public Date getDataCamp() {
+        return dataCamp;
+    }
+
+    public void setDataCamp(Date dataCamp) {
+        this.dataCamp = dataCamp;
+    }
+
     public void salvarCampeonato() throws Exception {
 
-        this.camp.setTeams(this.times);          
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);        
+        String dataFormatada = formatter.format(this.dataCamp);
+
+        this.camp.setDataCamp(dataFormatada);
+
+        System.out.println("data camp MIZERA: " + this.camp.getDataCamp());
+
+        this.camp.setTeams(this.times);
+
+        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
         this.camp.setPartidas(gerarPartidas());
 
-        Campeonato c =  new Campeonato();
+        Campeonato c = new Campeonato();
         c = campeonatoServico.save(this.camp);
-        
-         for (Team timess : this.camp.getTeams()) {
+
+        for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam(timess);
             this.estatistica.setCampeonato(c);
