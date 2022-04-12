@@ -35,7 +35,7 @@
                         </style> 
                         <p:pickList id="grupoPickList" value="#{ managerPlayer.playerGroupList }" var="player"
                                     filterMatchMode="contains" showSourceFilter="true" showTargetFilter="true"
-                                    itemValue="#{ player }" itemLabel="#{ player.nome }" converter="player_converter">
+                                    itemValue="#{ player }" itemLabel="#{ player.nick }" converter="player_converter">
                             <f:facet name="sourceCaption">Players</f:facet>
                             <f:facet name="targetCaption">Players Selecionados</f:facet>
                         </p:pickList>

@@ -1,12 +1,8 @@
 package br.com.champ.Servico;
 
-import br.com.champ.Enums.StatusCamp;
-import br.com.champ.Generico.ServicoGenerico;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Player;
-import br.com.champ.Modelo.Tabela;
-import br.com.champ.Modelo.Team;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -25,7 +21,6 @@ import java.util.ArrayList;
  * @author andre
  */
 import java.util.List;
-import javax.persistence.Query;
 import org.json.JSONException;
 
 @Stateless

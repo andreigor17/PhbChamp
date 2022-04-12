@@ -20,24 +20,14 @@
 
 
             <div class="card">
-                <h5>Opções</h5>
                 <p:menu>
                     <p:submenu label="Opções">
-                        <p:menuitem value="API" actionListener="#{ managerConfiguracao.renderizarMenu( 'API' ) }" update="@form"
+                        <p:menuitem value="API" outcome="configuracaoAPI.xhtml" update="@form"
                                     icon="ui-icon-disk" />
 
                     </p:submenu>
                 </p:menu>
-            </div>
-
-            <p:fieldset legend="API" rendered="#{ managerConfiguracao.menu eq 'API' }">
-
-                <div class="column3 col-xs-6 col-md-3" >
-                    <p:panel header="API">
-
-                    </p:panel>
-                </div>
-            </p:fieldset>
+            </div>            
 
         </h:form>
 

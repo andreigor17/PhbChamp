@@ -5,10 +5,7 @@
  */
 package br.com.champ.Servico;
 
-import br.com.champ.Generico.ServicoGenerico;
 import br.com.champ.Modelo.Player;
-import br.com.champ.Modelo.Team;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -17,27 +14,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import static javax.ws.rs.client.Entity.json;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -255,7 +239,4 @@ public class PlayerServico implements Serializable {
         return new String(os.toByteArray());
     }
 
-    private void update(Player player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
