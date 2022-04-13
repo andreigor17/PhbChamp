@@ -214,7 +214,7 @@ public class CampeonatoServico {
 
     public Campeonato buscaCamp(Long id) {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
