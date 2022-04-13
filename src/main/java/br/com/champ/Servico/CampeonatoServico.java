@@ -2,6 +2,7 @@ package br.com.champ.Servico;
 
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Player;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,14 +22,23 @@ import java.util.ArrayList;
  * @author andre
  */
 import java.util.List;
+import javax.ejb.EJB;
 import org.json.JSONException;
 
 @Stateless
 public class CampeonatoServico {
 
+    @EJB
+    private ConfiguracaoServico configuracaoServico;
+
+    public Configuracao obterConfiguracao() {
+        return configuracaoServico.buscaConfig();
+
+    }
+
     public List<Campeonato> pesquisar(Campeonato camp) throws Exception {
         try {
-            String url = "http://localhost:8090/campeonatos";
+            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -86,7 +96,7 @@ public class CampeonatoServico {
 
     public List<Campeonato> pesquisarCampsAtuais() {
         try {
-            String url = "http://localhost:8090/campeonatos";
+            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -133,8 +143,14 @@ public class CampeonatoServico {
 
     }
 
-    public Campeonato save(Campeonato camp) throws Exception {
-        String url = "http://localhost:8090/campeonatos";
+    public Campeonato save(Campeonato camp, Long id, String uri) throws Exception {
+
+        String url;
+        if (id != null) {
+            url = obterConfiguracao().getCaminhoApi() + uri + id;
+        } else {
+            url = obterConfiguracao().getCaminhoApi() + uri;
+        }
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -149,7 +165,11 @@ public class CampeonatoServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                request.setRequestMethod("POST");
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();
@@ -194,7 +214,7 @@ public class CampeonatoServico {
 
     public Campeonato buscaCamp(Long id) {
         try {
-            String url = "http://localhost:8090/campeonatos/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

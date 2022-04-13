@@ -1,7 +1,6 @@
 package br.com.champ.Servico;
 
-import br.com.champ.Generico.ServicoGenerico;
-import br.com.champ.Modelo.Player;
+import br.com.champ.Modelo.Configuracao;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Team;
 import com.google.gson.Gson;
@@ -17,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Query;
+import javax.ejb.EJB;
 import org.json.JSONException;
 
 /**
@@ -27,10 +26,18 @@ import org.json.JSONException;
 @Stateless
 public class TeamServico {
 
+    @EJB
+    private ConfiguracaoServico configuracaoServico;
+
+    public Configuracao obterConfiguracao() {
+        return configuracaoServico.buscaConfig();
+
+    }
+
     public List<Team> pesquisar(Team team) throws Exception {
 
         try {
-            String url = "http://localhost:8090/teams";
+            String url = obterConfiguracao().getCaminhoApi() + "/teams";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -84,7 +91,7 @@ public class TeamServico {
     private List<Team> buscaTimes() throws Exception {
 
         try {
-            String url = "http://localhost:8090/teams";
+            String url = obterConfiguracao().getCaminhoApi() + "/teams";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -133,7 +140,7 @@ public class TeamServico {
 
     public Team buscaTeam(Long id) {
         try {
-            String url = "http://localhost:8090/teams/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/teams/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -173,8 +180,14 @@ public class TeamServico {
 
     }
 
-    public Team save(Team team) throws Exception {
-        String url = "http://localhost:8090/teams";
+    public Team save(Team team, Long id, String uri) throws Exception {
+
+        String url;
+        if (id != null) {
+            url = obterConfiguracao().getCaminhoApi() + uri + id;
+        } else {
+            url = obterConfiguracao().getCaminhoApi() + uri;
+        }
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -189,7 +202,11 @@ public class TeamServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                request.setRequestMethod("POST");
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();

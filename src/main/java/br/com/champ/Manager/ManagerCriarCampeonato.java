@@ -1,6 +1,7 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Enums.StatusCamp;
+import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Partida;
@@ -144,13 +145,13 @@ public class ManagerCriarCampeonato implements Serializable {
         this.camp.setPartidas(gerarPartidas());
 
         Campeonato c = new Campeonato();
-        c = campeonatoServico.save(this.camp);
+        c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
             this.estatistica.setTeam(timess);
             this.estatistica.setCampeonato(c);
-            this.estatisticaServico.salvar(estatistica, null);
+            this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
             this.estatisticasTime.add(estatistica);
             timess.setEstatisticas(estatisticasTime);
             //this.teamServico.update(timess);

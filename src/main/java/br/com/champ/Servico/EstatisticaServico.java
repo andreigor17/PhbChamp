@@ -5,6 +5,7 @@
  */
 package br.com.champ.Servico;
 
+import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Estatisticas;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.json.JSONException;
 
@@ -28,13 +30,22 @@ import org.json.JSONException;
  */
 @Stateless
 public class EstatisticaServico {
+    
+    @EJB
+    private ConfiguracaoServico configuracaoServico;
 
-    public String salvar(Estatisticas estatistica, Long id) throws Exception {
+    public Configuracao obterConfiguracao() {
+        return configuracaoServico.buscaConfig();
+
+    }
+
+    public String salvar(Estatisticas estatistica, Long id, String uri) throws Exception {
+       
         String url;
         if (id != null) {
-            url = "http://localhost:8090/estatisticas/" + id;
+            url = obterConfiguracao().getCaminhoApi() + uri + id;
         } else {
-            url = "http://localhost:8090/estatisticas";
+            url = obterConfiguracao().getCaminhoApi() + uri;
         }
 
         try {
@@ -92,14 +103,11 @@ public class EstatisticaServico {
         return new String(os.toByteArray());
     }
 
-    public void delete(Estatisticas estatistica) {
-//        
-    }
 
     public List<Estatisticas> estatisticaPorTime(Long id, Long id2) {
 
         try {
-            String url = "http://localhost:8090/estatisticas/estatisticasPorTime/" + id + "/" + id2;
+            String url = obterConfiguracao().getCaminhoApi() + "/estatisticas/estatisticasPorTime/" + id + "/" + id2;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -149,7 +157,7 @@ public class EstatisticaServico {
     public Estatisticas pesquisar(Long id) {
 
         try {
-            String url = "http://localhost:8090/estatisticas/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/estatisticas/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

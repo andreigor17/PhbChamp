@@ -5,6 +5,7 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Servico.AnexoServico;
@@ -126,10 +127,10 @@ public class ManagerCriarPlayer implements Serializable {
         Player player = new Player();
 
         if (this.p.getId() == null) {
-            player = playerServico.save(this.p, null);
+            player = playerServico.save(this.p, null, Url.SALVAR_PLAYER.getNome());
             this.arquivo.gravar();
         } else {
-            player = playerServico.save(this.p, this.p.getId(), ip);
+            player = playerServico.save(this.p, this.p.getId(), Url.ATUALIZAR_PLAYER.getNome());
         }
 
         Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + player.getId());

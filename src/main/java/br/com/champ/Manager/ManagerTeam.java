@@ -1,5 +1,6 @@
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Servico.TeamServico;
 import java.io.Serializable;
@@ -77,7 +78,7 @@ public class ManagerTeam implements Serializable {
     public void salvarTeam() throws Exception {
         Team t = new Team();
         this.team.setPlayers(this.membros);
-        t = teamServico.save(this.team);
+        t = teamServico.save(this.team, null, Url.SALVAR_TIME.getNome());
         Mensagem.successAndRedirect("Time cadastrado com sucesso", "visualizarTime.xhtml?id=" + t.getId());
         
     }

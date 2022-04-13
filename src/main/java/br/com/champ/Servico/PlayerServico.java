@@ -5,6 +5,7 @@
  */
 package br.com.champ.Servico;
 
+import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Player;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.json.JSONException;
 
@@ -30,10 +32,18 @@ import org.json.JSONException;
 @Stateless
 public class PlayerServico implements Serializable {
 
+    @EJB
+    private ConfiguracaoServico configuracaoServico;
+
+    public Configuracao obterConfiguracao() {
+        return configuracaoServico.buscaConfig();
+
+    }
+
     public List<Player> pesquisar(Player player) throws Exception {
 
         try {
-            String url = "http://localhost:8090/players";
+            String url = obterConfiguracao().getCaminhoApi() + "/players";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -82,7 +92,7 @@ public class PlayerServico implements Serializable {
 
     public Player buscaPlayer(Long id) {
         try {
-            String url = "http://localhost:8090/players/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/players/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -127,7 +137,7 @@ public class PlayerServico implements Serializable {
 
     private List<Player> buscaPlayers() {
         try {
-            String url = "http://localhost:8090/players";
+            String url = obterConfiguracao().getCaminhoApi() + "/players/";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -173,13 +183,13 @@ public class PlayerServico implements Serializable {
         return null;
     }
 
-    public Player save(Player player, Long id) throws Exception {
+    public Player save(Player player, Long id, String uri) throws Exception {
 
         String url;
         if (id != null) {
-            url = "http://localhost:8090/players/" + id;
+            url = obterConfiguracao().getCaminhoApi() + uri + id;
         } else {
-            url = "http://localhost:8090/players";
+            url = obterConfiguracao().getCaminhoApi() + uri;
         }
         try {
             // Cria um objeto HttpURLConnection:

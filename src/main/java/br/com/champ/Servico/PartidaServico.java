@@ -5,6 +5,7 @@
  */
 package br.com.champ.Servico;
 
+import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Partida;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.json.JSONException;
 
@@ -28,15 +30,22 @@ import org.json.JSONException;
  */
 @Stateless
 public class PartidaServico {
+    
+    @EJB
+    private ConfiguracaoServico configuracaoServico;
 
-    public Partida salvar(Partida partida, Long id) throws Exception {
+    public Configuracao obterConfiguracao() {
+        return configuracaoServico.buscaConfig();
 
-        String url;
+    }
 
+    public Partida salvar(Partida partida, Long id, String uri) throws Exception {
+
+       String url;
         if (id != null) {
-            url = "http://localhost:8090/partidas/" + id;
+            url = obterConfiguracao().getCaminhoApi() + uri + id;
         } else {
-            url = "http://localhost:8090/partidas";
+            url = obterConfiguracao().getCaminhoApi() + uri;
         }
 
         try {
@@ -106,7 +115,7 @@ public class PartidaServico {
 
     public List<Partida> pesquisarPartidas() {
         try {
-            String url = "http://localhost:8090/partidas";
+            String url = obterConfiguracao().getCaminhoApi() + "/partidas";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -155,7 +164,7 @@ public class PartidaServico {
 
     public List<Partida> partidaPorCamp(Long id) {
         try {
-            String url = "http://localhost:8090/partidas/partidasPorCamp/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/partidas/partidasPorCamp/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -204,7 +213,7 @@ public class PartidaServico {
     public Partida pesquisar(Long id) {
 
         try {
-            String url = "http://localhost:8090/partidas/" + id;
+            String url = obterConfiguracao().getCaminhoApi() + "/partidas/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
