@@ -1,6 +1,7 @@
 package br.com.champ.Servico;
 
 import br.com.champ.Modelo.Configuracao;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -20,10 +21,15 @@ import org.json.JSONException;
  */
 @Stateless
 public class ConfiguracaoServico implements Serializable {
+    
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
+
+    }
 
     public Configuracao save(Configuracao configuracao, Long id) throws Exception {
 
-        String url = "http://localhost:8090/configuracao/" + id;
+        String url = pathToAPI() + id;
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -81,7 +87,7 @@ public class ConfiguracaoServico implements Serializable {
     
     public Configuracao buscaConfig() {
         try {
-            String url = "http://localhost:8090/configuracao/1";
+            String url = pathToAPI() + "/configuracao/1";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

@@ -23,7 +23,7 @@
                     <p:outputLabel value="Caminho da API:" for="caminhoAPIInputText"/>
                 </div> 
                 <div class="column3 text">
-                    <p:inputText id="caminhoAPIInputText" value="#{managerConfiguracao.configuracao.caminhoApi}"/>
+                    <p:inputText id="caminhoAPIInputText" value="#{managerConfiguracao.path}" />
                 </div>
                 
                 <div class="actions">
@@ -42,7 +42,7 @@
                                      icon="ui-icon-check"
                                      process="@form"
                                      update="@form"
-                                     actionListener="#{managerConfiguracao.salvar()}"
+                                     actionListener="#{managerConfiguracao.updatePath()}"
                                      />
 
                 </center>
