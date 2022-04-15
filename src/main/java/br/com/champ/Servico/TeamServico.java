@@ -3,6 +3,7 @@ package br.com.champ.Servico;
 import br.com.champ.Modelo.Configuracao;
 import javax.ejb.Stateless;
 import br.com.champ.Modelo.Team;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -33,11 +34,16 @@ public class TeamServico {
         return configuracaoServico.buscaConfig();
 
     }
+    
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
+
+    }
 
     public List<Team> pesquisar(Team team) throws Exception {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/teams";
+            String url = pathToAPI() + "/teams";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -91,7 +97,7 @@ public class TeamServico {
     private List<Team> buscaTimes() throws Exception {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/teams";
+            String url = pathToAPI() + "/teams";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -140,7 +146,7 @@ public class TeamServico {
 
     public Team buscaTeam(Long id) {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/teams/" + id;
+            String url = pathToAPI() + "/teams/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -184,9 +190,9 @@ public class TeamServico {
 
         String url;
         if (id != null) {
-            url = obterConfiguracao().getCaminhoApi() + uri + id;
+            url = pathToAPI() + uri + id;
         } else {
-            url = obterConfiguracao().getCaminhoApi() + uri;
+            url = pathToAPI() + uri;
         }
 
         try {

@@ -7,6 +7,7 @@ package br.com.champ.Servico;
 
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Player;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -35,15 +36,16 @@ public class PlayerServico implements Serializable {
     @EJB
     private ConfiguracaoServico configuracaoServico;
 
-    public Configuracao obterConfiguracao() {
-        return configuracaoServico.buscaConfig();
+
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
 
     }
 
     public List<Player> pesquisar(Player player) throws Exception {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/players";
+            String url = pathToAPI() + "/players";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -92,7 +94,7 @@ public class PlayerServico implements Serializable {
 
     public Player buscaPlayer(Long id) {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/players/" + id;
+            String url = pathToAPI() + "/players/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -137,7 +139,7 @@ public class PlayerServico implements Serializable {
 
     private List<Player> buscaPlayers() {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/players/";
+            String url = pathToAPI() + "/players/";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -187,9 +189,9 @@ public class PlayerServico implements Serializable {
 
         String url;
         if (id != null) {
-            url = obterConfiguracao().getCaminhoApi() + uri + id;
+            url = pathToAPI() + uri + id;
         } else {
-            url = obterConfiguracao().getCaminhoApi() + uri;
+            url = pathToAPI() + uri;
         }
         try {
             // Cria um objeto HttpURLConnection:

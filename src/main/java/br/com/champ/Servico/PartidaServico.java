@@ -7,6 +7,7 @@ package br.com.champ.Servico;
 
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Partida;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -38,14 +39,19 @@ public class PartidaServico {
         return configuracaoServico.buscaConfig();
 
     }
+    
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
+
+    }
 
     public Partida salvar(Partida partida, Long id, String uri) throws Exception {
 
        String url;
         if (id != null) {
-            url = obterConfiguracao().getCaminhoApi() + uri + id;
+            url = pathToAPI() + uri + id;
         } else {
-            url = obterConfiguracao().getCaminhoApi() + uri;
+            url = pathToAPI() + uri;
         }
 
         try {
@@ -115,7 +121,7 @@ public class PartidaServico {
 
     public List<Partida> pesquisarPartidas() {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/partidas";
+            String url = pathToAPI() + "/partidas";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -164,7 +170,7 @@ public class PartidaServico {
 
     public List<Partida> partidaPorCamp(Long id) {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/partidas/partidasPorCamp/" + id;
+            String url = pathToAPI() + "/partidas/partidasPorCamp/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -213,7 +219,7 @@ public class PartidaServico {
     public Partida pesquisar(Long id) {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/partidas/" + id;
+            String url = pathToAPI() + "/partidas/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

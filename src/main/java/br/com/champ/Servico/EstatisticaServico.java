@@ -7,6 +7,7 @@ package br.com.champ.Servico;
 
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Estatisticas;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -38,14 +39,19 @@ public class EstatisticaServico {
         return configuracaoServico.buscaConfig();
 
     }
+    
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
+
+    }
 
     public String salvar(Estatisticas estatistica, Long id, String uri) throws Exception {
        
         String url;
         if (id != null) {
-            url = obterConfiguracao().getCaminhoApi() + uri + id;
+            url = pathToAPI() + uri + id;
         } else {
-            url = obterConfiguracao().getCaminhoApi() + uri;
+            url = pathToAPI() + uri;
         }
 
         try {
@@ -107,7 +113,7 @@ public class EstatisticaServico {
     public List<Estatisticas> estatisticaPorTime(Long id, Long id2) {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/estatisticas/estatisticasPorTime/" + id + "/" + id2;
+            String url = pathToAPI() + "/estatisticas/estatisticasPorTime/" + id + "/" + id2;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -157,7 +163,7 @@ public class EstatisticaServico {
     public Estatisticas pesquisar(Long id) {
 
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/estatisticas/" + id;
+            String url = pathToAPI() + "/estatisticas/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

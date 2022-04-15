@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Modelo.Player;
+import br.com.champ.Utilitario.APIPath;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -35,10 +36,15 @@ public class CampeonatoServico {
         return configuracaoServico.buscaConfig();
 
     }
+    
+    public String pathToAPI() {
+        return APIPath.pathToAPI();
+
+    }
 
     public List<Campeonato> pesquisar(Campeonato camp) throws Exception {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos";
+            String url = pathToAPI() + "/campeonatos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -96,7 +102,7 @@ public class CampeonatoServico {
 
     public List<Campeonato> pesquisarCampsAtuais() {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos";
+            String url = pathToAPI() + "/campeonatos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -147,9 +153,9 @@ public class CampeonatoServico {
 
         String url;
         if (id != null) {
-            url = obterConfiguracao().getCaminhoApi() + uri + id;
+            url = pathToAPI() + uri + id;
         } else {
-            url = obterConfiguracao().getCaminhoApi() + uri;
+            url = pathToAPI() + uri;
         }
 
         try {
@@ -214,7 +220,7 @@ public class CampeonatoServico {
 
     public Campeonato buscaCamp(Long id) {
         try {
-            String url = obterConfiguracao().getCaminhoApi() + "/campeonatos/" + id;
+            String url = pathToAPI() + "/campeonatos/" + id;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
