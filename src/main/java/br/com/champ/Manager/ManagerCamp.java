@@ -72,8 +72,8 @@ public class ManagerCamp implements Serializable {
                 //estats = estatisticaServico.pesquisar(estats.getId());
                 this.ests.add(estats);
             }
-            timeCamp.setEstatisticas(this.ests);
-            this.timesVisualizar.add(timeCamp);
+//            timeCamp.setEstatisticas(this.ests);
+//            this.timesVisualizar.add(timeCamp);
         }
 
     }
@@ -231,7 +231,7 @@ public class ManagerCamp implements Serializable {
             partidaServico.salvar(this.partida, this.partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
             Mensagem.successAndRedirect("Partida atualizada com sucesso", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
         } catch (Exception e) {
-            System.err.println(e); 
+            System.err.println(e);
         }
 
     }

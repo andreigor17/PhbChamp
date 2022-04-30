@@ -34,47 +34,61 @@
                 <div class="command">
                     <p:commandButton
                         id="pesquisarcommandButton" value="Pesquisar" icon="ui-icon-search"                                 
-                        update="@form" actionListener="#{ managerIndex.mostrarCampeonato() }" />
+                        update="@form"  actionListener="#{ managerIndex.mostrarCampeonato() }" />
+                    <p:commandButton value="Limpar" icon="ui-icon-close" update="@form" actionListener="#{ managerIndex.limpar() }" />
 
                 </div>
 
             </p:fieldset>
 
 
-           <p:tabView id="tabview" styleClass="row" >
+            <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="tabela" title="Tabela" >
 
-                    <p:dataTable id="timesDataTable" value="#{ managerIndex.camp.teams }" var="team"
-                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
+                    <p:dataTable id="timesDataTable" value="#{ managerIndex.ests }" var="ests"
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
+                                 sortBy="#{ ests.pontos}" sortOrder="descending">
 
                         <p:column headerText="Nome" width="50%">
-                            <h:outputText value="#{ team.nome }" />
+                            <h:outputText value="#{ ests.team.nome }" />
                         </p:column>
                         <p:column headerText="Pontos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).pontos}" />
+                            <h:outputText value="#{ ests.pontos}" />
                         </p:column>
                         <p:column headerText="Kills" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).kills}" />
+                            <h:outputText value="#{ ests.kills}" />
                         </p:column>
                         <p:column headerText="Deaths" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).deaths}" />
+                            <h:outputText value="#{ ests.deaths}" />
                         </p:column>
                         <p:column headerText="Rounds Ganhos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).roundsGanhos}" />
+                            <h:outputText value="#{ ests.roundsGanhos}" />
                         </p:column>
                         <p:column headerText="Rounds Perdidos" width="50%">
-                            <h:outputText value="#{ team.estatisticas.get(0).roundsPerdidos}" />
+                            <h:outputText value="#{ ests.roundsPerdidos}" />
                         </p:column>
-
-
-
-
                     </p:dataTable>
 
                 </p:tab>
                 <p:tab id="jogos" title="Jogos">
+                    <p:dataTable id="matchesSportsIo" value="#{ managerIndex.matches }" var="matches"
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma partida encontrada"
+                                  sortOrder="descending">
 
-                                   </p:tab>
+                        <p:column headerText="Time A" width="50%">
+                            <h:outputText value="#{ matches.teamAName }" />
+                        </p:column>
+                        <p:column headerText="Time B" width="50%">
+                            <h:outputText value="#{ matches.teamBName}" />
+                        </p:column>
+                        <p:column headerText="Hora" width="50%">
+                            <h:outputText value="#{ matches.dateTime}" />
+                        </p:column>
+                        <p:column headerText="Finalizada" width="50%">
+                            <h:outputText value="#{ matches.isClosed}" />
+                        </p:column>                     
+                    </p:dataTable>
+                </p:tab>
             </p:tabView>
         </h:form>
 
