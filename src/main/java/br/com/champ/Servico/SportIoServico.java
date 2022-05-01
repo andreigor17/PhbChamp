@@ -31,7 +31,7 @@ public class SportIoServico {
         public List<SportsIoMatches> pesquisar() throws Exception {
 
         try {
-            String url = "http://api.sportsdata.io/v3/csgo/scores/json/GamesByDate/2022-04-30?key=d4ec21c675ab4112a05279e8fd4be265";
+            String url = "http://api.sportsdata.io/v3/csgo/scores/json/GamesByDate/2022-05-01?key=d4ec21c675ab4112a05279e8fd4be265";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

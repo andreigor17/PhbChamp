@@ -5,15 +5,21 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
+import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.CampeonatoServico;
+import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
+import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +43,10 @@ public class ManagerPlayer implements Serializable {
     CampeonatoServico campServico;
     @EJB
     AnexoServico anexoServico;
+    @EJB
+    TeamServico teamServico;
+    @EJB
+    PartidaServico partidaServico;
 
     private Player player;
     private List<Player> players;
@@ -45,6 +55,8 @@ public class ManagerPlayer implements Serializable {
     private List<Player> allPlayers;
     private List<Player> selectedPlayers;
     private DualListModel<Player> playerGroupList;
+    private String capitaoTime1;
+    private String capitaoTime2;
 
     @PostConstruct
     public void init() {
@@ -130,6 +142,22 @@ public class ManagerPlayer implements Serializable {
         this.selectedPlayers = selectedPlayers;
     }
 
+    public String getCapitaoTime1() {
+        return capitaoTime1;
+    }
+
+    public void setCapitaoTime1(String capitaoTime1) {
+        this.capitaoTime1 = capitaoTime1;
+    }
+
+    public String getCapitaoTime2() {
+        return capitaoTime2;
+    }
+
+    public void setCapitaoTime2(String capitaoTime2) {
+        this.capitaoTime2 = capitaoTime2;
+    }
+
     public void salvarPlayer() {
         //this.playerServico.salvar(this.player);
         //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
@@ -150,22 +178,52 @@ public class ManagerPlayer implements Serializable {
     }
 
     public void sorteioX5() {
-        this.selectedPlayers = this.playerGroupList.getTarget();
-        System.out.println("players selecionados: " + this.selectedPlayers.size());
+        try {
+            List<Player> time1 = new ArrayList<>();
+            List<Player> time2 = new ArrayList<>();
 
-        if (this.selectedPlayers.size() % 2 == 0) {
-            System.out.println("ok");
-        } else {
-            Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
-//        }
-//        Collections.shuffle(this.selectedPlayers);
-//        for (int i = 0; i < 5; i++) {
-//            System.out.println(this.selectedPlayers.get(i));
-//
-//        }
+            this.selectedPlayers = this.playerGroupList.getTarget();
+            System.out.println("players selecionados: " + this.selectedPlayers.size());
 
+            if (this.selectedPlayers.size() % 2 == 0) {
+                System.out.println("ok");
+            } else {
+                Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
+            }
+            Collections.shuffle(this.selectedPlayers);
+            for (int i = 0; i < 5; i++) {
+                this.selectedPlayers.get(i).setPossuiTime(true);
+                System.out.println("Time 1: " + this.selectedPlayers.get(i));
+                time1.add(this.selectedPlayers.get(i));
+            }
+
+            for (Player p : this.selectedPlayers) {
+                if (!p.isPossuiTime()) {
+                    System.out.println("Time 2: " + p);
+                    time2.add(p);
+                }
+
+            }
+
+            Team team1 = new Team();
+            team1.setAtivo(true);
+            team1.setNome("Time " + capitaoTime1);
+            team1.setPlayers(time1);
+            teamServico.save(team1, null, Url.SALVAR_TIME.getNome());
+
+            Team team2 = new Team();
+            team2.setAtivo(true);
+            team2.setNome("Time " + capitaoTime1);
+            team2.setPlayers(time2);
+            teamServico.save(team2, null, Url.SALVAR_TIME.getNome());
+
+            Partida partida = new Partida();
+            partida.setTeam1(team1);
+            partida.setTeam2(team2);
+            partidaServico.salvar(partida, null, Url.SALVAR_PARTIDA.getNome());
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
 }
