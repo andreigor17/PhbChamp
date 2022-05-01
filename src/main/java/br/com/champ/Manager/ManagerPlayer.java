@@ -181,6 +181,9 @@ public class ManagerPlayer implements Serializable {
         try {
             List<Player> time1 = new ArrayList<>();
             List<Player> time2 = new ArrayList<>();
+            Team t1 = new Team();
+            Team t2 = new Team();
+            Partida partidaX5 = new Partida();
 
             this.selectedPlayers = this.playerGroupList.getTarget();
             System.out.println("players selecionados: " + this.selectedPlayers.size());
@@ -206,23 +209,26 @@ public class ManagerPlayer implements Serializable {
             }
 
             Team team1 = new Team();
-            team1.setAtivo(true);
-            team1.setNome("Time " + capitaoTime1);
-            team1.setPlayers(time1);
-            teamServico.save(team1, null, Url.SALVAR_TIME.getNome());
+            t1.setAtivo(true);
+            t1.setNome("TimeTeste1 ");
+            t1.setPlayers(time1);
+            team1 = teamServico.save(t1, null, Url.SALVAR_TIME.getNome());
 
             Team team2 = new Team();
-            team2.setAtivo(true);
-            team2.setNome("Time " + capitaoTime1);
-            team2.setPlayers(time2);
-            teamServico.save(team2, null, Url.SALVAR_TIME.getNome());
+            t2.setAtivo(true);
+            t2.setNome("TimeTeste2 ");
+            t2.setPlayers(time2);
+            team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
             Partida partida = new Partida();
-            partida.setTeam1(team1);
-            partida.setTeam2(team2);
-            partidaServico.salvar(partida, null, Url.SALVAR_PARTIDA.getNome());
+            partidaX5.setTeam1(team1);
+            partidaX5.setTeam2(team2);
+            partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
+
+            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
+            
         } catch (Exception ex) {
-            Logger.getLogger(ManagerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
         }
     }
 

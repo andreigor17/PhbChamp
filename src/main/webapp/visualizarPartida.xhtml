@@ -1,0 +1,153 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+
+    <ui:define name="title">
+        Visualizar Partida
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formVisualizarPartida"
+                >
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+
+            <div  class="actions">
+
+                <p:commandButton title="Remover Partida"
+                                 value="Excluir"
+                                 icon="ui-icon-close" 
+                                 styleClass="ui-priority-primary-red left" 
+                                 process="@this"
+                                 update="@form"
+                                 oncomplete="PF('confirmarRemoverPartidaDialog').show();">
+                    <f:setPropertyActionListener value="#{partida}"
+                                                 target="#{managerPartida.partida}"/>
+                </p:commandButton>
+                <p:button value="Editar" outcome="criarPartida.xhtml"
+                          icon="ui-icon-pencil"  >
+                    <f:param value="#{ managerPartida.partida.id }" name="id"/>
+                </p:button>
+
+                <p:button value="Pesquisar" outcome="pesquisarPartida.xhtml"
+                          icon="ui-icon-search"  />
+
+            </div>
+            <p:fieldset legend="Dados">
+
+                
+
+            </p:fieldset>
+
+ 
+
+                    <p:dataTable id="partidaTime1"
+                                 value="#{managerPartida.playersTime1}"
+                                 var="player"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum time encontrado na partida...">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="#{managerPartida.partida.team1.nome}" />
+                        </f:facet>
+
+                        <p:column headerText="Opções" width="10%">
+                            <div class="options2">
+                                <p:button title="Visualizar Player"
+                                          icon="ui-icon-search"
+                                          href="visualizarPlayer.xhtml?id=#{partida.team1.id}"/>
+
+                            </div>
+
+                        </p:column>
+
+                        <p:column headerText="Nome" width="60%">
+                            <p:outputLabel value="#{player.nome}" />
+                        </p:column>
+        
+                        
+
+                    </p:dataTable>
+
+            
+             <p:dataTable id="partidaTime2"
+                          value="#{managerPartida.playersTime2}"
+                                 var="player"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum time encontrado na partida...">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="#{managerPartida.partida.team2.nome}" />
+                        </f:facet>
+
+                        <p:column headerText="Opções" width="10%">
+                            <div class="options2">
+                                <p:button title="Visualizar Player"
+                                          icon="ui-icon-search"
+                                          href="visualizarPlayer.xhtml?id=#{partida.team2.id}"/>
+
+                            </div>
+
+                        </p:column>
+
+                        <p:column headerText="Nome" width="60%">
+                            <p:outputLabel value="#{player.nome}" />
+                        </p:column>
+        
+                        
+
+                    </p:dataTable>
+
+            <p:dialog id="confirmarRemoverPartidaDialog"
+                      widgetVar="confirmarRemoverPartidaDialog"
+                      header="Atenção!"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+
+
+                <center>
+
+                    <p:commandButton value="Não"
+                                     title="Cancelar Remoção"
+                                     icon="fa fa-ban"
+                                     oncomplete="PF('confirmarRemoverPartidaDialog').hide();"
+                                     styleClass="btn btn-default"/>
+
+                    <p:commandButton value="Sim"
+                                     title="Confirmar Remoção"
+                                     icon="fa fa-check"
+                                     process="@this"
+                                     update="@form"
+                                     actionListener="#{managerPartida.excluir()}"
+                                     styleClass="btn btn-info"/>
+
+                </center>
+
+            </p:dialog>          
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
