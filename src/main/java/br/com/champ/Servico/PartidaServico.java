@@ -119,12 +119,12 @@ public class PartidaServico {
 
     }
 
-    public List<Partida> pesquisarPartidas() {
+    public List<Partida> pesquisarPartidas(Partida partidaPesquisar) {
         try {
             String url = pathToAPI() + "/partidas";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            // optional default is GET
+//            // optional default is GET
             con.setRequestMethod("GET");
             //add request header
             con.setRequestProperty("Content-Type", "application/json");

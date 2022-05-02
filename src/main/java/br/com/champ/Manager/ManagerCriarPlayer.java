@@ -58,11 +58,6 @@ public class ManagerCriarPlayer implements Serializable {
             this.p = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
         }
 
-        String ip;
-        this.configuracao = configuracaoServico.buscaConfig();
-        if (this.configuracao != null) {
-            ip = this.configuracao.getCaminhoApi();
-        }
     }
 
     public void instanciar() {
