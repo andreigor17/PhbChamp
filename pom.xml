@@ -144,18 +144,13 @@
             <groupId>org.primefaces.themes</groupId>
             <artifactId>bootstrap</artifactId>
             <version>1.0.10</version>
-        </dependency>
+        </dependency>        
+        <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.2</version>
+            <version>11.0.0</version>
         </dependency>
-        <!-- Thanks for using https://jar-download.com -->
-
-        <!-- https://mvnrepository.com/artifact/me.xethh.utils/DateUtils -->
-       
-        <!-- Thanks for using https://jar-download.com -->
-        <!-- https://mvnrepository.com/artifact/com.cedarsoftware/java-util -->
         <dependency>
             <groupId>com.cedarsoftware</groupId>
             <artifactId>java-util</artifactId>

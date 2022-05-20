@@ -23,7 +23,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -107,14 +107,10 @@ public class ManagerCriarPlayer implements Serializable {
     }
 
     public void doUpload(FileUploadEvent event) {
-        try {
-            this.arquivo.fileUpload(event, ".png", "/image/");
-            this.p.setAvatar(this.arquivo.getNome());
-            imagem = new DefaultStreamedContent(event.getFile().getInputstream());
-            this.setFile(event.getFile());
-        } catch (IOException e) {
-            //Tratamento de exceção.
-        }
+        this.arquivo.fileUpload(event, ".png", "/image/"); //Tratamento de exceção.
+        this.p.setAvatar(this.arquivo.getNome());
+        imagem = new DefaultStreamedContent();
+        this.setFile(event.getFile());
 
     }
 

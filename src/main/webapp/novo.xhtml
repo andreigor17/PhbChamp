@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>
+            Phb Champ
+            <ui:insert name="head-title"></ui:insert>
+        </title>
+
+        <meta charset="utf-8" />
+
+
+
+        <link rel="stylesheet" href="media/css/style.css"/>
+        <link rel="stylesheet" href="media/css/foxeditor.css"/>
+        <link rel="stylesheet" href="media/css/timeline.css"/>
+        <link rel="stylesheet" href="media/css/menu.css"/>
+        <link rel="stylesheet" href="media/css/dashboard.css"/>
+        <link rel='stylesheet prefetch' href='media/css/photoswipe.css'/>
+        <link rel='stylesheet prefetch' href='media/css/default-skin.css'/>
+        <link rel="stylesheet" href="media/css/style_photo.css" media="screen" type="text/css" />
+
+    </h:head>
+    <h:body>
+
+        <f:view locale="pt_BR">
+
+            <header>
+                TESTE
+
+            </header>
+
+            <div class="row">
+                <div class="column4">
+
+                    <p:tieredMenu style="margin-top: 200px">
+
+                        <p:menuitem url="Início.xhtml" value="index.xhtml"  icon="ui-icon-home"/>
+
+                        <p:submenu label="Players"  icon="ui-icon-document">
+                            <p:menuitem url="criarPlayer.xhtml" value="Cadastrar" icon="ui-icon-plus"/>
+                            <p:menuitem url="pesquisarPlayer.xhtml?" value="Pesquisar" icon="ui-icon-search"/>                                
+                        </p:submenu>
+
+                        <p:submenu label="Time"  icon="ui-icon-document">
+                            <p:menuitem url="criarTime.xhtml?" value="Cadastrar" icon="ui-icon-plus"/>                                
+                            <p:menuitem url="pesquisarTime.xhtml?" value="Pesquisar" icon="ui-icon-search"/>
+                        </p:submenu>
+
+
+                    </p:tieredMenu>
+                </div>
+            </div>
+
+            <section id="content">
+                
+
+
+                <h1>
+                    <ui:insert name="title"></ui:insert>                
+                </h1>
+                <ui:insert name="content"></ui:insert>
+
+            </section>
+
+
+        </f:view>
+
+
+
+    </h:body>
+</html>
