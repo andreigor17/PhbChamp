@@ -41,9 +41,19 @@ and open the template in the editor.
             </header>
 
             <div class="row">
-                <div class="column4">
+                <div class="column4">                   
+                </div>
+            </div>
 
-                    <p:tieredMenu style="margin-top: 200px">
+            <section id="content">
+                
+
+
+                <h1>
+                    <ui:insert name="title"></ui:insert>                
+                </h1>
+                <ui:insert name="content">
+                     <p:tieredMenu style="margin-top: 200px">
 
                         <p:menuitem url="Início.xhtml" value="index.xhtml"  icon="ui-icon-home"/>
 
@@ -59,17 +69,7 @@ and open the template in the editor.
 
 
                     </p:tieredMenu>
-                </div>
-            </div>
-
-            <section id="content">
-                
-
-
-                <h1>
-                    <ui:insert name="title"></ui:insert>                
-                </h1>
-                <ui:insert name="content"></ui:insert>
+                </ui:insert>
 
             </section>
 
