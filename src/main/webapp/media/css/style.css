@@ -8,6 +8,15 @@
     src: url('../../media/fonts/CourierPrime.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Righteous';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/righteous/v13/1cXxaUPXBpj2rGoU7C9WhnGFucE.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 .cke{
     margin: 0 auto!important;
 }
@@ -36,6 +45,13 @@
     font-style: normal;
     font-weight: 700;
     src: url('../../media/fonts/Cinzel-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Righteous';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://fonts.googleapis.com/css2?family=Righteous&family=Sarala:wght@400;700&display=swap');
 }
 
 /*Body and Wrapper*/ 
@@ -1844,4 +1860,91 @@ span.URGENTE{
 
 .oculto{
     display: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Sarala:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+body {
+    font-family: 'Sarala';
+    background: linear-gradient(68.15deg, #7692AA, #455559);
+    margin: 0px;
+}
+
+header {
+    
+}
+
+.cabecalho-inicial {
+    font-size: 14px;
+    line-height: 29px;
+    text-align: right;
+    color: #C4CDEC;
+}
+
+.cabecalho-inicial a {
+    text-decoration: none;
+    color: #C4CDEC;
+    padding: 2px 6px;
+}
+
+.cabecalho-inicial a:hover {
+    text-decoration: underline;
+}
+
+.titulo-principal {
+    font-family: 'Righteous';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 70px;
+    line-height: 87px;
+    text-align: center;
+    color: #E7ECFF;
+}
+
+.cabecalho-secundario {
+    background-color: #2F3D40;
+    padding: 10px;
+    box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.192)
+}
+
+.cabecalho-secundario > a {
+    color:#c1c7c9;
+    padding: 10px;
+    border-radius: 3px ;
+    text-decoration: none;
+    font-weight: bold;
+    transition-duration: 0.5s;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+}
+
+.cabecalho-secundario > a:hover {
+    background-color: white;
+    color: #3D5A73;
+}
+
+.container {
+    background-color: white;
+    padding: 200px;
+    margin: 30px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.315);
+}
+
+footer {
+    text-align: center;
+    padding: 3px;
+    margin: 0px;
+    color: #C4CDEC;
+}
+
+footer > p {
+    margin: 0px;
 }

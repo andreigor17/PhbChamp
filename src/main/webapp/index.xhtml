@@ -47,7 +47,8 @@
 
                     <p:dataTable id="timesDataTable" value="#{ managerIndex.ests }" var="ests"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
-                                 sortBy="#{ ests.pontos}" sortOrder="descending">
+                                 sortBy="#{ ests.pontos}" 
+                                 sortMode="descending">
 
                         <p:column headerText="Nome" width="50%">
                             <h:outputText value="#{ ests.team.nome }" />
@@ -73,7 +74,7 @@
                 <p:tab id="jogos" title="Jogos">
                     <p:dataTable id="matchesSportsIo" value="#{ managerIndex.matches }" var="matches"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma partida encontrada"
-                                  sortOrder="descending">
+                                  sortMode="descending">
 
                         <p:column headerText="Time A" width="50%">
                             <h:outputText value="#{ matches.teamAName }" />
