@@ -24,6 +24,20 @@ and open the template in the editor.
         <title>PHB CHAMP</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 
+        <script>
+
+            function desabilitarBotoes(disable) {
+                $('.ui-button').attr("disabled", disable);
+                if (disable) {
+                    PF('statusDialog').show();
+                } else {
+                    PF('statusDialog').hide();
+                }
+            }
+
+
+        </script>
+
     </h:head>
 
     <header>
@@ -40,7 +54,7 @@ and open the template in the editor.
     <h:body>
         <f:view locale="pt_BR">  
 
-            <nav class="cabecalho-secundario" style="margin-top: 80px">
+            <nav class="cabecalho-secundario" style="margin-top: 20px">
                 <a href="index.xhtml">Index</a>
                 <a href="#">Players</a>
                 <a href="#">Times</a>
@@ -56,6 +70,21 @@ and open the template in the editor.
                 </div>
 
             </section>
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" 
+                      header="Carregando..."
+                      resizable="false" showHeader="false">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-12">
+                        <div style="text-align: center;">
+
+                            <img src="media/images/loading-cartoon.gif" alt="..." width="50%"/><br/>
+
+                            <h:outputText value="Estou processando, por favor, aguarde."/>
+                        </div>
+                    </div>
+                </div>
+            </p:dialog>
 
         </f:view>
 

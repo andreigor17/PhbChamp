@@ -1,4 +1,4 @@
-<ui:composition template="layout.xhtml"
+<ui:composition template="novo.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -22,7 +22,7 @@
 
             <div class="actions">
                 <p:button value="Cadastrar" outcome="criarPlayer.xhtml"
-                          icon="ui-icon-plus" styleClass="ui-priority-primary" />
+                          icon="ui-icon-plus"  />
             </div>
 
             <p:fieldset legend="Filtros" id="dadosFieldset">                    
@@ -40,7 +40,8 @@
             <div class="command">
                 <p:commandButton
                     id="pesquisarcommandButton" value="Pesquisar" icon="ui-icon-search"                                 
-                    update="@form" actionListener="#{ managerCriarPlayer.pesquisarPlayer() }" />
+                    update="@form" actionListener="#{ managerCriarPlayer.pesquisarPlayer() }"  
+                    onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"/>
                 <p:commandButton value="Limpar" icon="ui-icon-close" update="@form" actionListener="#{ managerPlayer.limpar() }" />
             </div>
 
