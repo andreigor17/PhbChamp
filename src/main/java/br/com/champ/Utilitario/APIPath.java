@@ -24,7 +24,7 @@ public class APIPath {
 
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("/opt/apipath.json")) {
+        try (Reader reader = new FileReader("D:\\apipath.json")) {
 
             JSONObject jsonObject = null;
             try {

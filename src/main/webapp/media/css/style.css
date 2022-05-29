@@ -455,7 +455,7 @@ fieldset {
 }
 
 .ui-priority-primary{
-    background: #E7ECFF !important;
+    background: #F9F9F9 !important;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);    
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
