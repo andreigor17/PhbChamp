@@ -37,7 +37,7 @@ public class PlayerServico implements Serializable {
     private ConfiguracaoServico configuracaoServico;
 
 
-    public String pathToAPI() {
+    public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
     }

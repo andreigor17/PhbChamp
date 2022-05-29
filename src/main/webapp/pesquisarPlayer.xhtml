@@ -62,7 +62,7 @@
                 </f:facet>
 
                 <p:column headerText="Opções" width="10%">
-                    <div class="options2">
+                    <div class="options">
                         <p:button title="Visualizar Player"
                                   icon="ui-icon-search"
                                   href="visualizarPlayer.xhtml?id=#{player.id}"/>
@@ -80,17 +80,16 @@
 
                 </p:column>
 
-                <p:column headerText="Nome" width="60%">
+                <p:column headerText="Nome" width="20%">
                     <p:outputLabel value="#{player.nome}" />
                 </p:column>
-
-        
-
-
-
+                <p:column headerText="Nick" width="20%">
+                    <p:outputLabel value="#{player.nick}" />
+                </p:column>
+                <p:column headerText="Sobrenome" width="20%">
+                    <p:outputLabel value="#{player.sobreNome}" />
+                </p:column>                
             </p:dataTable>
-
-
 
             <p:dialog id="confirmarRemoverPlayerDialog"
                       widgetVar="confirmarRemoverPlayerDialog"

@@ -5,6 +5,8 @@
  */
 package br.com.champ.Utilitario;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,33 +22,45 @@ import org.json.simple.parser.JSONParser;
  */
 public class APIPath {
 
-    public static String pathToAPI() {
+    public static String pathToAPI() throws FileNotFoundException, IOException {
 
         JSONParser parser = new JSONParser();
+        String path = null;
 
-        try (Reader reader = new FileReader("D:\\apipath.json")) {
+        String pathUbuntu = "/opt/apipath.json";
+        String pathWindows = "C:\\apipath.json";
 
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = (JSONObject) parser.parse(reader);
-            } catch (org.json.simple.parser.ParseException ex) {
-                Logger.getLogger(APIPath.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(jsonObject);
+        File ubuntuFile = new File(pathUbuntu);
+        File windowsFile = new File(pathWindows);
 
-            String caminho_api = (String) jsonObject.get("caminho_api");
-            System.out.println(caminho_api);
-
-            if (caminho_api != null) {
-                return caminho_api;
-            } else {
-                return null;
-            }
-
-        } catch (IOException e) {
-            System.err.println(e);
+        if (ubuntuFile.exists()) {
+            path = pathUbuntu;
+        } else {
+            path = pathWindows;
         }
-        return null;
+
+        if (!ubuntuFile.exists() && !windowsFile.exists()) {
+            Mensagem.fatal("Nenhum arquivo de configuração encontrado!");
+        }
+
+        Reader reader = new FileReader(path);
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = (JSONObject) parser.parse(reader);
+        } catch (org.json.simple.parser.ParseException ex) {
+            Logger.getLogger(APIPath.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(jsonObject);
+
+        String caminho_api = (String) jsonObject.get("caminho_api");
+        System.out.println(caminho_api);
+
+        if (caminho_api != null) {
+            return caminho_api;
+        } else {
+            return null;
+        }
 
     }
 
@@ -74,7 +88,7 @@ public class APIPath {
 
     }
 
-    public static void updateFile(String newPath) {
+    public static void updateFile(String newPath) throws IOException {
 
         String path = pathToAPI();
         String replace = path.replace(path, newPath);
