@@ -22,7 +22,7 @@ import org.json.JSONException;
 @Stateless
 public class ConfiguracaoServico implements Serializable {
     
-    public String pathToAPI() {
+    public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
     }

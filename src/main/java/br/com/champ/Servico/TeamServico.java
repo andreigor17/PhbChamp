@@ -34,8 +34,8 @@ public class TeamServico {
         return configuracaoServico.buscaConfig();
 
     }
-    
-    public String pathToAPI() {
+
+    public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
     }

@@ -22,7 +22,7 @@
 
             <div class="actions">
                 <p:button value="Cadastrar Player" outcome="criarPlayer.xhtml"
-                          icon="ui-icon-plus" styleClass="ui-priority-primary" />
+                          icon="ui-icon-plus"  />
             </div>
 
             <p:fieldset legend="Sorteio" id="dadosFieldset">                    
@@ -43,7 +43,7 @@
                 </div>
 
                 <center>
-                    <p:commandButton value="Sortear!"  icon="ui-icon-plus" styleClass="ui-priority-primary"
+                    <p:commandButton value="Sortear!"  icon="ui-icon-plus" 
                                      actionListener="#{managerPlayer.sorteioX5()}"
                                      process="@form" update="@form" />
 

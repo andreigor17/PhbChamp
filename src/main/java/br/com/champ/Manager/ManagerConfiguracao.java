@@ -9,6 +9,7 @@ import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Servico.ConfiguracaoServico;
 import br.com.champ.Utilitario.APIPath;
 import br.com.champ.Utilitario.Mensagem;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,7 +76,7 @@ public class ManagerConfiguracao implements Serializable {
         this.path = path;
     }
 
-    public void updatePath() {
+    public void updatePath() throws IOException {
         APIPath.updateFile(this.path);
         Mensagem.successAndRedirect("Path atualizado com sucesso!", "configuracaoAPI.xhtml");
     }
