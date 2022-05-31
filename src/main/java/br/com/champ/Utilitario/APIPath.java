@@ -41,6 +41,7 @@ public class APIPath {
 
         if (!ubuntuFile.exists() && !windowsFile.exists()) {
             Mensagem.fatal("Nenhum arquivo de configuração encontrado!");
+            return null;
         }
 
         Reader reader = new FileReader(path);
