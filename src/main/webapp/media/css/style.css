@@ -1837,7 +1837,7 @@ span.URGENTE{
 
 body {
     font-family: 'Sarala';
-    background: linear-gradient(68.15deg, #7692AA, #455559);
+    background: linear-gradient(to right, #7692AA, #455559);
     margin: 0px;
 }
 
@@ -1875,29 +1875,61 @@ header {
 .cabecalho-secundario {
     background-color: #2F3D40;
     padding: 10px;
-    box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.192)
+    box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.192);
 }
 
-.cabecalho-secundario > a {
+.cabecalho-secundario ul {
+    list-style-type: none;
+    padding: 0px;
+    background-color: #2F3D40;
+}
+
+.cabecalho-secundario ul li  {
+    display: inline;
+    position: relative;
+}
+
+.cabecalho-secundario ul li a {
     color:#c1c7c9;
-    padding: 10px;
-    border-radius: 3px ;
     text-decoration: none;
-    font-weight: bold;
+    display: inline-block;
+    padding: 10px;
     transition-duration: 0.5s;
+    border-radius: 3px ;
+    font-weight: bold;
     align-items: center;
     text-align: center;
     font-size: 16px;
 }
 
-.cabecalho-secundario > a:hover {
+.cabecalho-secundario ul li a:hover {
     background-color: white;
     color: #3D5A73;
 }
 
-.container {
+/*sub-menu*/
+.cabecalho-secundario ul ul {
+    display: none;
+    left: 0;
+    position: absolute;
+    transition-duration: 0.5s;
+}
+
+.cabecalho-secundario ul li:hover ul {
+    display: block;
+}
+
+.cabecalho-secundario ul ul {
+    width: 150px;
+}
+
+.cabecalho-secundario ul ul li a {
+    display: block;
+}
+
+main {
     background-color: white;
-    padding: 20px;
+    padding: 40px;
     margin: 30px;
     border-radius: 3px;
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.315);

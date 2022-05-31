@@ -38,44 +38,60 @@ and open the template in the editor.
 
 
         </script>
-
     </h:head>
 
     <header>
         <nav class="cabecalho-inicial">
             <a href="#">Conta</a>
-            <a href="#">Configurações</a>
+            <a href="configuracao.xhtml">Configurações</a>
             <a href="#">Sair</a>
         </nav>
-
         <hr></hr>
-
         <h1 class="titulo-principal">PHB CHAMP</h1>        
     </header>
     <h:body>
         <f:view locale="pt_BR">  
+            <nav class="cabecalho-secundario">
+                <ul>
+                    <li><a href="index.xhtml">Index</a></li>
+                    <li><a href="#">Players</a>
+                        <ul>
+                            <li><a href="criarPlayer.xhtml">Cadastrar Player</a></li>
+                            <li><a href="pesquisarPlayer.xhtml">Pesquisar Player</a></li>
 
-            <nav class="cabecalho-secundario" style="margin-top: 20px">
-                <a href="index.xhtml">Index</a>
-                <a href="#">Players</a>
-                <a href="#">Times</a>
+                        </ul>
+                    </li>
+                    <li><a href="#">Times</a>
+                        <ul>
+                            <li><a href="criarTime.xhtml">Cadastrar Time</a></li>
+                            <li><a href="pesquisarTime.xhtml">Pesquisar Time</a></li>
+                        </ul>
+                    </li>
+                     <li><a href="#">Campeonatos</a>
+                        <ul>
+                            <li><a href="criarCampeonato.xhtml">Criar Campeonatos</a></li>
+                            <li><a href="pesquisarCampeonato.xhtml">Pesquisar Campeonatos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Amistosos</a>
+                        <ul>
+                            <li><a href="sorteiox5.xhtml">Sorteio X5</a></li>
+                            
+                        </ul>
+                    </li>
+                </ul>
             </nav>
             <section>
-
-                <div class="container">
+                <main>
 
                     <p:fieldset legend="Dados">
-
                         <h1>
                             <ui:insert name="title"></ui:insert>                
                         </h1>
                         <ui:insert name="content"></ui:insert>
                     </p:fieldset>
-                </div>
-
-
+                </main>
             </section>
-
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" 
                       header="Carregando..."
                       resizable="false" showHeader="false">
@@ -91,6 +107,9 @@ and open the template in the editor.
                 </div>
             </p:dialog>
 
+            <footer>
+                <h5>Copyright © 2022 - Todos os direitos reservados</h5>
+            </footer>
         </f:view>
 
     </h:body>
