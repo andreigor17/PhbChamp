@@ -194,7 +194,7 @@ public class ManagerPlayer implements Serializable {
                 Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
             }
             Collections.shuffle(this.selectedPlayers);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i <= this.selectedPlayers.size()/2 ; i++) {
                 this.selectedPlayers.get(i).setPossuiTime(true);
                 System.out.println("Time 1: " + this.selectedPlayers.get(i));
                 time1.add(this.selectedPlayers.get(i));

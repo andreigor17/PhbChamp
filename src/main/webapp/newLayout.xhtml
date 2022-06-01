@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>
+            Cartório Tech
+            <ui:insert name="head-title"></ui:insert>
+        </title>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/font-awesome/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/style.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/foxeditor.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/timeline.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/menu.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/dashboard.css"/>
+        <link rel='stylesheet prefetch' href='#{request.contextPath}/media/css/photoswipe.css'/>
+        <link rel='stylesheet prefetch' href='#{request.contextPath}/media/css/default-skin.css'/>
+        <link rel="stylesheet" href="#{request.contextPath}/media/css/style_photo.css" media="screen" type="text/css" />
+
+    </h:head>
+
+    <h:body>
+        <f:view locale="pt_BR">
+            <header>
+                <div class="progress"/>
+
+                <div id="header_wrapper">
+                    <div class="menu">
+                        <nav role="navigation" id="main_menu">
+                            <ul>
+                                <a  href="#{request.contextPath}/index"><li id="inicio">Início</li></a>
+
+                                <li id="venda" >
+                                    <a href="#{request.contextPath}/venda"  
+                                       aria-haspopup="true">Vendas</a>
+                                    <ul class="dropdown" aria-label="submenu">
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('CONTRATO')}">
+                                            <li><a id="contrato" href="pesquisarContrato.xhtml">Contrato</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('BOLETO')}">
+                                            <li><a id="boleto" href="indexBoleto.xhtml">Boleto</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('ENTRADAS')}">
+                                            <li><a id="entradas" href="pesquisarEntrada.xhtml">Entradas</a></li>
+                                        </c:if>
+
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('LEADS')}">
+                                            <li><a id="entradas" href="pesquisarLeads.xhtml">Leads</a></li>
+                                        </c:if>
+
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('PRODUTO')}">
+                                            <li><a id="entradas" href="#{request.contextPath}/produto">Produtos</a></li>
+                                        </c:if>
+                                    </ul>
+                                </li>
+
+                                <li id="relatorios" >
+                                    <a href="#"  
+                                       aria-haspopup="true">Relatórios</a>
+                                    <ul class="dropdown" aria-label="submenu" style="width: 200px;">
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('RELATORIO_RECEITA')}">
+                                            <li><a id="relatorio-vendas" href="relatorioReceitas.xhtml">Análise de Receitas</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('RELATORIO_CONTA_RECEBER')}">
+                                            <li><a id="relatorio-contasareceber" href="contaReceber.xhtml">Contas a receber</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('RELATORIO_DESPESAS_POR_TIPO')}">
+                                            <li><a id="relatorio-contasareceber" href="despesasPorTipo.xhtml">Despesas por tipo</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('RELATORIO_DESPESAS_POR_TIPO')}">
+                                            <li><a id="relatorio-contratos" href="relatorioContratos.xhtml">Análise de Contratos</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('RELATORIO_COMISSAO')}">
+                                            <li><a id="relatorio-contratos" href="analiseComissao.xhtml">Análise de Comissões</a></li>
+                                        </c:if>
+                                        <c:if test="#{managerPrincipal.verificarAcessoModulo('PEDIDO')}">
+                                            <li><a id="relatorio-pedidos" href="totalPedido.xhtml">Total de Pedidos</a></li>
+                                        </c:if>
+                                    </ul>
+                                </li>
+
+                                <c:if test="#{managerPrincipal.verificarAcessoModulo('CLIENTE')}">
+                                    <a href="#{request.contextPath}/cliente"><li id="cliente">Cliente</li></a>
+                                </c:if>
+
+                            </ul>
+                        </nav>
+
+                    </div>
+
+                    <h:form id="formAlertas" class="formAlertas">
+
+                        <p:poll interval="59" listener="#{managerPrincipal.verificarPoll()}" process="@this" update="@this" async="true"/>
+
+                        <p:remoteCommand async="true" actionListener="#{managerPrincipal.verificarPoll()}" name="verificarAlertas"/>
+
+                        <div id="user_menu"> 
+                            <p:commandLink id="teste" title="Alertas" style="#{managerPrincipal.alertas.isEmpty() ? 'display:none;' : ''}">
+                                <i class="menubar-icon fa fa-bell fa-lg">
+                                    <span >#{managerPrincipal.alertas.size()}</span>
+                                </i>
+                            </p:commandLink>
+                            <a title="Minha Empresa" 
+                               aria-label="Minha Empresa" class="ui-commandlink ui-widget" href="visualizarEmpresa.xhtml?empresaId=#{ managerPrincipal.usuario.empresa.id }">
+                                Minha Empresa
+                            </a>
+                            <a title="Administração" 
+                               aria-label="Administração" class="ui-commandlink ui-widget" href="administracao.xhtml">
+                                <i class="menubar-icon fa fa-gear fa-lg"></i>
+                            </a>
+
+                            <p:commandLink value="#{managerPrincipal.nome}" title="#{managerPrincipal.nome}" actionListener="#{managerPrincipal.visualizarUsuario()}" />
+                            <p:commandLink value="Sair" title="Sair" actionListener="#{managerPrincipal.logout()}" />
+                        </div>
+
+                        <p:overlayPanel id="painelAlertas" for="teste" hideEffect="fade" rendered="true" 
+                                        styleClass="notificao_sistema" 
+                                        style="width: 300px; min-height: 150px; max-height: 500px;" widgetVar="alertaOverlayPanel">
+
+                            <div class="arrow_2">
+                                <div class="arrow"/>
+                            </div>
+
+                            <div class="message-title">
+                                <i class="fa fa-warning text-yellow"></i>
+                                Alertas
+
+                                <p:commandLink title="Marcar todos os alertas como lido" actionListener="#{managerPrincipal.marcarTodosComoLida()}"
+                                               process="@this" update="@this, :formAlertas:painelAlertas, :formAlertas:teste"
+                                               style="float: right;"
+                                               rendered="#{not managerPrincipal.alertas.isEmpty()}">
+                                    <i class="fa fa-flag"></i>
+                                    Ler todas
+                                </p:commandLink>
+                            </div>
+
+                            <div class="mensagem_item">
+                                <div class="row mensagem_vazia" style="#{managerPrincipal.alertas.isEmpty() ? '' : 'display:none;'}">
+                                    <div class="column12 bold text">
+                                        <p:outputLabel rendered="#{managerPrincipal.alertas.isEmpty()}" value="Você não possui novos alertas"
+                                                       styleClass="noselect"/>
+                                    </div>
+                                </div>
+                                <ul style="#{!managerPrincipal.alertas.isEmpty() ? 'max-height:460px; overflow-y: auto;' : 'display:none;'} ">
+                                    <ui:repeat value="#{managerPrincipal.alertas}" var="mensagem" varStatus="cont">
+
+                                        <li class="message-textbar text">
+                                            <a href="#{mensagem.url}">
+                                                <b>
+                                                    #{mensagem.titulo}
+                                                </b><br/>
+
+                                                <h:outputText value="#{mensagem.mensagem}" escape="false"/>
+                                            </a>
+                                            <p:commandLink title="Marcar como lida" actionListener="#{managerPrincipal.marcarComoLida(cont.index)}"
+                                                           process="@this" update="@this, :formAlertas:painelAlertas, :formAlertas:teste"
+                                                           rendered="#{mensagem.notificacaoEmail}">
+                                                <i class="fa fa-flag"></i>
+                                            </p:commandLink>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+
+                        </p:overlayPanel>
+                    </h:form>
+                </div>
+
+            </header>
+
+            <section id="content">
+
+                <h:form prependId="false">
+
+                    <script type="text/javascript">
+                        $(".my_audio").trigger('load');
+            
+                        function play_audio(task) {
+                            if(task == 'play'){
+                                $(".my_audio").trigger('play');
+                            }
+                            if(task == 'stop'){
+                                $(".my_audio").trigger('pause');
+                                $(".my_audio").prop("currentTime",0);
+                            }
+                        }
+                    </script>
+
+                    <audio class="my_audio">
+                        <source src="media/sounds/message.ogg" type="audio/ogg"/>
+                    </audio>
+                    <p:remoteCommand name="permissaoAcessoRemoteCommand" actionListener="#{ managerPrincipal.verificarMensageAcesso() }" />
+                </h:form>
+
+                <p:growl  >
+                    <p:autoUpdate />
+                </p:growl>
+
+                <p:ajaxStatus onstart="ajaxOnStartIndicator()" onerror="ajaxOnErrorIndicator()" 
+                              onsuccess="ajaxOnSuccessIndicator()" oncomplete="ajaxOnCompleteIndicator(); widthFix();"/>
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:outputLabel value="Processando..." />
+                </p:dialog>
+
+                <h1>
+                    <ui:insert name="title"></ui:insert>                
+                </h1>
+
+                <ui:insert name="content"></ui:insert>
+
+            </section>
+
+            <div id="divGaleria" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+                <div class="pswp__bg"></div>
+
+                <div class="pswp__scroll-wrap">
+
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+
+                    <div class="pswp__ui pswp__ui--hidden">
+
+                        <div class="pswp__top-bar">
+
+                            <div class="pswp__counter"></div>
+
+                            <button class="pswp__button pswp__button--close" title="Fechar (Esc)"></button>
+                            <button class="pswp__button pswp__button--fs" title="Tela Cheia"></button>
+                            <button class="pswp__button pswp__button--edit" 
+                                    title="Editar" style="display: none"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
+
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div> 
+                        </div>
+
+
+
+                        <button class="pswp__button pswp__button--arrow--left" title="Anterior (seta esquerda)">
+                        </button>
+
+                        <button class="pswp__button pswp__button--arrow--right" title="Próximo (seta direita)">
+                        </button>
+
+                        <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer>
+                <p id="copyright">Copyright © #{ managerPrincipal.obterAno() } - Todos os Direitos  Reservados </p>
+                <p><a href="http://www.foxinline.com" target="_blank">FoxInline Technologies </a>- (86) 3321-2876 | (86) 3322-1438</p>
+            </footer>
+
+            <script src="#{request.contextPath}/media/js/autoNumeric.js"></script>
+            <script src="#{request.contextPath}/media/js/menu.js"></script>
+            <script src="#{request.contextPath}/media/js/widthFix.js"></script>
+            <script src='#{request.contextPath}/media/js/calendar.js'></script>
+            <script src='#{request.contextPath}/media/js/progressbar.js'></script>
+            <script src='#{request.contextPath}/media/js/photoswipe.js'></script>
+            <script src='#{request.contextPath}/media/js/photoswipe-ui-default.js'></script>
+            <script src="#{request.contextPath}/media/js/photoswipe-gallery.js"></script>
+            <script src="#{request.contextPath}/media/js/jQuery-2.1.4.min.js" type="text/javascript"></script>
+
+            <script src="#{request.contextPath}/media/js/moment-with-locales.min.js"></script>
+            <script src="#{request.contextPath}/media/js/livestamp.js"></script>
+
+
+            <script>
+                $.noConflict();
+                
+                moment.locale('pt');
+                
+  
+                function initPhoto(){
+                    initPhotoSwipeFromDOM('.my-simple-gallery');
+                }
+                
+                $(document).ready(function() {
+                    verificarAlertas();
+                });
+                
+            </script>
+
+        </f:view>
+
+    </h:body>
+
+</html>
