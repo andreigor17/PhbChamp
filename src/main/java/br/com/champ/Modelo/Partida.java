@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author gustavo
+ * @author andre
  */
 public class Partida extends ModeloGenerico implements Serializable {
 

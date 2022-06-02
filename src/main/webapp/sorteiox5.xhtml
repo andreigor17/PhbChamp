@@ -43,13 +43,61 @@
                 </div>
 
                 <center>
-                    <p:commandButton value="Sortear!"  icon="ui-icon-plus" 
-                                     actionListener="#{managerPlayer.sorteioX5()}"
+                    <p:commandButton value="Avançar"  icon="ui-icon-plus" 
+                                     actionListener="#{managerPlayer.verificarPlayers()}"                              
                                      process="@form" update="@form" />
 
                 </center>
 
             </p:fieldset>
+
+            <p:dialog id="confirmarCriacaoX5Dialog"
+                      widgetVar="confirmarCriacaoX5Dialog"
+                      header="Nome dos times!"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+
+
+                <center>
+                    <div class="row">
+                        <div class="column3">
+                            <p:outputLabel value="Nome do time 1: " for="nomeTime1"/>
+                        </div>
+                        <div class="column3">
+                            <p:inputText id="nomeTime1" value="#{managerPlayer.nomeTime1}"/>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="column3">
+                            <p:outputLabel value="Nome do time 2: " for="nomeTime2"/>
+                        </div>
+                        <div class="column3">
+                            <p:inputText id="nomeTime2" value="#{managerPlayer.nomeTime2}"/>
+                        </div>
+                    </div>
+                    <p:commandButton value="Cancelar"
+                                     title="Cancelar Remoção"
+                                     icon="fa fa-ban"
+                                     oncomplete="PF('confirmarCriacaoX5Dialog').hide();"
+                                     styleClass="btn btn-default"/>
+
+                    <p:commandButton value="Sortear times"
+                                     title="Confirmar Remoção"
+                                     icon="fa fa-check"
+                                     process="@form"
+                                     update="@form"
+                                     actionListener="#{managerPlayer.sorteioX5()}"
+                                     styleClass="btn btn-info"/>
+
+                </center>
+
+            </p:dialog>          
+
 
         </h:form>
 

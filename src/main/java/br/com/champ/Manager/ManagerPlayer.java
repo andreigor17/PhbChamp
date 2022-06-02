@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -57,6 +58,8 @@ public class ManagerPlayer implements Serializable {
     private DualListModel<Player> playerGroupList;
     private String capitaoTime1;
     private String capitaoTime2;
+    private String nomeTime1;
+    private String nomeTime2;
 
     @PostConstruct
     public void init() {
@@ -158,6 +161,22 @@ public class ManagerPlayer implements Serializable {
         this.capitaoTime2 = capitaoTime2;
     }
 
+    public String getNomeTime1() {
+        return nomeTime1;
+    }
+
+    public void setNomeTime1(String nomeTime1) {
+        this.nomeTime1 = nomeTime1;
+    }
+
+    public String getNomeTime2() {
+        return nomeTime2;
+    }
+
+    public void setNomeTime2(String nomeTime2) {
+        this.nomeTime2 = nomeTime2;
+    }
+
     public void salvarPlayer() {
         //this.playerServico.salvar(this.player);
         //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
@@ -177,6 +196,16 @@ public class ManagerPlayer implements Serializable {
         init();
     }
 
+    public void verificarPlayers() {
+        this.selectedPlayers = this.playerGroupList.getTarget();
+        if (this.selectedPlayers.size() % 2 == 0) {
+            PrimeFaces.current().executeScript("PF('confirmarCriacaoX5Dialog').show();");
+        } else {
+            Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
+            return;
+        }
+    }
+
     public void sorteioX5() {
         try {
             List<Player> time1 = new ArrayList<>();
@@ -188,21 +217,16 @@ public class ManagerPlayer implements Serializable {
             this.selectedPlayers = this.playerGroupList.getTarget();
             System.out.println("players selecionados: " + this.selectedPlayers.size());
 
-            if (this.selectedPlayers.size() % 2 == 0) {
-                System.out.println("ok");
-            } else {
-                Mensagem.error("Para formar 2 times, adicione uma quantidade par de jogadores!");
-            }
             Collections.shuffle(this.selectedPlayers);
-            for (int i = 0; i <= this.selectedPlayers.size()/2 ; i++) {
+            for (int i = 0; i < this.selectedPlayers.size() / 2; i++) {
                 this.selectedPlayers.get(i).setPossuiTime(true);
-                System.out.println("Time 1: " + this.selectedPlayers.get(i));
+                System.out.println(this.nomeTime1 + " " + this.selectedPlayers.get(i).getNick());
                 time1.add(this.selectedPlayers.get(i));
             }
 
             for (Player p : this.selectedPlayers) {
                 if (!p.isPossuiTime()) {
-                    System.out.println("Time 2: " + p);
+                    System.out.println(this.nomeTime2 + " " + p.getNick());
                     time2.add(p);
                 }
 
@@ -210,23 +234,24 @@ public class ManagerPlayer implements Serializable {
 
             Team team1 = new Team();
             t1.setAtivo(true);
-            t1.setNome("TimeTeste1 ");
+            t1.setNome(nomeTime1);
             t1.setPlayers(time1);
             team1 = teamServico.save(t1, null, Url.SALVAR_TIME.getNome());
 
             Team team2 = new Team();
             t2.setAtivo(true);
-            t2.setNome("TimeTeste2 ");
+            t2.setNome(nomeTime2);
             t2.setPlayers(time2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
             Partida partida = new Partida();
             partidaX5.setTeam1(team1);
             partidaX5.setTeam2(team2);
+            partida.setCamp(null);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
             Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
-            
+
         } catch (Exception ex) {
             System.err.println(ex);
         }
