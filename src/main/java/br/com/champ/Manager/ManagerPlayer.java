@@ -279,7 +279,7 @@ public class ManagerPlayer implements Serializable {
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
-            //Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
+            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {
             System.err.println(ex);
         }

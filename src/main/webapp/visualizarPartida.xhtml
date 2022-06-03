@@ -45,102 +45,104 @@
 
             </p:fieldset>
 
+            <p:tabView id="tabview">
+                <c:forEach items="#{managerPartida.itensPartidas}" var="item">
+                    <p:tab id="tab" title="#{item.team1.nome}">
 
-            <p:tabView value="#{managerPartida.itemPartida}" var="item">                                   
-                <p:tab title="#{item.team1.nome}">
+                        <p:dataTable id="partidaTime1"
+                                     value="#{item.team1}"
+                                     var="team1"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum mapa jogado na partida...">
 
-                    <p:dataTable id="partidaTime1"
-                                 value="#{item.team1}"
-                                 var="team1"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                                 rows="10"
-                                 rowsPerPageTemplate="5,10,15"
-                                 emptyMessage="Nenhum mapa jogado na partida...">
+                            <f:facet name="header">
+                                <p:outputLabel value="Time 1" />
+                            </f:facet>
 
-                        <f:facet name="header">
-                            <p:outputLabel value="Time 1" />
-                        </f:facet>
+                            <p:column headerText="Opções" width="10%">
+                                <div class="options2">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id="/>
 
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options2">
-                                <p:button title="Visualizar Player"
-                                          icon="ui-icon-search"
-                                          href="visualizarPlayer.xhtml?id="/>
+                                </div>
 
-                            </div>
+                            </p:column>
 
-                        </p:column>
+                            <p:column headerText="Nome" width="50%">
+                                <p:outputLabel  value="#{team1.nome}"/>
+                            </p:column>
+                            <p:column headerText="K" width="10%">
 
-                        <p:column headerText="Nome" width="50%">
-                            <p:outputLabel  value="#{team1.nome}"/>
-                        </p:column>
-                        <p:column headerText="K" width="10%">
+                            </p:column>
+                            <p:column headerText="A" width="10%">
 
-                        </p:column>
-                        <p:column headerText="A" width="10%">
+                            </p:column>
+                            <p:column headerText="D" width="10%">
 
-                        </p:column>
-                        <p:column headerText="D" width="10%">
+                            </p:column>
+                            <p:column headerText="ADR" width="10%">
 
-                        </p:column>
-                        <p:column headerText="ADR" width="10%">
-
-                        </p:column>
-
-
-
-                    </p:dataTable>
-
-
-                    <p:dataTable id="partidaTime2"
-                                 value="#{item.team2}"
-                                 var="team2"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                                 rows="10"
-                                 rowsPerPageTemplate="5,10,15"
-                                 emptyMessage="Nenhum time encontrado na partida...">
-
-                        <f:facet name="header">
-                            <p:outputLabel value="Time 2" />
-                        </f:facet>
-
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options2">
-                                <p:button title="Visualizar Player"
-                                          icon="ui-icon-search"
-                                          href="visualizarPlayer.xhtml?id="/>
-
-                            </div>
-
-                        </p:column>
-
-                        <p:column headerText="Nome" width="60%">
-                            <p:outputLabel  value="#{team2.nome}"/>
-                        </p:column>                  
-                        <p:column headerText="K" width="10%">
-
-                        </p:column>
-                        <p:column headerText="A" width="10%">
-
-                        </p:column>
-                        <p:column headerText="D" width="10%">
-
-                        </p:column>
-                        <p:column headerText="ADR" width="10%">
-
-                        </p:column>
+                            </p:column>
 
 
 
-                    </p:dataTable>
+                        </p:dataTable>
 
-                </p:tab>                
+
+                        <p:dataTable id="partidaTime2"
+                                     value="#{item.team2}"
+                                     var="team2"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum time encontrado na partida...">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="Time 2" />
+                            </f:facet>
+
+                            <p:column headerText="Opções" width="10%">
+                                <div class="options2">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id="/>
+
+                                </div>
+
+                            </p:column>
+
+                            <p:column headerText="Nome" width="60%">
+                                <p:outputLabel  value="#{team2.nome}"/>
+                            </p:column>                  
+                            <p:column headerText="K" width="10%">
+
+                            </p:column>
+                            <p:column headerText="A" width="10%">
+
+                            </p:column>
+                            <p:column headerText="D" width="10%">
+
+                            </p:column>
+                            <p:column headerText="ADR" width="10%">
+
+                            </p:column>
+
+
+
+                        </p:dataTable>
+
+                    </p:tab>  
+
+                </c:forEach>Ï
             </p:tabView>
 
             <p:dialog id="confirmarRemoverPartidaDialog"
