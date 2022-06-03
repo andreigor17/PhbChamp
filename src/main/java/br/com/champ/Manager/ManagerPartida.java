@@ -5,6 +5,7 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Servico.PartidaServico;
@@ -31,6 +32,8 @@ public class ManagerPartida {
     private List<Player> playersTime1;
     private List<Player> playersTime2;
     private List<Partida> partidas;
+    private List<ItemPartida> itensPartidas;
+    private ItemPartida itemPartida;
 
     @PostConstruct
     public void init() {
@@ -42,11 +45,14 @@ public class ManagerPartida {
 
         if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
             this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
+
+        } else {
+            instanciar();
         }
 
         if (this.partida.getId() != null) {
-            this.playersTime1 = this.partida.getTeam1().getPlayers();
-            this.playersTime2 = this.partida.getTeam2().getPlayers();
+            this.itensPartidas = this.partida.getItemPartida();
+            System.out.println("dados do item: " + this.itensPartidas.get(0).getTeam1().getNome());
         }
 
     }
@@ -55,6 +61,8 @@ public class ManagerPartida {
         this.partida = new Partida();
         this.partidas = new ArrayList<>();
         this.partidaPesquisar = new Partida();
+        this.itemPartida = new ItemPartida();
+        this.itensPartidas = new ArrayList<>();
 
     }
 
@@ -96,10 +104,26 @@ public class ManagerPartida {
 
     public void setPartidaPesquisar(Partida partidaPesquisar) {
         this.partidaPesquisar = partidaPesquisar;
-    }    
+    }
 
     public void pesquisar() {
         this.partidas = partidaServico.pesquisarPartidas(this.partidaPesquisar);
+    }
+
+    public List<ItemPartida> getItensPartidas() {
+        return itensPartidas;
+    }
+
+    public void setItensPartidas(List<ItemPartida> itensPartidas) {
+        this.itensPartidas = itensPartidas;
+    }
+
+    public ItemPartida getItemPartida() {
+        return itemPartida;
+    }
+
+    public void setItemPartida(ItemPartida itemPartida) {
+        this.itemPartida = itemPartida;
     }
 
     public void limpar() {

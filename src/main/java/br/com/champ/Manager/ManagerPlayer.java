@@ -7,11 +7,13 @@ package br.com.champ.Manager;
 
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.CampeonatoServico;
+import br.com.champ.Servico.ItemPartidaServico;
 import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
@@ -48,6 +50,8 @@ public class ManagerPlayer implements Serializable {
     TeamServico teamServico;
     @EJB
     PartidaServico partidaServico;
+    @EJB
+    ItemPartidaServico itemPartidaServico;
 
     private Player player;
     private List<Player> players;
@@ -60,6 +64,8 @@ public class ManagerPlayer implements Serializable {
     private String capitaoTime2;
     private String nomeTime1;
     private String nomeTime2;
+    private List<ItemPartida> itemPartidas;
+    private ItemPartida itemPartida;
 
     @PostConstruct
     public void init() {
@@ -86,6 +92,8 @@ public class ManagerPlayer implements Serializable {
         this.selectedPlayers = new ArrayList<Player>();
         this.allPlayers = playerServico.pesquisar(this.player);
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
+        this.itemPartidas = new ArrayList<>();
+        this.itemPartida = new ItemPartida();
 
     }
 
@@ -177,6 +185,22 @@ public class ManagerPlayer implements Serializable {
         this.nomeTime2 = nomeTime2;
     }
 
+    public List<ItemPartida> getItemPartidas() {
+        return itemPartidas;
+    }
+
+    public void setItemPartidas(List<ItemPartida> itemPartidas) {
+        this.itemPartidas = itemPartidas;
+    }
+
+    public ItemPartida getItemPartida() {
+        return itemPartida;
+    }
+
+    public void setItemPartida(ItemPartida itemPartida) {
+        this.itemPartida = itemPartida;
+    }
+
     public void salvarPlayer() {
         //this.playerServico.salvar(this.player);
         //Mensagem.successAndRedirect("Player salvo com sucesso", "visualizarPlayer.xhtml?id=" + this.player.getId());
@@ -213,6 +237,7 @@ public class ManagerPlayer implements Serializable {
             Team t1 = new Team();
             Team t2 = new Team();
             Partida partidaX5 = new Partida();
+            ItemPartida itemPartidaAtual = new ItemPartida();
 
             this.selectedPlayers = this.playerGroupList.getTarget();
             System.out.println("players selecionados: " + this.selectedPlayers.size());
@@ -245,13 +270,16 @@ public class ManagerPlayer implements Serializable {
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
             Partida partida = new Partida();
-            partidaX5.setTeam1(team1);
-            partidaX5.setTeam2(team2);
-            partida.setCamp(null);
+            itemPartida.setTeam1(team1);
+            itemPartida.setTeam2(team2);
+            itemPartida.setCamp(null);
+//            itemPartidaAtual = itemPartidaServico.salvar(itemPartida, null, Url.SALVAR_ITEM_PARTIDA.getNome());
+
+            this.itemPartidas.add(itemPartida);
+            partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
-            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
-
+            //Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {
             System.err.println(ex);
         }
