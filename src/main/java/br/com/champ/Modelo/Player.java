@@ -8,6 +8,7 @@ package br.com.champ.Modelo;
 import br.com.champ.Enums.Funcoes;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Player extends ModeloGenerico implements Serializable {
     private boolean capitao;
     private String avatar;
     private Funcoes funcao;
+    private List<Estatisticas> estatisticas; 
 
     public String getNome() {
         return nome;
@@ -94,8 +96,14 @@ public class Player extends ModeloGenerico implements Serializable {
     public void setFuncao(Funcoes funcao) {
         this.funcao = funcao;
     }
-    
-    
+
+    public List<Estatisticas> getEstatisticas() {
+        return estatisticas;
+    }
+
+    public void setEstatisticas(List<Estatisticas> estatisticas) {
+        this.estatisticas = estatisticas;
+    }        
 
     @Override
     public String toString() {

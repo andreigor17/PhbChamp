@@ -33,7 +33,7 @@
                                 width: 350px;
                             }
                         </style> 
-                        <p:pickList id="grupoPickList" value="#{ managerPlayer.playerGroupList }" var="player"
+                        <p:pickList id="grupoPickList" value="#{ managerPartida.playerGroupList }" var="player"
                                     filterMatchMode="contains" showSourceFilter="true" showTargetFilter="true"
                                     itemValue="#{ player }" itemLabel="#{ player.nick }" converter="player_converter">
                             <f:facet name="sourceCaption">Players</f:facet>
@@ -44,7 +44,7 @@
 
                 <center>
                     <p:commandButton value="Avançar"  icon="ui-icon-plus" 
-                                     actionListener="#{managerPlayer.verificarPlayers()}"                              
+                                     actionListener="#{managerPartida.verificarPlayers()}"                              
                                      process="@form" update="@form" />
 
                 </center>
@@ -69,7 +69,7 @@
                             <p:outputLabel value="Nome do time 1: " for="nomeTime1"/>
                         </div>
                         <div class="column3">
-                            <p:inputText id="nomeTime1" value="#{managerPlayer.nomeTime1}"/>
+                            <p:inputText id="nomeTime1" value="#{managerPartida.nomeTime1}"/>
                         </div>
                     </div>
                      <div class="row">
@@ -77,7 +77,7 @@
                             <p:outputLabel value="Nome do time 2: " for="nomeTime2"/>
                         </div>
                         <div class="column3">
-                            <p:inputText id="nomeTime2" value="#{managerPlayer.nomeTime2}"/>
+                            <p:inputText id="nomeTime2" value="#{managerPartida.nomeTime2}"/>
                         </div>
                     </div>
                     <p:commandButton value="Cancelar"
@@ -91,7 +91,7 @@
                                      icon="fa fa-check"
                                      process="@form"
                                      update="@form"
-                                     actionListener="#{managerPlayer.sorteioX5()}"
+                                     actionListener="#{managerPartida.sorteioX5()}"
                                      styleClass="btn btn-info"/>
 
                 </center>

@@ -18,6 +18,8 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     private Integer pontos = 0;
     private Team team;
     private Campeonato campeonato;
+    private ItemPartida itemPartida;
+    private Player player;
 
     public Integer getKills() {
         return kills;
@@ -89,6 +91,22 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
 
     public void setPontos(Integer pontos) {
         this.pontos = pontos;
+    }
+
+    public ItemPartida getItemPartida() {
+        return itemPartida;
+    }
+
+    public void setItemPartida(ItemPartida itemPartida) {
+        this.itemPartida = itemPartida;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
 }
