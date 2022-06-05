@@ -47,10 +47,10 @@
 
             <p:tabView id="tabview">
                 <c:forEach items="#{managerPartida.itensPartidas}" var="item">
-                    <p:tab id="tab" title="#{item.team1.nome}">
+                    <p:tab id="tab" title="#{item.mapas.nome ? item.mapas.nome : 'N/A'}">
 
                         <p:dataTable id="partidaTime1"
-                                     value="#{item.team1}"
+                                     value="#{managerPartida.itensPartidas.get(0).team1.players}"
                                      var="team1"
                                      paginator="true"
                                      paginatorPosition="bottom"
@@ -61,11 +61,11 @@
                                      emptyMessage="Nenhum mapa jogado na partida...">
 
                             <f:facet name="header">
-                                <p:outputLabel value="Time 1" />
+                                <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team1.nome}" />
                             </f:facet>
 
                             <p:column headerText="Opções" width="10%">
-                                <div class="options2">
+                                <div class="options">
                                     <p:button title="Visualizar Player"
                                               icon="ui-icon-search"
                                               href="visualizarPlayer.xhtml?id="/>
@@ -74,20 +74,20 @@
 
                             </p:column>
 
-                            <p:column headerText="Nome" width="50%">
-                                <p:outputLabel  value="#{team1.nome}"/>
-                            </p:column>
-                            <p:column headerText="K" width="10%">
-
+                            <p:column headerText="Nome" width="40%">
+                                <p:outputLabel value="#{team1.nome}"/>
+                            </p:column>                            
+                            <p:column headerText="K" width="10%"   >                                  
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="A" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="D" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="ADR" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
 
 
@@ -96,7 +96,7 @@
 
 
                         <p:dataTable id="partidaTime2"
-                                     value="#{item.team2}"
+                                     value="#{managerPartida.itensPartidas.get(0).team2.players}"
                                      var="team2"
                                      paginator="true"
                                      paginatorPosition="bottom"
@@ -107,7 +107,7 @@
                                      emptyMessage="Nenhum time encontrado na partida...">
 
                             <f:facet name="header">
-                                <p:outputLabel value="Time 2" />
+                                <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team2.nome}" />
                             </f:facet>
 
                             <p:column headerText="Opções" width="10%">
@@ -120,20 +120,20 @@
 
                             </p:column>
 
-                            <p:column headerText="Nome" width="60%">
-                                <p:outputLabel  value="#{team2.nome}"/>
-                            </p:column>                  
+                            <p:column headerText="Nome" width="40%">
+                                <p:outputLabel value="#{team2.nome}"/>
+                            </p:column>                     
                             <p:column headerText="K" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="A" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="D" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
                             <p:column headerText="ADR" width="10%">
-
+                                <p:outputLabel />
                             </p:column>
 
 
