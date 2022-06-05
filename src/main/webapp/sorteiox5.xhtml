@@ -72,7 +72,7 @@
                             <p:inputText id="nomeTime1" value="#{managerPartida.nomeTime1}"/>
                         </div>
                     </div>
-                     <div class="row">
+                    <div class="row">
                         <div class="column3">
                             <p:outputLabel value="Nome do time 2: " for="nomeTime2"/>
                         </div>
@@ -80,19 +80,34 @@
                             <p:inputText id="nomeTime2" value="#{managerPartida.nomeTime2}"/>
                         </div>
                     </div>
-                    <p:commandButton value="Cancelar"
-                                     title="Cancelar Remoção"
-                                     icon="fa fa-ban"
-                                     oncomplete="PF('confirmarCriacaoX5Dialog').hide();"
-                                     styleClass="btn btn-default"/>
+                    <div class="row">
+                        <div class="column3">
+                            <p:outputLabel value="Selecione o número de rounds:"/>
+                        </div>
 
-                    <p:commandButton value="Sortear times"
-                                     title="Confirmar Remoção"
-                                     icon="fa fa-check"
-                                     process="@form"
-                                     update="@form"
-                                     actionListener="#{managerPartida.sorteioX5()}"
-                                     styleClass="btn btn-info"/>
+                        <div class="column2">
+                            <p:selectOneRadio value="#{managerPartida.qtdItensPartidas}" unselectable="true">
+                                <f:selectItem itemLabel="MD1" itemValue="1"/>
+                                <f:selectItem itemLabel="MD3" itemValue="3"/>
+                                <f:selectItem itemLabel="MD5" itemValue="5"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p:commandButton value="Cancelar"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-ban"
+                                         oncomplete="PF('confirmarCriacaoX5Dialog').hide();"
+                                         styleClass="btn btn-default"/>
+
+                        <p:commandButton value="Sortear times"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         process="@form"
+                                         update="@form"
+                                         actionListener="#{managerPartida.sorteioX5()}"
+                                         styleClass="btn btn-info"/>
+                    </div>
 
                 </center>
 

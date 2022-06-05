@@ -5,6 +5,7 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Rounds;
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.ItemPartida;
@@ -94,7 +95,6 @@ public class ManagerPartida {
         this.partidaPesquisar = new Partida();
         this.itemPartida = new ItemPartida();
         this.itensPartidas = new ArrayList<>();
-        this.qtdItensPartidas = 1;
         this.selectedPlayers = new ArrayList<Player>();
         this.allPlayers = playerServico.pesquisar(this.player);
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
@@ -250,7 +250,6 @@ public class ManagerPartida {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-    
 
     public void limpar() throws Exception {
         instanciar();
@@ -261,25 +260,25 @@ public class ManagerPartida {
     }
 
     public List<ItemPartida> gerarPartidas(Partida p, Campeonato camp, Team time1, Team time2) {
-   
+
         int i = 0;
-        List<ItemPartida> partidasGeradas;
+        List<ItemPartida> partidasGeradas = new ArrayList<>();
+        System.out.println("teste " + this.qtdItensPartidas);
         try {
-            for (i = 1; i < this.qtdItensPartidas; i++) {
+            for (i = 1; i <= this.qtdItensPartidas; i++) {
                 ItemPartida newItem = new ItemPartida();
                 if (camp != null) {
                     newItem.setCamp(camp);
                 }
                 newItem.setTeam1(time1);
                 newItem.setTeam2(time2);
-                itemPartidaServico.salvar(newItem, null, Url.SALVAR_ITEM_PARTIDA.getNome());
-                this.partida.getItemPartida().add(newItem);
-                partidaServico.salvar(this.partida, this.partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
-            }
+                //itemPartidaServico.salvar(newItem, null, Url.SALVAR_ITEM_PARTIDA.getNome());
+                partidasGeradas.add(newItem);                
+            }            
         } catch (Exception ex) {
             Logger.getLogger(ManagerPartida.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return partidasGeradas;
     }
 
     public void verificarPlayers() {
@@ -293,13 +292,14 @@ public class ManagerPartida {
     }
 
     public void sorteioX5() {
-        try { 
+        try {
             List<Player> time1 = new ArrayList<>();
             List<Player> time2 = new ArrayList<>();
             Team t1 = new Team();
             Team t2 = new Team();
             Partida partidaX5 = new Partida();
             ItemPartida itemPartidaAtual = new ItemPartida();
+            Partida partida = new Partida();
 
             this.selectedPlayers = this.playerGroupList.getTarget();
             System.out.println("players selecionados: " + this.selectedPlayers.size());
@@ -331,13 +331,7 @@ public class ManagerPartida {
             t2.setPlayers(time2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
-            Partida partida = new Partida();
-            itemPartida.setTeam1(team1);
-            itemPartida.setTeam2(team2);
-            itemPartida.setCamp(null);
-//            itemPartidaAtual = itemPartidaServico.salvar(itemPartida, null, Url.SALVAR_ITEM_PARTIDA.getNome());
-
-            this.itemPartidas.add(itemPartida);
+            this.itemPartidas = gerarPartidas(partidaX5, null, team1, team2);
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
