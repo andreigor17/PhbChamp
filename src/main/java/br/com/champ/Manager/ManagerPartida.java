@@ -262,8 +262,7 @@ public class ManagerPartida {
     public List<ItemPartida> gerarPartidas(Partida p, Campeonato camp, Team time1, Team time2) {
 
         int i = 0;
-        List<ItemPartida> partidasGeradas = new ArrayList<>();
-        System.out.println("teste " + this.qtdItensPartidas);
+        List<ItemPartida> partidasGeradas = new ArrayList<>();        
         try {
             for (i = 1; i <= this.qtdItensPartidas; i++) {
                 ItemPartida newItem = new ItemPartida();
@@ -271,8 +270,7 @@ public class ManagerPartida {
                     newItem.setCamp(camp);
                 }
                 newItem.setTeam1(time1);
-                newItem.setTeam2(time2);
-                //itemPartidaServico.salvar(newItem, null, Url.SALVAR_ITEM_PARTIDA.getNome());
+                newItem.setTeam2(time2);                
                 partidasGeradas.add(newItem);                
             }            
         } catch (Exception ex) {
