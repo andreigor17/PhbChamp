@@ -6,12 +6,14 @@
 package br.com.champ.Modelo;
 
 import br.com.champ.Enums.Maps;
+import br.com.champ.Generico.ModeloGenerico;
+import java.io.Serializable;
 
 /**
  *
  * @author andre
  */
-public class ItemPartida {
+public class ItemPartida extends ModeloGenerico implements Serializable {
 
     private int scoreT1;
     private int scoreT2;
@@ -20,6 +22,7 @@ public class ItemPartida {
     private Team team1;
     private Team team2;
     private Campeonato camp;
+    private Estatisticas estatisticas;
 
     public int getScoreT1() {
         return scoreT1;
@@ -75,6 +78,14 @@ public class ItemPartida {
 
     public void setCamp(Campeonato camp) {
         this.camp = camp;
+    }
+
+    public Estatisticas getEstatisticas() {
+        return estatisticas;
+    }
+
+    public void setEstatisticas(Estatisticas estatisticas) {
+        this.estatisticas = estatisticas;
     }
     
 }

@@ -5,13 +5,14 @@
  */
 package br.com.champ.Manager;
 
-import br.com.champ.Enums.Rounds;
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
+import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
+import br.com.champ.Servico.EstatisticaServico;
 import br.com.champ.Servico.ItemPartidaServico;
 import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
@@ -46,6 +47,8 @@ public class ManagerPartida {
     PlayerServico playerServico;
     @EJB
     TeamServico teamServico;
+    @EJB
+    EstatisticaServico estatisticasServico;
     private Partida partida;
     private Partida partidaPesquisar;
     private List<Player> playersTime1;
@@ -64,6 +67,7 @@ public class ManagerPartida {
     private DualListModel<Player> playerGroupList;
     private Player player;
     private List<Player> players;
+    private List<Estatisticas> estsGerais;
 
     @PostConstruct
     public void init() {
@@ -100,6 +104,7 @@ public class ManagerPartida {
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
         this.itemPartidas = new ArrayList<>();
         this.itemPartida = new ItemPartida();
+        this.estsGerais = new ArrayList<Estatisticas>();
 
     }
 
@@ -262,17 +267,18 @@ public class ManagerPartida {
     public List<ItemPartida> gerarPartidas(Partida p, Campeonato camp, Team time1, Team time2) {
 
         int i = 0;
-        List<ItemPartida> partidasGeradas = new ArrayList<>();        
+        List<ItemPartida> partidasGeradas = new ArrayList<>();
         try {
             for (i = 1; i <= this.qtdItensPartidas; i++) {
                 ItemPartida newItem = new ItemPartida();
                 if (camp != null) {
                     newItem.setCamp(camp);
                 }
+
                 newItem.setTeam1(time1);
-                newItem.setTeam2(time2);                
-                partidasGeradas.add(newItem);                
-            }            
+                newItem.setTeam2(time2);
+                partidasGeradas.add(newItem);
+            }
         } catch (Exception ex) {
             Logger.getLogger(ManagerPartida.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,6 +304,8 @@ public class ManagerPartida {
             Partida partidaX5 = new Partida();
             ItemPartida itemPartidaAtual = new ItemPartida();
             Partida partida = new Partida();
+            List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
+            List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
             this.selectedPlayers = this.playerGroupList.getTarget();
             System.out.println("players selecionados: " + this.selectedPlayers.size());
@@ -305,13 +313,11 @@ public class ManagerPartida {
             Collections.shuffle(this.selectedPlayers);
             for (int i = 0; i < this.selectedPlayers.size() / 2; i++) {
                 this.selectedPlayers.get(i).setPossuiTime(true);
-                System.out.println(this.nomeTime1 + " " + this.selectedPlayers.get(i).getNick());
                 time1.add(this.selectedPlayers.get(i));
             }
 
             for (Player p : this.selectedPlayers) {
                 if (!p.isPossuiTime()) {
-                    System.out.println(this.nomeTime2 + " " + p.getNick());
                     time2.add(p);
                 }
 
@@ -333,7 +339,38 @@ public class ManagerPartida {
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
-            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
+            List<ItemPartida> it = partida.getItemPartida();
+
+            for (ItemPartida i : it) {
+                System.out.println("item id " + i.getId());
+            }
+
+            for (ItemPartida i : it) {
+                for (Player playerTime1 : team1.getPlayers()) {
+                    Estatisticas estatisticas = new Estatisticas();
+                    estatisticas.setPlayer(playerTime1);
+                    estatisticas.setTeam(team1);
+                    estatisticas.setItemPartida(i);
+                    estsTeam1.add(estatisticas);
+
+                }
+                this.estsGerais.addAll(estsTeam1);
+
+                for (Player playerTime2 : team2.getPlayers()) {
+                    Estatisticas estatisticas = new Estatisticas();
+                    estatisticas.setPlayer(playerTime2);
+                    estatisticas.setTeam(team2);
+                    estatisticas.setItemPartida(i);
+                    estsTeam2.add(estatisticas);
+                }
+                this.estsGerais.addAll(estsTeam2);
+
+                for (Estatisticas e : this.estsGerais) {
+                    estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
+                }
+            }
+
+            //Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {
             System.err.println(ex);
         }
