@@ -365,12 +365,18 @@ public class ManagerPartida {
                 }
                 this.estsGerais.addAll(estsTeam2);
 
+                System.out.println("lista " + this.estsGerais.size());
+
                 for (Estatisticas e : this.estsGerais) {
                     estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
                 }
+
+                estsTeam1 = new ArrayList<Estatisticas>();
+                estsTeam2 = new ArrayList<Estatisticas>();
+                this.estsGerais = new ArrayList<Estatisticas>();
             }
 
-            //Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
+            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {
             System.err.println(ex);
         }
