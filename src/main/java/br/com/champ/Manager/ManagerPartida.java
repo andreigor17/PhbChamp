@@ -6,7 +6,6 @@
 package br.com.champ.Manager;
 
 import br.com.champ.Enums.Url;
-import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Partida;
@@ -19,16 +18,16 @@ import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
+import br.com.champ.Utilitario.PartidaUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -68,6 +67,7 @@ public class ManagerPartida {
     private Player player;
     private List<Player> players;
     private List<Estatisticas> estsGerais;
+    private boolean skip;
 
     @PostConstruct
     public void init() {
@@ -87,7 +87,7 @@ public class ManagerPartida {
         }
 
         if (this.partida.getId() != null) {
-            this.itensPartidas = this.partida.getItemPartida();            
+            this.itensPartidas = this.partida.getItemPartida();
             System.out.println("dados do item: " + this.itensPartidas.get(0).getTeam1().getNome());
         }
 
@@ -107,8 +107,8 @@ public class ManagerPartida {
         this.estsGerais = new ArrayList<Estatisticas>();
 
     }
-    
-    public List<Estatisticas> estsGerais(Team team, ItemPartida item){
+
+    public List<Estatisticas> estsGerais(Team team, ItemPartida item) {
         List<Estatisticas> e = estatisticasServico.estatisticaPorItemPartida(team.getId(), item.getId());
         return e;
     }
@@ -261,6 +261,14 @@ public class ManagerPartida {
         this.players = players;
     }
 
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+
     public void limpar() throws Exception {
         instanciar();
     }
@@ -269,26 +277,11 @@ public class ManagerPartida {
 
     }
 
-    public List<ItemPartida> gerarPartidas(Partida p, Campeonato camp, Team time1, Team time2) {
-
-        int i = 0;
-        List<ItemPartida> partidasGeradas = new ArrayList<>();
-        try {
-            for (i = 1; i <= this.qtdItensPartidas; i++) {
-                ItemPartida newItem = new ItemPartida();
-                if (camp != null) {
-                    newItem.setCamp(camp);
-                }
-
-                newItem.setTeam1(time1);
-                newItem.setTeam2(time2);
-                partidasGeradas.add(newItem);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ManagerPartida.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return partidasGeradas;
+    public void gerarMapas() {
+        PrimeFaces.current().executeScript("PF('gerarMapasDialog').show();");
     }
+
+   
 
     public void verificarPlayers() {
         this.selectedPlayers = this.playerGroupList.getTarget();
@@ -340,7 +333,7 @@ public class ManagerPartida {
             t2.setPlayers(time2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
-            this.itemPartidas = gerarPartidas(partidaX5, null, team1, team2);
+            this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, null, team1, team2, this.qtdItensPartidas);
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 

@@ -20,22 +20,22 @@
 
             <div  class="actions">
 
-                <p:commandButton title="Remover Partida"
-                                 value="Excluir"
-                                 icon="ui-icon-close"                                   
-                                 process="@this"
-                                 update="@form"
-                                 oncomplete="PF('confirmarRemoverPartidaDialog').show();">
-                    <f:setPropertyActionListener value="#{partida}"
-                                                 target="#{managerPartida.partida}"/>
-                </p:commandButton>
-                <p:button value="Editar" outcome="criarPartida.xhtml"
-                          icon="ui-icon-pencil"  >
-                    <f:param value="#{ managerPartida.partida.id }" name="id"/>
-                </p:button>
-
                 <p:button value="Pesquisar" outcome="pesquisarPartida.xhtml"
-                          icon="ui-icon-search"  />
+                          icon="ui-icon-search" style="text-align: left" />   
+
+                <p:commandButton id="menuButton" value="Opções" type="button" icon="pi pi-bars"/>
+                <p:menu overlay="true" trigger="menuButton" my="left top" at="left bottom">
+                    <p:submenu label="Geral">
+                        <p:menuitem value="Editar" 
+                                    icon="pi pi-pencil"/>
+                        <p:menuitem value="Excluir"  update="messages" icon="pi pi-refresh"/>                        
+                    </p:submenu>
+                    <p:submenu label="Picks and Bans">
+                        <p:menuitem value="Gerar mapas" action="#{managerPartida.gerarMapas()}" process="@this" icon="pi pi-external-link"/>
+                        <p:menuitem value="Alterar mapas"  icon="pi pi-upload"/>
+                    </p:submenu>
+                </p:menu>
+
 
             </div>
             <p:fieldset legend="Dados">
@@ -69,7 +69,7 @@
                                 <div class="options">
                                     <p:button title="Visualizar Player"
                                               icon="ui-icon-search"
-                                             href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
+                                              href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
                                 </div>
                             </p:column>
                             <p:column headerText="Nome" width="30%">
@@ -166,7 +166,23 @@
 
                 </center>
 
-            </p:dialog>          
+            </p:dialog>   
+
+            <p:dialog id="gerarMapasDialog"
+                      widgetVar="gerarMapasDialog"
+                      header="Picks and Bans!"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+
+
+                <center>
+
+      
 
         </h:form>
 
