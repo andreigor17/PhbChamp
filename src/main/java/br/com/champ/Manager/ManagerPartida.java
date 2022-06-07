@@ -87,7 +87,7 @@ public class ManagerPartida {
         }
 
         if (this.partida.getId() != null) {
-            this.itensPartidas = this.partida.getItemPartida();
+            this.itensPartidas = this.partida.getItemPartida();            
             System.out.println("dados do item: " + this.itensPartidas.get(0).getTeam1().getNome());
         }
 
@@ -106,6 +106,11 @@ public class ManagerPartida {
         this.itemPartida = new ItemPartida();
         this.estsGerais = new ArrayList<Estatisticas>();
 
+    }
+    
+    public List<Estatisticas> estsGerais(Team team, ItemPartida item){
+        List<Estatisticas> e = estatisticasServico.estatisticaPorItemPartida(team.getId(), item.getId());
+        return e;
     }
 
     public Partida getPartida() {

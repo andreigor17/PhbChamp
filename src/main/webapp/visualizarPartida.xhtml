@@ -46,12 +46,13 @@
             </p:fieldset>
 
             <p:tabView id="tabview">
+                <p:tab id="tabGeral" title="Geral"/>
                 <c:forEach items="#{managerPartida.itensPartidas}" var="item">
                     <p:tab id="tab" title="#{item.mapas.nome ? item.mapas.nome : 'N/A'}">
 
                         <p:dataTable id="partidaTime1"
-                                     value="#{managerPartida.itensPartidas.get(0).team1.players}"
-                                     var="team1"
+                                     value="#{managerPartida.estsGerais(item.team1, item)}"
+                                     var="ests1"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -64,31 +65,26 @@
                                 <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team1.nome}" />
                             </f:facet>
 
-                            <p:column headerText="Opções" width="10%">
+                            <p:column headerText="Opções" width="5%">
                                 <div class="options">
                                     <p:button title="Visualizar Player"
                                               icon="ui-icon-search"
-                                              href="visualizarPlayer.xhtml?id="/>
-
+                                             href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
                                 </div>
-
                             </p:column>
-
-                            <p:column headerText="Nome" width="40%">
-                                <p:outputLabel value="#{team1.nome}"/>
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
                             </p:column>                            
-                            <p:column headerText="K" width="10%"   >                                  
-                                <p:outputLabel />
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests1.kills}"/>
                             </p:column>
-                            <p:column headerText="A" width="10%">
-                                <p:outputLabel />
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests1.assists}"/>
                             </p:column>
-                            <p:column headerText="D" width="10%">
-                                <p:outputLabel />
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests1.deaths}"/>
                             </p:column>
-                            <p:column headerText="ADR" width="10%">
-                                <p:outputLabel />
-                            </p:column>
+
 
 
 
@@ -96,8 +92,8 @@
 
 
                         <p:dataTable id="partidaTime2"
-                                     value="#{managerPartida.itensPartidas.get(0).team2.players}"
-                                     var="team2"
+                                     value="#{managerPartida.estsGerais(item.team2, item)}"
+                                     var="ests2"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -110,30 +106,25 @@
                                 <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team2.nome}" />
                             </f:facet>
 
-                            <p:column headerText="Opções" width="10%">
-                                <div class="options2">
+                            <p:column headerText="Opções" width="5%">
+                                <div class="options">
                                     <p:button title="Visualizar Player"
                                               icon="ui-icon-search"
-                                              href="visualizarPlayer.xhtml?id="/>
-
+                                              href="visualizarPlayer.xhtml?id=#{ests2.player.id}"/>
                                 </div>
-
                             </p:column>
 
-                            <p:column headerText="Nome" width="40%">
-                                <p:outputLabel value="#{team2.nome}"/>
-                            </p:column>                     
-                            <p:column headerText="K" width="10%">
-                                <p:outputLabel />
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests2.player.nome}   '#{ests2.player.nick}' #{ests2.player.sobreNome} "/>
+                            </p:column>                            
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests2.kills}"/>
                             </p:column>
-                            <p:column headerText="A" width="10%">
-                                <p:outputLabel />
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests2.assists}"/>
                             </p:column>
-                            <p:column headerText="D" width="10%">
-                                <p:outputLabel />
-                            </p:column>
-                            <p:column headerText="ADR" width="10%">
-                                <p:outputLabel />
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests2.deaths}"/>
                             </p:column>
 
 
