@@ -305,8 +305,7 @@ public class ManagerPartida {
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
-            this.selectedPlayers = this.playerGroupList.getTarget();
-            System.out.println("players selecionados: " + this.selectedPlayers.size());
+            this.selectedPlayers = this.playerGroupList.getTarget();            
 
             Collections.shuffle(this.selectedPlayers);
             for (int i = 0; i < this.selectedPlayers.size() / 2; i++) {
@@ -338,10 +337,7 @@ public class ManagerPartida {
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
             List<ItemPartida> it = partida.getItemPartida();
-
-            for (ItemPartida i : it) {
-                System.out.println("item id " + i.getId());
-            }
+            
 
             for (ItemPartida i : it) {
                 for (Player playerTime1 : team1.getPlayers()) {
@@ -362,8 +358,7 @@ public class ManagerPartida {
                     estsTeam2.add(estatisticas);
                 }
                 this.estsGerais.addAll(estsTeam2);
-
-                System.out.println("lista " + this.estsGerais.size());
+                
 
                 for (Estatisticas e : this.estsGerais) {
                     estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
