@@ -87,8 +87,7 @@ public class ManagerPartida {
         }
 
         if (this.partida.getId() != null) {
-            this.itensPartidas = this.partida.getItemPartida();
-            System.out.println("dados do item: " + this.itensPartidas.get(0).getTeam1().getNome());
+            this.itensPartidas = this.partida.getItemPartida();            
         }
 
     }
