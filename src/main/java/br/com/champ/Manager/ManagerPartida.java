@@ -83,9 +83,10 @@ public class ManagerPartida {
         String gerarMapasId = FacesUtil
                 .getRequestParameter("partidaId");
 
-        if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty() || gerarMapasId != null && !gerarMapasId.isEmpty()) {
+        if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
             this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
-
+        } else if (gerarMapasId != null && !gerarMapasId.isEmpty()) {
+            this.partida = this.partidaServico.pesquisar(Long.parseLong(gerarMapasId));
         } else {
             try {
                 instanciar();
@@ -117,6 +118,7 @@ public class ManagerPartida {
         this.itemPartidas = new ArrayList<>();
         this.itemPartida = new ItemPartida();
         this.estsGerais = new ArrayList<Estatisticas>();
+        this.mapas = new ArrayList<>();
 
     }
 
@@ -279,6 +281,22 @@ public class ManagerPartida {
 
     public void setSkip(boolean skip) {
         this.skip = skip;
+    }
+
+    public List<Estatisticas> getEstsGerais() {
+        return estsGerais;
+    }
+
+    public void setEstsGerais(List<Estatisticas> estsGerais) {
+        this.estsGerais = estsGerais;
+    }
+
+    public List<Mapas> getMapas() {
+        return mapas;
+    }
+
+    public void setMapas(List<Mapas> mapas) {
+        this.mapas = mapas;
     }
 
     public void limpar() throws Exception {

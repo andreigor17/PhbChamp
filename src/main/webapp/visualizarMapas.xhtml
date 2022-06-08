@@ -46,28 +46,13 @@
                             <p:outputLabel value="Imagem" />
                         </div>
                         <div class="column4">
-                            <h:graphicImage value="image/#{managerMapa.mapa.avatar}" width="100px" height="100px" />
+                            <h:graphicImage value="image/#{managerMapa.mapa.avatar}" width="300px" height="100px" />
 
                         </div>
                     </div>
                 </div>
 
-            </p:fieldset>
-
-
-            <p:dialog widgetVar="exibirAvatar" id="exibirAvatarDialog" closable="false" header="#{managerMapa.mapa.nome}" >
-
-                <p:graphicImage value="#{managerMapa.fotoMapa}"/>
-
-                <h:outputText rendered="#{managerMapa.fotoMapa}" value="Nenhuma imagem cadastrada."/>
-
-                <br />
-
-                <p:commandButton process="@this" style="margin-top:20px;" onclick="PF('exibirAvatar').hide();" value="OK"/>
-
-            </p:dialog>
-
-
+            </p:fieldset>           
 
         </h:form>
 
