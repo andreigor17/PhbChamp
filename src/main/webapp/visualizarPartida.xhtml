@@ -31,7 +31,7 @@
                         <p:menuitem value="Excluir"  update="messages" icon="pi pi-refresh"/>                        
                     </p:submenu>
                     <p:submenu label="Picks and Bans">
-                        <p:menuitem value="Gerar mapas" action="#{managerPartida.gerarMapas()}" process="@this" icon="pi pi-external-link"/>
+                        <p:menuitem value="Gerar mapas" outcome="gerarMapas.xhtml?partidaId=#{managerPartida.partida.id}" process="@this" icon="pi pi-external-link"/>
                         <p:menuitem value="Alterar mapas"  icon="pi pi-upload"/>
                     </p:submenu>
                 </p:menu>
@@ -167,6 +167,35 @@
                 </center>
 
             </p:dialog>   
+
+            <p:dialog id="picksbansDialog"
+                      widgetVar="picksbansDialog"
+                      header="Picks e Bans"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+                <div class="row">
+
+                    <div class="column4">
+                        <div class="column4">
+                            <p:outputLabel  value="LISTA DE MAPAS"/>
+                        </div>
+                    </div>
+
+                    <div class="column12">
+                        <p:outputLabel  value="PICKS E BANS"/>
+                    </div>
+
+                    <div class="column4">
+                        <p:outputLabel  value="LISTA DE MAPAS"/>
+                    </div>
+                </div>
+
+
+            </p:dialog>
 
         </h:form>
 

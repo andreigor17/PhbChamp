@@ -8,11 +8,13 @@ package br.com.champ.Manager;
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.ItemPartida;
+import br.com.champ.Modelo.Mapas;
 import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.EstatisticaServico;
 import br.com.champ.Servico.ItemPartidaServico;
+import br.com.champ.Servico.MapaServico;
 import br.com.champ.Servico.PartidaServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Servico.TeamServico;
@@ -22,12 +24,13 @@ import br.com.champ.Utilitario.PartidaUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -48,6 +51,8 @@ public class ManagerPartida {
     TeamServico teamServico;
     @EJB
     EstatisticaServico estatisticasServico;
+    @EJB
+    MapaServico mapaServico;
     private Partida partida;
     private Partida partidaPesquisar;
     private List<Player> playersTime1;
@@ -68,14 +73,17 @@ public class ManagerPartida {
     private List<Player> players;
     private List<Estatisticas> estsGerais;
     private boolean skip;
+    private List<Mapas> mapas;
 
     @PostConstruct
     public void init() {
 
         String visualizarPartidaId = FacesUtil
                 .getRequestParameter("id");
+        String gerarMapasId = FacesUtil
+                .getRequestParameter("partidaId");
 
-        if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
+        if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty() || gerarMapasId != null && !gerarMapasId.isEmpty()) {
             this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
 
         } else {
@@ -87,7 +95,12 @@ public class ManagerPartida {
         }
 
         if (this.partida.getId() != null) {
-            this.itensPartidas = this.partida.getItemPartida();            
+            try {
+                this.itensPartidas = this.partida.getItemPartida();
+                this.mapas = mapaServico.pesquisar();
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
         }
 
     }
@@ -277,10 +290,8 @@ public class ManagerPartida {
     }
 
     public void gerarMapas() {
-        PrimeFaces.current().executeScript("PF('gerarMapasDialog').show();");
+        PrimeFaces.current().executeScript("PF('picksbansDialog').show();");
     }
-
-   
 
     public void verificarPlayers() {
         this.selectedPlayers = this.playerGroupList.getTarget();
@@ -304,7 +315,7 @@ public class ManagerPartida {
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
-            this.selectedPlayers = this.playerGroupList.getTarget();            
+            this.selectedPlayers = this.playerGroupList.getTarget();
 
             Collections.shuffle(this.selectedPlayers);
             for (int i = 0; i < this.selectedPlayers.size() / 2; i++) {
@@ -336,7 +347,6 @@ public class ManagerPartida {
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
 
             List<ItemPartida> it = partida.getItemPartida();
-            
 
             for (ItemPartida i : it) {
                 for (Player playerTime1 : team1.getPlayers()) {
@@ -357,7 +367,6 @@ public class ManagerPartida {
                     estsTeam2.add(estatisticas);
                 }
                 this.estsGerais.addAll(estsTeam2);
-                
 
                 for (Estatisticas e : this.estsGerais) {
                     estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());

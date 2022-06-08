@@ -1,5 +1,6 @@
 package br.com.champ.Manager;
 
+import br.com.champ.Utilitario.Mensagem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class ManagerAnexo implements Serializable {
     private byte[] arquivo;
     private String nome;
     public String REAL_PATH_OPT = "/opt/uploads";
+    public String pathWindows = "D:\\uploads";
 
     public ManagerAnexo() {
     }
@@ -31,12 +33,25 @@ public class ManagerAnexo implements Serializable {
 
     public void fileUpload(FileUploadEvent event, String type, String diretorio) {
         try {
+            String path = null;
             Timestamp playerAvatar = new Timestamp(System.currentTimeMillis());
             this.nome = playerAvatar + type;
-            this.caminho = REAL_PATH_OPT + diretorio + getNome();
+            File ubuntuFile = new File(REAL_PATH_OPT);
+            File windowsFile = new File(pathWindows);
+
+            if (ubuntuFile.exists()) {
+                path = REAL_PATH_OPT;
+            } else {
+                path = pathWindows;
+            }
+            if (!ubuntuFile.exists() && !windowsFile.exists()) {
+                Mensagem.fatal("Nenhum arquivo de configuração encontrado!");
+                return;
+            }
+            this.caminho = path + diretorio + getNome();
             this.arquivo = event.getFile().getContent();
 
-            File file = new File(REAL_PATH_OPT + diretorio);
+            File file = new File(path + diretorio);
             file.mkdirs();
 
         } catch (Exception ex) {
@@ -60,4 +75,4 @@ public class ManagerAnexo implements Serializable {
 
     }
 
-     }
+}

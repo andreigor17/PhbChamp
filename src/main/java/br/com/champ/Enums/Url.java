@@ -21,7 +21,9 @@ public enum Url {
     ATUALIZAR_PARTIDA(8, "/partidas/"),
     SALVAR_ESTATISTICA(9, "/estatisticas"),
     ATUALIZAR_ESTATISTICA(10, "/estatisticas/"),
-    SALVAR_ITEM_PARTIDA(7, "/itemPartidas");
+    SALVAR_ITEM_PARTIDA(11, "/itemPartidas"),
+    SALVAR_MAPA(12, "/mapas"),
+    ATUALIZAR_MAPA(13, "/mapas");
 
     private String nome;
     private Integer valor;
