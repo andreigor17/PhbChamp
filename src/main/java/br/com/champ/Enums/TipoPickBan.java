@@ -4,29 +4,29 @@
  */
 package br.com.champ.Enums;
 
+import java.util.List;
+
 /**
  *
  * @author andreigor
  */
 public enum TipoPickBan {
 
-    PICK(1, "PICK"),
-    BAN(1, "BAN");
+    MD1("PICK", "PICK", "BAN", "BAN", "BAN", "BAN", "BAN"),
+    MD2("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN"),
+    MD3("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN"),
+    MD5("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN");
 
     private String nome;
-    private Integer valor;
+    private List<String> nomes;
 
     public String getNome() {
         return nome;
     }
-
-    public Integer getValor() {
-        return valor;
-    }
-
-    private TipoPickBan(Integer valor, String nome) {
+        
+    private TipoPickBan(String nome1, String nome2, String nome3, String nome4, String nome5, String nome6, String nome7) {
         this.nome = nome;
-        this.valor = valor;
+
     }
 
 }

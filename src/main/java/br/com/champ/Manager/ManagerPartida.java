@@ -21,11 +21,10 @@ import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import br.com.champ.Utilitario.PartidaUtils;
+import br.com.champ.Utilitario.PickBanUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -74,6 +73,7 @@ public class ManagerPartida {
     private List<Estatisticas> estsGerais;
     private boolean skip;
     private List<Mapas> mapas;
+    List<String> picksbans;
 
     @PostConstruct
     public void init() {
@@ -99,6 +99,7 @@ public class ManagerPartida {
             try {
                 this.itensPartidas = this.partida.getItemPartida();
                 this.mapas = mapaServico.pesquisar();
+                this.picksbans = PickBanUtils.gerarListaPB(this.partida.getItemPartida().size());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
@@ -297,6 +298,14 @@ public class ManagerPartida {
 
     public void setMapas(List<Mapas> mapas) {
         this.mapas = mapas;
+    }
+
+    public List<String> getPicksbans() {
+        return picksbans;
+    }
+
+    public void setPicksbans(List<String> picksbans) {
+        this.picksbans = picksbans;
     }
 
     public void limpar() throws Exception {
