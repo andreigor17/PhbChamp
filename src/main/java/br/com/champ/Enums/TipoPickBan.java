@@ -12,19 +12,16 @@ import java.util.List;
  */
 public enum TipoPickBan {
 
-    MD1("PICK", "PICK", "BAN", "BAN", "BAN", "BAN", "BAN"),
-    MD2("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN"),
-    MD3("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN"),
-    MD5("PICK", "BAN", "BAN", "BAN", "BAN", "BAN", "BAN");
+    PICK("PICK"),
+    BAN("BAN");
 
     private String nome;
-    private List<String> nomes;
 
     public String getNome() {
         return nome;
     }
-        
-    private TipoPickBan(String nome1, String nome2, String nome3, String nome4, String nome5, String nome6, String nome7) {
+
+    private TipoPickBan(String nome) {
         this.nome = nome;
 
     }

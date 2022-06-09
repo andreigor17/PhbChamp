@@ -22,6 +22,7 @@ import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import br.com.champ.Utilitario.PartidaUtils;
 import br.com.champ.Utilitario.PickBanUtils;
+import br.com.champ.vo.PickBanVo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -74,6 +75,7 @@ public class ManagerPartida {
     private boolean skip;
     private List<Mapas> mapas;
     List<String> picksbans;
+    private List<PickBanVo> pickBanVo;
 
     @PostConstruct
     public void init() {
@@ -99,7 +101,8 @@ public class ManagerPartida {
             try {
                 this.itensPartidas = this.partida.getItemPartida();
                 this.mapas = mapaServico.pesquisar();
-                this.picksbans = PickBanUtils.gerarListaPB(this.partida.getItemPartida().size());
+                this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1() ,this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());
+                //this.picksbans = PickBanUtils.gerarListaPB(this.partida.getItemPartida().size());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
@@ -307,6 +310,14 @@ public class ManagerPartida {
     public void setPicksbans(List<String> picksbans) {
         this.picksbans = picksbans;
     }
+
+    public List<PickBanVo> getPickBanVo() {
+        return pickBanVo;
+    }
+
+    public void setPickBanVo(List<PickBanVo> pickBanVo) {
+        this.pickBanVo = pickBanVo;
+    }        
 
     public void limpar() throws Exception {
         instanciar();

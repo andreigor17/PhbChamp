@@ -32,12 +32,12 @@
                 </div>
                 <div class="column4" style="height: 60vh; overflow-x: scroll">
                     <h1 style="text-align: center">TESTE</h1>
-                    <ui:repeat value="#{managerPartida.picksbans}" var="pb">
+                    <ui:repeat value="#{managerPartida.pickBanVo}" var="pb">
                         <div class="row">
-                            <div class="card" style="background-color: #ff1168; padding: 0.8em">
+                            <div class="card" style="#{pb.tipoPickBan.nome eq 'BAN' ? 'background-color: #ff1168; padding: 0.8em': 'background-color: #a2e5d2; padding: 0.8em'}">
                                 <div class="card-body">
-                                    <h5 class="card-title">Team 1</h5>
-                                    <h3 class="card-text">#{pb.toString()}</h3>
+                                    <h5 class="card-title">#{pb.team.nome}</h5>
+                                    <h3 class="card-text">#{pb.tipoPickBan.nome}</h3>
                                 </div>
                             </div>                        
                         </div>
