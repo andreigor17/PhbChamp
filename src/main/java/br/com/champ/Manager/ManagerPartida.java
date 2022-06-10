@@ -74,6 +74,7 @@ public class ManagerPartida {
     private List<Estatisticas> estsGerais;
     private boolean skip;
     private List<Mapas> mapas;
+    private List<Mapas> pickedMaps;
     List<String> picksbans;
     private List<PickBanVo> pickBanVo;
 
@@ -123,6 +124,7 @@ public class ManagerPartida {
         this.itemPartida = new ItemPartida();
         this.estsGerais = new ArrayList<Estatisticas>();
         this.mapas = new ArrayList<>();
+        this.pickedMaps = new ArrayList<>();
 
     }
 
@@ -319,6 +321,14 @@ public class ManagerPartida {
         this.pickBanVo = pickBanVo;
     }        
 
+    public List<Mapas> getPickedMaps() {
+        return pickedMaps;
+    }
+
+    public void setPickedMaps(List<Mapas> pickedMaps) {
+        this.pickedMaps = pickedMaps;
+    }
+    
     public void limpar() throws Exception {
         instanciar();
     }
@@ -328,7 +338,7 @@ public class ManagerPartida {
     }
 
     public void gerarMapas() {
-        PrimeFaces.current().executeScript("PF('picksbansDialog').show();");
+        PrimeFaces.current().executeScript("PF('gerarMapasDialog').show();");
     }
 
     public void verificarPlayers() {
