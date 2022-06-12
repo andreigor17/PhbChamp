@@ -5,6 +5,9 @@
 package br.com.champ.Utilitario;
 
 import br.com.champ.Enums.TipoPickBan;
+import br.com.champ.Modelo.ItemPartida;
+import br.com.champ.Modelo.Mapas;
+import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Team;
 import br.com.champ.vo.PickBanVo;
 import java.util.ArrayList;
@@ -59,6 +62,31 @@ public class PickBanUtils {
             return null;
         }
         return pickBanVo;
+    }
+
+    public static List<ItemPartida> setarMapas(List<Mapas> mapasSelecionados, List<ItemPartida> itens) {
+        if (mapasSelecionados.size() == 1) {
+            itens.get(0).setMapas(mapasSelecionados.get(0));
+            return itens;
+        } else if (mapasSelecionados.size() == 2) {
+            itens.get(0).setMapas(mapasSelecionados.get(0));
+            itens.get(1).setMapas(mapasSelecionados.get(1));
+            return itens;
+        } else if (mapasSelecionados.size() == 3) {
+            itens.get(0).setMapas(mapasSelecionados.get(0));
+            itens.get(1).setMapas(mapasSelecionados.get(1));
+            itens.get(2).setMapas(mapasSelecionados.get(2));
+            return itens;
+        } else if (mapasSelecionados.size() == 5) {
+            itens.get(0).setMapas(mapasSelecionados.get(0));
+            itens.get(1).setMapas(mapasSelecionados.get(1));
+            itens.get(2).setMapas(mapasSelecionados.get(2));
+            itens.get(3).setMapas(mapasSelecionados.get(3));
+            itens.get(4).setMapas(mapasSelecionados.get(4));
+            return itens;
+        } else {
+            return null;
+        }
     }
 
 }

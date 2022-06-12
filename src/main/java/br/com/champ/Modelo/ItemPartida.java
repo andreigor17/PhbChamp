@@ -17,7 +17,7 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
 
     private int scoreT1;
     private int scoreT2;
-    private Maps mapas;
+    private Mapas mapas;
     private Partida partida;
     private Team team1;
     private Team team2;
@@ -40,13 +40,13 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
         this.scoreT2 = scoreT2;
     }
 
-    public Maps getMapas() {
+    public Mapas getMapas() {
         return mapas;
     }
 
-    public void setMapas(Maps mapas) {
+    public void setMapas(Mapas mapas) {
         this.mapas = mapas;
-    }
+    }   
 
     public Partida getPartida() {
         return partida;

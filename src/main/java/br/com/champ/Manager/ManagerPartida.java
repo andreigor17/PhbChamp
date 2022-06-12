@@ -26,6 +26,8 @@ import br.com.champ.vo.PickBanVo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -77,36 +79,40 @@ public class ManagerPartida {
     private List<Mapas> pickedMaps;
     List<String> picksbans;
     private List<PickBanVo> pickBanVo;
+    private PickBanVo pbItem;
 
     @PostConstruct
     public void init() {
+        try {
+            instanciar();
+            String visualizarPartidaId = FacesUtil
+                    .getRequestParameter("id");
+            String gerarMapasId = FacesUtil
+                    .getRequestParameter("partidaId");
 
-        String visualizarPartidaId = FacesUtil
-                .getRequestParameter("id");
-        String gerarMapasId = FacesUtil
-                .getRequestParameter("partidaId");
-
-        if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
-            this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
-        } else if (gerarMapasId != null && !gerarMapasId.isEmpty()) {
-            this.partida = this.partidaServico.pesquisar(Long.parseLong(gerarMapasId));
-        } else {
-            try {
-                instanciar();
-            } catch (Exception ex) {
-                System.err.println(ex);
+            if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
+                this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
+            } else if (gerarMapasId != null && !gerarMapasId.isEmpty()) {
+                this.partida = this.partidaServico.pesquisar(Long.parseLong(gerarMapasId));
+            } else {
+                try {
+                    instanciar();
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
             }
-        }
 
-        if (this.partida.getId() != null) {
-            try {
-                this.itensPartidas = this.partida.getItemPartida();
-                this.mapas = mapaServico.pesquisar();
-                this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1() ,this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());
-                //this.picksbans = PickBanUtils.gerarListaPB(this.partida.getItemPartida().size());
-            } catch (Exception ex) {
-                System.err.println(ex);
+            if (this.partida.getId() != null) {
+                try {
+                    this.itensPartidas = this.partida.getItemPartida();
+                    this.mapas = mapaServico.pesquisar();
+                    this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1(), this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());                    
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
             }
+        } catch (Exception ex) {
+            System.err.println(ex);
         }
 
     }
@@ -319,7 +325,7 @@ public class ManagerPartida {
 
     public void setPickBanVo(List<PickBanVo> pickBanVo) {
         this.pickBanVo = pickBanVo;
-    }        
+    }
 
     public List<Mapas> getPickedMaps() {
         return pickedMaps;
@@ -328,7 +334,15 @@ public class ManagerPartida {
     public void setPickedMaps(List<Mapas> pickedMaps) {
         this.pickedMaps = pickedMaps;
     }
-    
+
+    public PickBanVo getPbItem() {
+        return pbItem;
+    }
+
+    public void setPbItem(PickBanVo pbItem) {
+        this.pbItem = pbItem;
+    }
+
     public void limpar() throws Exception {
         instanciar();
     }
@@ -337,8 +351,47 @@ public class ManagerPartida {
 
     }
 
-    public void gerarMapas() {
-        PrimeFaces.current().executeScript("PF('gerarMapasDialog').show();");
+    public void pickarMapa(Mapas mapa) {
+        System.out.println("MAPA " + this.pickedMaps.size());
+        if (pbItem.getTipoPickBan().getNome().equalsIgnoreCase("PICK")) {
+            System.out.println("entrou?");
+            this.pickedMaps.add(mapa);
+            System.out.println("MAPA " + this.pickedMaps.size());
+        }
+        pbItem.setMapas(mapa);
+        this.mapas.remove(mapa);
+
+    }
+
+    public boolean renderizarCommandButton(PickBanVo pb) {
+        int position = pickBanVo.indexOf(pb);        
+        if (pickBanVo.get(0).equals(pb) && pickBanVo.get(0).getMapas() == null) {
+            System.out.println("0" + pb.getTipoPickBan().getNome());
+            return true;
+        } else if (pickBanVo.get(position - 1).getMapas() != null) {
+            System.out.println("1");
+            return true;
+        } else {
+            System.out.println("2");
+            return false;
+        }
+    }
+    
+    public void finalizarPicks(){
+        List<ItemPartida> itensAtualizados = new ArrayList<>();
+        itensAtualizados = PickBanUtils.setarMapas(this.pickedMaps, this.partida.getItemPartida());
+        for(ItemPartida i : itensAtualizados){
+            try {
+                itemPartidaServico.salvar(itemPartida, i.getId(), Url.ATUALIZAR_ITEM_PARTIDA.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+        }
+        Mensagem.successAndRedirect("Picks realizados com sucesso!", "visualizarPartida.xhtml?id=" + this.partida.getId());
+    }
+    
+    public void retornarPartida(){
+        Mensagem.successAndRedirect("Operação cancelada com sucesso!", "visualizarPartida.xhtml?id=" + this.partida.getId());
     }
 
     public void verificarPlayers() {

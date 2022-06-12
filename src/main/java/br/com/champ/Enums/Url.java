@@ -22,8 +22,9 @@ public enum Url {
     SALVAR_ESTATISTICA(9, "/estatisticas"),
     ATUALIZAR_ESTATISTICA(10, "/estatisticas/"),
     SALVAR_ITEM_PARTIDA(11, "/itemPartidas"),
-    SALVAR_MAPA(12, "/mapas"),
-    ATUALIZAR_MAPA(13, "/mapas");
+    ATUALIZAR_ITEM_PARTIDA(12, "/itemPartidas"),
+    SALVAR_MAPA(13, "/mapas"),
+    ATUALIZAR_MAPA(14, "/mapas");
 
     private String nome;
     private Integer valor;

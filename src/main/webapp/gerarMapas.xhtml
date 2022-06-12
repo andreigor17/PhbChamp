@@ -35,10 +35,19 @@
                     <ui:repeat value="#{managerPartida.pickBanVo}" var="pb">
                         <div class="row">
                             <div class="card" style="#{pb.tipoPickBan.nome eq 'BAN' ? 'background-color: #ff1168; padding: 0.8em': 'background-color: #a2e5d2; padding: 0.8em'}">
-                                <div class="card-body">
+                                <div class="card-body">                                    
                                     <h5 class="card-title">#{pb.team.nome}</h5>
-                                    <h3 class="card-text">#{pb.tipoPickBan.nome}</h3>
-                                    <p:commandButton value="Selecionar Mapa" actionListener="#{managerPartida.gerarMapas()}" process="@this"/>
+                                    <h3 class="card-text">#{pb.mapas ne null ? ' '.concat(pb.tipoPickBan.nome).concat(' - ').concat(pb.mapas.nome) : pb.tipoPickBan.nome }</h3>
+                                    <h:graphicImage value="image/#{pb.mapas.avatar}" width="100px" height="100px" rendered="#{pb.mapas ne null}"/>
+                                    <p:commandButton title="Selecionar Mapa"
+                                                     value="Selecionar" 
+                                                     rendered="#{pb.mapas eq null}"
+                                                     process="@this"
+                                                     update="@form"
+                                                     oncomplete="PF('gerarMapasDialog').show();">
+                                        <f:setPropertyActionListener value="#{pb}"
+                                                                     target="#{managerPartida.pbItem}"/>
+                                    </p:commandButton>
                                 </div>
                             </div>                        
                         </div>
@@ -62,6 +71,31 @@
                     </ui:repeat>
                 </div>
             </div>
+            <div class="row">
+                <div class="actions">
+
+                    <center>
+
+                        <p:commandButton value="Cancelar"
+                                         title="Cancelar"
+                                         icon="ui-icon-close"
+                                         process="@this"
+                                         update="@form"
+                                         actionListener="#{managerPartida.retornarPartida()}"
+                                         />
+
+                        <p:commandButton value="Salvar"
+                                         title="Salvar Player"
+                                         icon="ui-icon-check"
+                                         process="@form"
+                                         update="@form"                                     
+                                         actionListener="#{managerPartida.finalizarPicks()}"
+                                         />
+
+                    </center>
+
+                </div>
+            </div>
 
             <p:dialog id="gerarMapasDialog"
                       widgetVar="gerarMapasDialog"
@@ -73,38 +107,25 @@
                       hideEffect="fade">
 
 
-                <div class="row" style="display: flex; flex-wrap: wrap">
-                    <div class="column4" style="display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: scroll">
-                        <h1 style="text-align: center">REMAINING MAPS</h1>
-                        <ui:repeat value="#{managerPartida.mapas}" var="mapa">
-                            <div class="row">
-                                <p:outputLabel id="nomeMapa" style="text-align: center !important" value="#{mapa.nome}"/>
-                            </div>
-                            <div class="row" style="display: flex; justify-content: center; align-items: center">
-                                <h:graphicImage value="image/#{mapa.avatar}" width="200px" height="100px" />
-                            </div>
-                        </ui:repeat>
+                <div class="row" style="display: flex; flex-wrap: wrap; width: 900px; height: 80vh; justify-content: center">
+                    <div class="row">
+                        <h1 style='text-align: center'>REMAINING MAPS</h1>
                     </div>
+                    <ui:repeat value="#{managerPartida.mapas}" var="mapa">
+                        <div style="display: flex; justify-content: center; flex-direction: column; width: 400px; margin: 10px;">
+                            <div class='row'>
+                                <p:outputLabel id="nomeMapa" style="text-align: center !important" value="#{mapa.nome}" />
+                            </div>
+                            <div class="row">                                
+                                <h:commandButton action="#{managerPartida.pickarMapa(mapa)}" style="border-radius: 10px;
+                                                 margin: 10px; width: 350px !important; height: 175px !important" 
+                                                 image="image/#{mapa.avatar}" >
+                                    <p:ajax process="@this" update="@form"/>
+                                </h:commandButton>
+                            </div>
+                        </div>                
+                    </ui:repeat>
                 </div>
-
-
-                <center>
-
-                    <p:commandButton value="Não"
-                                     title="Cancelar Remoção"
-                                     icon="fa fa-ban"
-                                     oncomplete="PF('gerarMapasDialog').hide();"
-                                     styleClass="btn btn-default"/>
-
-                    <p:commandButton value="Sim"
-                                     title="Confirmar Remoção"
-                                     icon="fa fa-check"
-                                     process="@this"
-                                     update="@form"
-                                     actionListener="#{managerPartida.gerarMapas()}"
-                                     styleClass="btn btn-info"/>
-
-                </center>
 
             </p:dialog>
 
