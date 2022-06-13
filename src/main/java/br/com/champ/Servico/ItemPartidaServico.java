@@ -30,14 +30,14 @@ import org.json.JSONException;
 @Stateless
 public class ItemPartidaServico {
     
-     public ItemPartida salvar(ItemPartida partida, Long id, String uri) throws Exception {
+     public ItemPartida salvar(List<ItemPartida> partida,  String uri) throws Exception {
 
        String url;
-        if (id != null) {
-            url = pathToAPI() + uri + id;
-        } else {
+//        if (id != null) {
+//            url = pathToAPI() + uri;
+//        } else {
             url = pathToAPI() + uri;
-        }
+        //}
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -52,11 +52,11 @@ public class ItemPartidaServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-                if (id != null) {
+//                if (id != null) {
                     request.setRequestMethod("PUT");
-                } else {
-                    request.setRequestMethod("POST");
-                }
+//                } else {
+//                    request.setRequestMethod("POST");
+//                }
 
                 // Conecta na URL:
                 request.connect();
@@ -64,6 +64,20 @@ public class ItemPartidaServico {
                 Gson gson = new Gson();
                 String json = gson.toJson(partida);
                 System.out.println("Montagem do item: " + json);
+                
+                 List<Player> p = new ArrayList<>();
+
+            //Player[] userArray = gson.fromJson(response.toString(), Player[].class);
+            Type userListType = new TypeToken<ArrayList<Player>>() {
+            }.getType();
+
+            ArrayList<Player> userArray = gson.fromJson(response.toString(), userListType);
+
+            for (Player user : userArray) {
+                p.add(user);
+            }
+
+            return p;
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
                 try (OutputStream outputStream = request.getOutputStream()) {
@@ -83,7 +97,7 @@ public class ItemPartidaServico {
                 request.disconnect();
             }
         } catch (IOException ex) {
-            System.err.println(ex);
+            System.err.println("erro " + ex);
         }
         return null;
     }

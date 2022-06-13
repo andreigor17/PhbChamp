@@ -487,7 +487,11 @@ public class ManagerPartida {
                 estsTeam1 = new ArrayList<Estatisticas>();
                 estsTeam2 = new ArrayList<Estatisticas>();
                 this.estsGerais = new ArrayList<Estatisticas>();
+                i.setPartida(partida);
+
             }
+
+            itemPartidaServico.salvar(it, Url.ATUALIZAR_ITEM_PARTIDA.getNome());
 
             Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {
