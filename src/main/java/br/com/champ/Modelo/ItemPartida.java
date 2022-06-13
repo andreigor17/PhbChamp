@@ -87,5 +87,10 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
     public void setEstatisticas(Estatisticas estatisticas) {
         this.estatisticas = estatisticas;
     }
+
+    @Override
+    public String toString() {
+        return "ItemPartida{" + "scoreT1=" + scoreT1 + ", scoreT2=" + scoreT2 + ", mapas=" + mapas + ", partida=" + partida + ", team1=" + team1 + ", team2=" + team2 + ", camp=" + camp + ", estatisticas=" + estatisticas + '}';
+    }
     
 }

@@ -31,24 +31,16 @@
                         <p:menuitem value="Excluir"  update="messages" icon="pi pi-refresh"/>                        
                     </p:submenu>
                     <p:submenu label="Picks and Bans">
-                        <p:menuitem value="Gerar mapas" outcome="gerarMapas.xhtml?partidaId=#{managerPartida.partida.id}" process="@this" icon="pi pi-external-link"/>
-                        <p:menuitem value="Alterar mapas"  icon="pi pi-upload"/>
+                        <p:menuitem value="Gerar mapas" outcome="gerarMapas.xhtml?partidaId=#{managerPartida.partida.id}" process="@this" icon="pi pi-external-link"/>                        
                     </p:submenu>
                 </p:menu>
 
 
-            </div>
-            <p:fieldset legend="Dados">
-                <div class="column1">
-                    <p:outputLabel value="Mapas:" />
-                </div>
-
-            </p:fieldset>
-
+            </div>           
             <p:tabView id="tabview">
-                <p:tab id="tabGeral" title="Geral"/>
+               
                 <c:forEach items="#{managerPartida.itensPartidas}" var="item">
-                    <p:tab id="tab" title="#{item.mapas.nome ? item.mapas.nome : 'N/A'}">
+                    <p:tab id="tab" title="#{item.mapas.nome ne null ? item.mapas.nome : 'N/A'}">
 
                         <p:dataTable id="partidaTime1"
                                      value="#{managerPartida.estsGerais(item.team1, item)}"

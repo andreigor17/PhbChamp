@@ -10,6 +10,15 @@
         Picks and Bans
     </ui:define>
 
+    <style>
+        .vote {
+            transition: 0.5s;
+        }
+        .vote:hover {
+            transform: scale(1.5);
+        }
+    </style>
+    
     <ui:define name="content">
 
         <h:form id="formVisualizarPartida"
@@ -17,28 +26,38 @@
 
             <p:growl id="messages"
                      showDetail="false"/>
-
-            <div class="row" style="display: flex; flex-wrap: wrap">
-                <div class="column4" style="display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: scroll">
+            <div class="row" style="display: flex; flex-wrap: wrap;">
+                <div class="column4">
                     <h1 style="text-align: center">REMAINING MAPS</h1>
+                </div>
+                <div class="column4">
+                    <h1 style="text-align: center">VOTES</h1>
+                </div>
+                <div class="column4">
+                    <h1 style="text-align: center">PICKED MAPS</h1>
+                </div>
+            </div>
+            <div class="row" style="display: flex; flex-wrap: wrap">
+                
+                <div class="column4" style="height: 70vh; overflow-x: scroll">
                     <ui:repeat value="#{managerPartida.mapas}" var="mapa">
                         <div class="row">
                             <p:outputLabel id="nomeMapa" style="text-align: center !important" value="#{mapa.nome}"/>
                         </div>
                         <div class="row" style="display: flex; justify-content: center; align-items: center">
-                            <h:graphicImage value="image/#{mapa.avatar}" width="200px" height="100px" />
+                            <h:graphicImage value="image/#{mapa.avatar}" width="200px" height="100px" style="border-radius: 10px"/>
                         </div>
                     </ui:repeat>
                 </div>
-                <div class="column4" style="height: 60vh; overflow-x: scroll">
-                    <h1 style="text-align: center">VOTES</h1>
+                <div class="column4" style="height: 70vh; overflow-x: scroll">
+                    
                     <ui:repeat value="#{managerPartida.pickBanVo}" var="pb">
                         <div class="row">
-                            <div class="card" style="#{pb.tipoPickBan.nome eq 'BAN' ? 'background-color: #ff1168; padding: 0.8em': 'background-color: #a2e5d2; padding: 0.8em'}">
-                                <div class="card-body">                                    
+                            <div class="card vote" style="#{pb.tipoPickBan.nome eq 'BAN' ? 'background-color: #ff1168; padding: 0.8em; border-radius: 10px;': 'background-color: #a2e5d2; padding: 0.8em; border-radius: 10px'}">
+                                <div class="card-body" style="display: flex; justify-content: space-around; align-items: center;">                                    
                                     <h5 class="card-title">#{pb.team.nome}</h5>
-                                    <h3 class="card-text">#{pb.mapas ne null ? ' '.concat(pb.tipoPickBan.nome).concat(' - ').concat(pb.mapas.nome) : pb.tipoPickBan.nome }</h3>
-                                    <h:graphicImage value="image/#{pb.mapas.avatar}" width="100px" height="100px" rendered="#{pb.mapas ne null}"/>
+                                    <h4 class="card-text">#{pb.mapas ne null ? ' '.concat(pb.tipoPickBan.nome).concat(' - ').concat(pb.mapas.nome) : pb.tipoPickBan.nome }</h4>
+                                    <h:graphicImage value="image/#{pb.mapas.avatar}" style="height: 65px; width: 130px; object-fit: cover; border: 1px solid white" rendered="#{pb.mapas ne null}"/>                                        
                                     <p:commandButton title="Selecionar Mapa"
                                                      value="Selecionar" 
                                                      rendered="#{pb.mapas eq null}"
@@ -55,8 +74,7 @@
 
                 </div>
 
-                <div class="column4" style="display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: scroll">
-                    <h1 style="text-align: center">PICKED MAPS</h1>
+                <div class="column4" style="height: 70vh; overflow-x: scroll">
                     <ui:repeat value="#{managerPartida.pickedMaps}" var="mapa">
                         <div class="row" style="display: flex; justify-content: center; align-items: center; text-align: center">                            
 
@@ -116,7 +134,7 @@
                             <div class='row'>
                                 <p:outputLabel id="nomeMapa" style="text-align: center !important" value="#{mapa.nome}" />
                             </div>
-                            <div class="row">                                
+                            <div class="row" style="display: flex; justify-items: center; align-items: center">                                
                                 <h:commandButton action="#{managerPartida.pickarMapa(mapa)}" style="border-radius: 10px;
                                                  margin: 10px; width: 350px !important; height: 175px !important" 
                                                  image="image/#{mapa.avatar}" >

@@ -106,7 +106,7 @@ public class ManagerPartida {
                 try {
                     this.itensPartidas = this.partida.getItemPartida();
                     this.mapas = mapaServico.pesquisar();
-                    this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1(), this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());                    
+                    this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1(), this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -137,6 +137,17 @@ public class ManagerPartida {
     public List<Estatisticas> estsGerais(Team team, ItemPartida item) {
         List<Estatisticas> e = estatisticasServico.estatisticaPorItemPartida(team.getId(), item.getId());
         return e;
+    }
+
+    public List<Estatisticas> somaEsts(Team team) {
+        List<Estatisticas> soma = new ArrayList<>();
+        Integer kills = 0;
+        Integer deaths = 0;
+        Integer assists = 0;
+        soma = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
+        System.out.println("estss " + soma.size());
+        return soma;
+
     }
 
     public Partida getPartida() {
@@ -364,7 +375,7 @@ public class ManagerPartida {
     }
 
     public boolean renderizarCommandButton(PickBanVo pb) {
-        int position = pickBanVo.indexOf(pb);        
+        int position = pickBanVo.indexOf(pb);
         if (pickBanVo.get(0).equals(pb) && pickBanVo.get(0).getMapas() == null) {
             System.out.println("0" + pb.getTipoPickBan().getNome());
             return true;
@@ -376,21 +387,21 @@ public class ManagerPartida {
             return false;
         }
     }
-    
-    public void finalizarPicks(){
-        List<ItemPartida> itensAtualizados = new ArrayList<>();
-        itensAtualizados = PickBanUtils.setarMapas(this.pickedMaps, this.partida.getItemPartida());
-        for(ItemPartida i : itensAtualizados){
-            try {
-                itemPartidaServico.salvar(itemPartida, i.getId(), Url.ATUALIZAR_ITEM_PARTIDA.getNome());
-            } catch (Exception ex) {
-                System.err.println(ex);
-            }
+
+    public void finalizarPicks() {
+        try {
+            List<ItemPartida> itensAtualizados = new ArrayList<>();
+            itensAtualizados = PickBanUtils.setarMapas(this.pickedMaps, this.partida.getItemPartida());
+            Partida p = new Partida();
+            this.partida.setItemPartida(itensAtualizados);
+            p = partidaServico.salvar(this.partida, this.partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
+            Mensagem.successAndRedirect("Picks realizados com sucesso!", "visualizarPartida.xhtml?id=" + p.getId());
+        } catch (Exception ex) {
+            System.err.println(ex);
         }
-        Mensagem.successAndRedirect("Picks realizados com sucesso!", "visualizarPartida.xhtml?id=" + this.partida.getId());
     }
-    
-    public void retornarPartida(){
+
+    public void retornarPartida() {
         Mensagem.successAndRedirect("Operação cancelada com sucesso!", "visualizarPartida.xhtml?id=" + this.partida.getId());
     }
 
