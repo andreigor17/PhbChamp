@@ -78,7 +78,7 @@ public class EstatisticaServico {
                 // Montando o  Json
                 Gson gson = new Gson();
                 String json = gson.toJson(estatistica);
-                System.out.println("Montagem da estatistica: " + json);
+                //System.out.println("Montagem da estatistica: " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
                 try (OutputStream outputStream = request.getOutputStream()) {
@@ -122,7 +122,7 @@ public class EstatisticaServico {
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
+            //System.out.println("\nSending 'GET' request to URL : " + url);
             System.out.println("Response Code : " + responseCode);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -133,7 +133,7 @@ public class EstatisticaServico {
             }
             in.close();
             //print in String
-            System.out.println(response.toString());
+            //System.out.println(response.toString());
             //Read JSON response and print
             Gson gson = new Gson();
             List<Estatisticas> c = new ArrayList<>();
@@ -183,7 +183,7 @@ public class EstatisticaServico {
             }
             in.close();
             //print in String
-            System.out.println(response.toString());
+            //System.out.println(response.toString());
             //Read JSON response and print
             Gson gson = new Gson();
             List<Estatisticas> c = new ArrayList<>();
@@ -233,7 +233,7 @@ public class EstatisticaServico {
             }
             in.close();
             //print in String
-            System.out.println(response.toString());
+           // System.out.println(response.toString());
             //Read JSON response and print
             Gson gson = new Gson();
             List<Estatisticas> c = new ArrayList<>();
@@ -283,7 +283,7 @@ public class EstatisticaServico {
             }
             in.close();
             //print in String
-            System.out.println(response.toString());
+            //System.out.println(response.toString());
             //Read JSON response and print
             Gson gson = new Gson();
             Estatisticas c = new Estatisticas();

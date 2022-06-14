@@ -141,13 +141,19 @@ public class ManagerPartida {
 
     public List<Estatisticas> somaEsts(Team team) {
         List<Estatisticas> soma = new ArrayList<>();
-        
+        Estatisticas est = new Estatisticas();
         Integer kills = 0;
         Integer deaths = 0;
         Integer assists = 0;
         List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
-        System.out.println("TAMANHO: " + ests.size());
-        return null;
+        for (Player p : team.getPlayers()) {            
+            for (Estatisticas e : ests) {
+                if (e.getPlayer().equals(p)){
+                    System.out.println("ESTATISTICA DO PLAYER TAL");
+                }
+            }
+        }
+        return ests;
 
     }
 
