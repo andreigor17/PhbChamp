@@ -147,6 +147,7 @@ public class ManagerPartida {
         Integer assists = 0;
         List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
         System.out.println("TAMANHO: " + ests.size());
+        return null;
 
     }
 
