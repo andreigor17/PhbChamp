@@ -29,14 +29,14 @@ import org.json.JSONException;
  */
 @Stateless
 public class ItemPartidaServico {
-    
-     public ItemPartida salvar(List<ItemPartida> partida,  String uri) throws Exception {
 
-       String url;
+    public List<ItemPartida> salvar(List<ItemPartida> partida, String uri) throws Exception {
+
+        String url;
 //        if (id != null) {
 //            url = pathToAPI() + uri;
 //        } else {
-            url = pathToAPI() + uri;
+        url = pathToAPI() + uri;
         //}
 
         try {
@@ -53,7 +53,7 @@ public class ItemPartidaServico {
 
                 // Define o método da requisição:
 //                if (id != null) {
-                    request.setRequestMethod("PUT");
+                request.setRequestMethod("PUT");
 //                } else {
 //                    request.setRequestMethod("POST");
 //                }
@@ -64,20 +64,6 @@ public class ItemPartidaServico {
                 Gson gson = new Gson();
                 String json = gson.toJson(partida);
                 System.out.println("Montagem do item: " + json);
-                
-                 List<Player> p = new ArrayList<>();
-
-            //Player[] userArray = gson.fromJson(response.toString(), Player[].class);
-            Type userListType = new TypeToken<ArrayList<Player>>() {
-            }.getType();
-
-            ArrayList<Player> userArray = gson.fromJson(response.toString(), userListType);
-
-            for (Player user : userArray) {
-                p.add(user);
-            }
-
-            return p;
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
                 try (OutputStream outputStream = request.getOutputStream()) {
@@ -86,12 +72,18 @@ public class ItemPartidaServico {
 
                 // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
                 //int response = request.getResponseCode();
-                ItemPartida c = new ItemPartida();
+                List<ItemPartida> p = new ArrayList<>();
 
-                ItemPartida userArray = gson.fromJson(readResponse(request), ItemPartida.class);
-                c = userArray;
+                Type userListType = new TypeToken<ArrayList<ItemPartida>>() {
+                }.getType();
 
-                return c;
+                ArrayList<ItemPartida> userArray = gson.fromJson(readResponse(request), userListType);
+
+                for (ItemPartida user : userArray) {
+                    p.add(user);
+                }
+
+                return p;
 
             } finally {
                 request.disconnect();
@@ -166,7 +158,5 @@ public class ItemPartidaServico {
         return null;
 
     }
-    
-    
-    
+
 }

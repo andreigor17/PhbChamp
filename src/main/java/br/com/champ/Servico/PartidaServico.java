@@ -31,7 +31,7 @@ import org.json.JSONException;
  */
 @Stateless
 public class PartidaServico {
-    
+
     @EJB
     private ConfiguracaoServico configuracaoServico;
 
@@ -39,7 +39,7 @@ public class PartidaServico {
         return configuracaoServico.buscaConfig();
 
     }
-    
+
     public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
@@ -47,7 +47,7 @@ public class PartidaServico {
 
     public Partida salvar(Partida partida, Long id, String uri) throws Exception {
 
-       String url;
+        String url;
         if (id != null) {
             url = pathToAPI() + uri + id;
         } else {
@@ -84,16 +84,11 @@ public class PartidaServico {
                 try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
-
-                // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
-                //int response = request.getResponseCode();
+                
                 Partida c = new Partida();
-
-                Partida userArray = gson.fromJson(readResponse(request), Partida.class);
-                c = userArray;
+                c = gson.fromJson(readResponse(request), Partida.class);
 
                 return c;
-
             } finally {
                 request.disconnect();
             }

@@ -141,11 +141,25 @@ public class ManagerPartida {
 
     public List<Estatisticas> somaEsts(Team team) {
         List<Estatisticas> soma = new ArrayList<>();
+        Estatisticas est = new Estatisticas();
         Integer kills = 0;
         Integer deaths = 0;
         Integer assists = 0;
-        soma = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
-        System.out.println("estss " + soma.size());
+        List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
+        System.out.println("TAMANHO: " + ests.size());
+        for (Estatisticas e : ests) {
+            kills += e.getKills();
+            deaths += e.getDeaths();
+            assists += e.getAssists();
+            e.setKills(kills);
+            e.setDeaths(deaths);
+            e.setAssists(assists);
+            e.setPlayer(e.getPlayer());
+            soma.add(e);
+            
+        }
+        
+
         return soma;
 
     }
@@ -363,29 +377,12 @@ public class ManagerPartida {
     }
 
     public void pickarMapa(Mapas mapa) {
-        System.out.println("MAPA " + this.pickedMaps.size());
         if (pbItem.getTipoPickBan().getNome().equalsIgnoreCase("PICK")) {
-            System.out.println("entrou?");
             this.pickedMaps.add(mapa);
-            System.out.println("MAPA " + this.pickedMaps.size());
         }
         pbItem.setMapas(mapa);
         this.mapas.remove(mapa);
 
-    }
-
-    public boolean renderizarCommandButton(PickBanVo pb) {
-        int position = pickBanVo.indexOf(pb);
-        if (pickBanVo.get(0).equals(pb) && pickBanVo.get(0).getMapas() == null) {
-            System.out.println("0" + pb.getTipoPickBan().getNome());
-            return true;
-        } else if (pickBanVo.get(position - 1).getMapas() != null) {
-            System.out.println("1");
-            return true;
-        } else {
-            System.out.println("2");
-            return false;
-        }
     }
 
     public void finalizarPicks() {
@@ -424,6 +421,7 @@ public class ManagerPartida {
             Partida partidaX5 = new Partida();
             ItemPartida itemPartidaAtual = new ItemPartida();
             Partida partida = new Partida();
+            List<Partida> partidas = new ArrayList<>();
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
@@ -457,8 +455,18 @@ public class ManagerPartida {
             this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, null, team1, team2, this.qtdItensPartidas);
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
-
             List<ItemPartida> it = partida.getItemPartida();
+
+            List<ItemPartida> newItem = new ArrayList<>();
+
+            for (ItemPartida ip : partida.getItemPartida()) {
+                ip.setPartida(partida.getId());
+                newItem.add(ip);
+            }
+
+            partida.setItemPartida(newItem);
+
+            partida = partidaServico.salvar(partida, partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
 
             for (ItemPartida i : it) {
                 for (Player playerTime1 : team1.getPlayers()) {
@@ -487,11 +495,8 @@ public class ManagerPartida {
                 estsTeam1 = new ArrayList<Estatisticas>();
                 estsTeam2 = new ArrayList<Estatisticas>();
                 this.estsGerais = new ArrayList<Estatisticas>();
-                i.setPartida(partida);
 
             }
-
-            itemPartidaServico.salvar(it, Url.ATUALIZAR_ITEM_PARTIDA.getNome());
 
             Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
         } catch (Exception ex) {

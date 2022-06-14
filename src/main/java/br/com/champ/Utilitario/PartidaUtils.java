@@ -29,7 +29,7 @@ public class PartidaUtils {
             for (i = 1; i <= qtdItensPartidas; i++) {
                 ItemPartida newItem = new ItemPartida();
                 if (camp != null) {
-                    newItem.setCamp(camp);
+                    newItem.setCamp(camp.getId());
                 }
 
                 newItem.setTeam1(time1);
