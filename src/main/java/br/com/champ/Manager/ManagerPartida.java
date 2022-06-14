@@ -141,26 +141,12 @@ public class ManagerPartida {
 
     public List<Estatisticas> somaEsts(Team team) {
         List<Estatisticas> soma = new ArrayList<>();
-        Estatisticas est = new Estatisticas();
+        
         Integer kills = 0;
         Integer deaths = 0;
         Integer assists = 0;
         List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
         System.out.println("TAMANHO: " + ests.size());
-        for (Estatisticas e : ests) {
-            kills += e.getKills();
-            deaths += e.getDeaths();
-            assists += e.getAssists();
-            e.setKills(kills);
-            e.setDeaths(deaths);
-            e.setAssists(assists);
-            e.setPlayer(e.getPlayer());
-            soma.add(e);
-            
-        }
-        
-
-        return soma;
 
     }
 
