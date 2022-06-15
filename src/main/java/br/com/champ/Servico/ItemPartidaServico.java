@@ -158,5 +158,46 @@ public class ItemPartidaServico {
         return null;
 
     }
+    
+    public ItemPartida buscaItem(Long id) {
+        try {
+            String url = pathToAPI() + "/itemPartidas/" + id;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            int responseCode = con.getResponseCode();
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            //print in String
+            System.out.println(response.toString());
+            //Read JSON response and print
+            Gson gson = new Gson();
+            ItemPartida p1 = new ItemPartida();
+
+            ItemPartida userArray = gson.fromJson(response.toString(), ItemPartida.class);
+
+            p1 = userArray;
+            return p1;
+        } catch (IOException iOException) {
+            System.err.println(iOException);
+        } catch (JSONException jSONException) {
+            System.err.println(jSONException);
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println(numberFormatException);
+        }
+        return null;
+
+    }
 
 }

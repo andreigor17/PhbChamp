@@ -146,14 +146,28 @@ public class ManagerPartida {
         Integer deaths = 0;
         Integer assists = 0;
         List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
-        for (Player p : team.getPlayers()) {            
+        for (Player p : team.getPlayers()) {
             for (Estatisticas e : ests) {
-                if (e.getPlayer().equals(p)){
-                    System.out.println("ESTATISTICA DO PLAYER TAL");
+                if (e.getPlayer().getId().equals(p.getId())) {
+                    kills += e.getKills();
+                    deaths += e.getDeaths();
+                    assists += e.getAssists();
+
                 }
+
             }
+            est.setKills(kills);
+            est.setAssists(assists);
+            est.setDeaths(deaths);
+            est.setPlayer(p);
+            est.setTeam(team);
+            soma.add(est);
+            kills = 0;
+            deaths = 0;
+            assists = 0;
+            est = new Estatisticas();
         }
-        return ests;
+        return soma;
 
     }
 
@@ -496,5 +510,7 @@ public class ManagerPartida {
             System.err.println(ex);
         }
     }
-
+    public void redirecionarPartida(ItemPartida item){
+        Mensagem.successAndRedirect("editarItem.xhtml?id=" + item.getId());
+    }
 }

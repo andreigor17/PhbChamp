@@ -16,7 +16,7 @@ import javax.faces.application.FacesMessage.Severity;
  * @author andre
  */
 public class Mensagem {
-    
+
     public static final String SUCCESS = "Operação Realizada com Sucesso!";
 
     public static final String ERROR = "Erro ao Realizar a Operação!";
@@ -38,7 +38,7 @@ public class Mensagem {
     public static void success(String mensagem, String detalhes) {
         adicionarMensagemSuccess(mensagem, detalhes);
     }
-    
+
     public static void successAndRedirect(String url) {
         adicionarMensagemSuccess(SUCCESS, null);
         redirect(url);
@@ -53,7 +53,7 @@ public class Mensagem {
         adicionarMensagemSuccess(mensagem, detalhes);
         redirect(url);
     }
-    
+
     public static void error() {
         adicionarMensagemError(ERROR, null);
     }
@@ -65,7 +65,7 @@ public class Mensagem {
     public static void error(String mensagem, String detalhes) {
         adicionarMensagemError(mensagem, detalhes);
     }
-    
+
     public static void errorAndRedirect(String url) {
         adicionarMensagemError(SUCCESS, null);
         redirect(url);
@@ -80,7 +80,7 @@ public class Mensagem {
         adicionarMensagemError(mensagem, detalhes);
         redirect(url);
     }
-    
+
     public static void warn() {
         adicionarMensagemWarn(WARN, null);
     }
@@ -92,7 +92,7 @@ public class Mensagem {
     public static void warn(String mensagem, String detalhes) {
         adicionarMensagemWarn(mensagem, detalhes);
     }
-    
+
     public static void warnAndRedirect(String url) {
         adicionarMensagemWarn(SUCCESS, null);
         redirect(url);
@@ -119,7 +119,7 @@ public class Mensagem {
     public static void fatal(String mensagem, String detalhes) {
         adicionarMensagemFatal(mensagem, detalhes);
     }
-    
+
     public static void fatalAndRedirect(String url) {
         adicionarMensagemFatal(FATAL, null);
         redirect(url);
@@ -146,7 +146,7 @@ public class Mensagem {
     public static void permissaoNegada(String mensagem, String detalhes) {
         adicionarMensagemPermissaoNegada(mensagem, detalhes);
     }
-    
+
     public static void permissaoNegadaAndRedirect(String url) {
         adicionarMensagemPermissaoNegada(PERMISSAO_NEGADA, null);
         redirect(url);
@@ -187,20 +187,24 @@ public class Mensagem {
                 .addMessage(null, new FacesMessage(severiry, summary, detail));
     }
 
+    public static void onlyRedirect(String url) {
+        redirect(url);
+    }
+
     private static void redirect(String url) {
-        
+
         try {
-            
+
             manterMensagem();
-            
+
             FacesUtil.getFacesContext()
-                .getExternalContext()
-                .redirect(url);
-            
+                    .getExternalContext()
+                    .redirect(url);
+
         } catch (IOException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private static void manterMensagem() {
@@ -209,5 +213,5 @@ public class Mensagem {
                 .getFlash()
                 .setKeepMessages(true);
     }
-    
+
 }

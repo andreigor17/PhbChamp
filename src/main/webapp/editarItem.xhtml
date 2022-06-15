@@ -1,0 +1,106 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+
+    <ui:define name="title">
+        Editar Partida
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formEditarItem"
+                >
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+            
+             <p:dataTable id="partidaTime1"
+                          value="#{managerPesquisarEstatisticas.estsGerais(itemPartida.team1)}"
+                                     var="ests1"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum mapa jogado na partida...">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team1.nome}" />
+                            </f:facet>
+
+                            <p:column headerText="Opções" width="5%">
+                                <div class="options">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
+                                </div>
+                            </p:column>
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
+                            </p:column>                            
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests1.kills}"/>
+                            </p:column>
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests1.assists}"/>
+                            </p:column>
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests1.deaths}"/>
+                            </p:column>
+
+
+
+
+                        </p:dataTable>
+
+
+                        <p:dataTable id="partidaTime2"
+                                     value="#{managerPesquisarEstatisticas.estsGerais(itemPartida.team2, itemPartida)}"
+                                     var="ests2"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum time encontrado na partida...">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team2.nome}" />
+                            </f:facet>
+
+                            <p:column headerText="Opções" width="5%">
+                                <div class="options">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id=#{ests2.player.id}"/>
+                                </div>
+                            </p:column>
+
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests2.player.nome}   '#{ests2.player.nick}' #{ests2.player.sobreNome} "/>
+                            </p:column>                            
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests2.kills}"/>
+                            </p:column>
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests2.assists}"/>
+                            </p:column>
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests2.deaths}"/>
+                            </p:column>
+
+
+
+                        </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
