@@ -12,6 +12,8 @@ import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -56,6 +58,14 @@ public class ManagerMapa {
     public void instanciar() {
         this.mapa = new Mapas();
         this.mapas = new ArrayList<>();
+    }
+
+    public void pesquisarMapas() {
+        try {
+            this.mapas = mapaServico.pesquisar();
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
     }
 
     public Mapas getMapa() {
@@ -117,8 +127,12 @@ public class ManagerMapa {
         Mensagem.successAndRedirect("Mapa criado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
 
     }
+    
+    public void visualizarMapa(Mapas mapa){
+        Mensagem.successAndRedirect("Operação realizada com sucesso!", "visualizarMapas.xhtml?id=" + mapa.getId());
+    }
 
     public void excluir() {
 
-    }
+    }    
 }

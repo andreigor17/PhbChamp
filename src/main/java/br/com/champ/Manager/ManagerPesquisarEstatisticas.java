@@ -5,14 +5,18 @@
  */
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.EstatisticaServico;
 import br.com.champ.Servico.ItemPartidaServico;
 import br.com.champ.Utilitario.FacesUtil;
+import br.com.champ.Utilitario.Mensagem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -41,7 +45,7 @@ public class ManagerPesquisarEstatisticas {
                 .getRequestParameter("id");
         if (visualizarItemId != null && !visualizarItemId.isEmpty()) {
             this.itemPartida = this.itemPartidaServico.buscaItem(Long.parseLong(visualizarItemId));
-            
+
         }
 
     }
@@ -75,14 +79,21 @@ public class ManagerPesquisarEstatisticas {
     public void setEsts(List<Estatisticas> ests) {
         this.ests = ests;
     }
-    
+
     public List<Estatisticas> estsGerais(Team team) {
-        List<Estatisticas> e = estatisticasServico.estatisticaPorItemPartida(team.getId(), this.itemPartida.getId());
-        return e;
+        this.ests = estatisticasServico.estatisticaPorItemPartida(team.getId(), this.itemPartida.getId());
+        return this.ests;
     }
-    
-    public void salvar(){
-        ItemPartida ip = new ItemPartida();
+
+    public void salvar() {
+        for (Estatisticas e : this.ests) {
+            try {
+                estatisticasServico.salvar(e, e.getId(), Url.SALVAR_ESTATISTICA.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+        }
+        Mensagem.successAndRedirect("Dados atualizados com sucesso!", "visualizarPartida.xhtml?id=" + this.itemPartida.getPartida());
     }
 
 }
