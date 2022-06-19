@@ -52,10 +52,10 @@ public class APIPath {
         } catch (org.json.simple.parser.ParseException ex) {
             Logger.getLogger(APIPath.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(jsonObject);
+        //System.out.println(jsonObject);
 
         String caminho_api = (String) jsonObject.get("caminho_api");
-        System.out.println(caminho_api);
+        //System.out.println(caminho_api);
 
         if (caminho_api != null) {
             return caminho_api;
@@ -85,7 +85,7 @@ public class APIPath {
         }
 
         //Imprimne na Tela o Objeto JSON para vizualização
-        System.out.println(jsonObject);
+        //System.out.println(jsonObject);
 
     }
 

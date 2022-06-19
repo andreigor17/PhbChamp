@@ -17,10 +17,31 @@
 
             <p:growl id="messages"
                      showDetail="false"/>
-            
-            
 
+            <div class="row">
+                <div class="column4">
+                    <p:tieredMenu style="width:200px">                       
+                        <p:submenu label="Criar" icon="pi pi-fw pi-plus">
+                            <p:menuitem value="X5" icon="pi pi-fw pi-bookmark" outcome="sorteiox5.xhtml"/>
+                            <p:menuitem value="Clássica" icon="pi pi-fw pi-video" outcome="partidaClassica.xhtml"/>
+                        </p:submenu>
+                        <p:menuitem value="Pesquisar" icon="pi pi-fw pi-trash" outcome="pesquisarPartida.xhtml"/>
+                        <p:divider />
+                        <p:menuitem value="Gráficos" icon="pi pi-fw pi-external-link"/>
 
+                    </p:tieredMenu>
+                </div>
+
+                <div class="column8">
+                    <p:dataTable id="partidaDataTable" value="#{managerIndexPartida.partidasØ}" var="partida"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 rows="5" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma partida encontrada">
+
+                    </p:dataTable>
+                </div>
+            </div>
         </h:form>
 
     </ui:define>

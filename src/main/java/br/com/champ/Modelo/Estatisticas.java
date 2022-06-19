@@ -109,4 +109,9 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
         this.player = player;
     }
 
+    @Override
+    public String toString() {
+        return "Estatisticas{" + "kills=" + kills + ", deaths=" + deaths + ", assists=" + assists + '}';
+    }
+
 }

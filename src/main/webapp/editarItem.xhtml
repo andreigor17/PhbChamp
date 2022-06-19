@@ -19,9 +19,11 @@
                      showDetail="false"/>
 
             <p:dataTable id="partidaTime1"
-                         value="#{managerPesquisarEstatisticas.estsGerais(managerPesquisarEstatisticas.itemPartida.team1)}"
+                         value="#{managerPesquisarEstatisticas.estsTime1Visualizar}"
                          var="ests1"
                          paginator="true"
+                         editable="true"
+                         editMode="cell" widgetVar="estsPartida"
                          paginatorPosition="bottom"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          currentPageReportTemplate="{currentPage} de {totalPages}"
@@ -43,27 +45,49 @@
                 <p:column headerText="Nome" width="30%">
                     <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
                 </p:column>                            
-                <p:column headerText="K" width="5%"   >                                  
-                    <p:inputText value="#{ests1.kills}"/>
+                <p:column headerText="Kills">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests1.kills}"/>
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests1.kills}" />
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
-                <p:column headerText="A" width="5%">
-                    <p:inputText value="#{ests1.assists}"/>
-                </p:column>
-                <p:column headerText="D" width="5%">
-                    <p:inputText value="#{ests1.deaths}"/>
-                </p:column>
+                <p:column headerText="Assists">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests1.assists}"/>
+                        </f:facet>
 
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests1.assists}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>  
+                <p:column headerText="Deaths">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests1.deaths}"/>
+                        </f:facet>
 
-
-
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests1.deaths}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>     
             </p:dataTable>
 
 
             <p:dataTable id="partidaTime2"
-                         value="#{managerPesquisarEstatisticas.estsGerais(managerPesquisarEstatisticas.itemPartida.team2)}"
+                         value="#{managerPesquisarEstatisticas.estsTime2Visualizar}"
                          var="ests2"
                          paginator="true"
                          paginatorPosition="bottom"
+                         editable="true"
+                         editMode="cell" widgetVar="estsPartida2"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          currentPageReportTemplate="{currentPage} de {totalPages}"
                          rows="10"
@@ -85,21 +109,46 @@
                 <p:column headerText="Nome" width="30%">
                     <p:outputLabel  value="#{ests2.player.nome}   '#{ests2.player.nick}' #{ests2.player.sobreNome} "/>
                 </p:column>                            
-                <p:column headerText="K" width="5%"   >                                  
-                    <p:inputText value="#{ests2.kills}"/>
-                </p:column>
-                <p:column headerText="A" width="5%">
-                    <p:inputText value="#{ests2.assists}"/>
-                </p:column>
-                <p:column headerText="D" width="5%">
-                    <p:inputText value="#{ests2.deaths}"/>
-                </p:column>
+                <p:column headerText="Kills">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests2.kills}"/>
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests2.kills}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>     
+                <p:column headerText="Assists">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests2.assists}"/>
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests2.assists}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>   
+                <p:column headerText="Deaths">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ests2.deaths}"/>
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText  value="#{ests2.deaths}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>                   
 
             </p:dataTable>
 
             <div class="actions">   
                 <center>
                     <p:commandButton value="Salvar" actionListener="#{managerPesquisarEstatisticas.salvar()}"/>
+                    <p:commandButton value="Cancelar" actionListener="#{managerPesquisarEstatisticas.cancelar()}"/>
                 </center>
             </div>
 

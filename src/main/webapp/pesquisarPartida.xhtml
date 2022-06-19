@@ -75,32 +75,16 @@
                                                          target="#{managerPartida.partida}"/>
                         </p:commandButton>
                     </div>
-
-
                 </p:column>
 
                 <p:column headerText="Time A" width="50%">
-                    <p:outputLabel value="#{partida.team1.nome}" />
-                </p:column>
-                <p:column headerText="Time A Score" width="10%">
-                    <p:outputLabel value="#{partida.scoreT1}" />
-                </p:column><p:column headerText="Time B" width="50%">
-                    <p:outputLabel value="#{partida.team2.nome}" />
-                </p:column>
-                <p:column headerText="Time B Score" width="10%">
-                    <p:outputLabel value="#{partida.scoreT2}" />
-                </p:column>
-                <p:column headerText="Mapa" width="60%">
-                    <p:outputLabel value="#{partida.mapas.nome}" />
-                </p:column>
-
-        
-
-
+                    <p:outputLabel value="#{partida.itemPartida.get(0).team1.nome}" />
+                </p:column>                
+                <p:column headerText="Time B" width="50%">
+                    <p:outputLabel value="#{partida.itemPartida.get(0).team2.nome}" />
+                </p:column>                       
 
             </p:dataTable>
-
-
 
             <p:dialog id="confirmarRemoverPartidaDialog"
                       widgetVar="confirmarRemoverPartidaDialog"
@@ -125,7 +109,7 @@
                                      icon="ui-icon-check"
                                      process="@this"
                                      update="@form"
-                                     
+
                                      styleClass="btn btn-info"/>
 
                 </div>
