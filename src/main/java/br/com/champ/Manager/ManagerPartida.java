@@ -26,13 +26,14 @@ import br.com.champ.vo.PickBanVo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.DragDropEvent;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -80,6 +81,11 @@ public class ManagerPartida {
     List<String> picksbans;
     private List<PickBanVo> pickBanVo;
     private PickBanVo pbItem;
+    private boolean classica = false;
+    private int tipoEscolhaCapitaes;
+    private List<Player> droppedPlayers1;
+    private List<Player> droppedPlayers2;
+    private Player selectedPlayer;
 
     @PostConstruct
     public void init() {
@@ -89,6 +95,13 @@ public class ManagerPartida {
                     .getRequestParameter("id");
             String gerarMapasId = FacesUtil
                     .getRequestParameter("partidaId");
+
+            Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+            this.classica = parametros.get("classica") != null;
+
+            if (this.classica) {
+                //PrimeFaces.current().executeScript("PF('selecaoDeCapitaesDialog').show();");
+            }
 
             if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
                 this.partida = this.partidaServico.pesquisar(Long.parseLong(visualizarPartidaId));
@@ -131,7 +144,9 @@ public class ManagerPartida {
         this.estsGerais = new ArrayList<Estatisticas>();
         this.mapas = new ArrayList<>();
         this.pickedMaps = new ArrayList<>();
-
+        this.droppedPlayers1 = new ArrayList<>();
+        this.droppedPlayers2 = new ArrayList<>();
+        this.selectedPlayer = new Player();
     }
 
     public List<Estatisticas> estsGerais(Team team, ItemPartida item) {
@@ -379,6 +394,46 @@ public class ManagerPartida {
         instanciar();
     }
 
+    public boolean isClassica() {
+        return classica;
+    }
+
+    public void setClassica(boolean classica) {
+        this.classica = classica;
+    }
+
+    public int getTipoEscolhaCapitaes() {
+        return tipoEscolhaCapitaes;
+    }
+
+    public void setTipoEscolhaCapitaes(int tipoEscolhaCapitaes) {
+        this.tipoEscolhaCapitaes = tipoEscolhaCapitaes;
+    }
+
+    public List<Player> getDroppedPlayers1() {
+        return droppedPlayers1;
+    }
+
+    public void setDroppedPlayers1(List<Player> droppedPlayers1) {
+        this.droppedPlayers1 = droppedPlayers1;
+    }
+
+    public List<Player> getDroppedPlayers2() {
+        return droppedPlayers2;
+    }
+
+    public void setDroppedPlayers2(List<Player> droppedPlayers2) {
+        this.droppedPlayers2 = droppedPlayers2;
+    }
+
+    public Player getSelectedPlayer() {
+        return selectedPlayer;
+    }
+
+    public void setSelectedPlayer(Player selectedPlayer) {
+        this.selectedPlayer = selectedPlayer;
+    }
+
     public void excluir() {
 
     }
@@ -510,7 +565,21 @@ public class ManagerPartida {
             System.err.println(ex);
         }
     }
-    public void redirecionarPartida(ItemPartida item){
+    
+    public void redirecionarPartida(ItemPartida item) {
         Mensagem.successAndRedirect("editarItem.xhtml?id=" + item.getId());
     }
+
+public void onPlayerDrop1(DragDropEvent<Player> ddEvent) {
+        Player player = ddEvent.getData();
+
+        droppedPlayers1.add(player);
+        allPlayers.remove(player);
+    }    
+public void onPlayerDrop2(DragDropEvent<Player> ddEvent) {
+        Player player = ddEvent.getData();
+
+        droppedPlayers2.add(player);
+        allPlayers.remove(player);
+    }    
 }

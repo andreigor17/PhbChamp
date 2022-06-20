@@ -20,29 +20,28 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerIndexPartida implements Serializable{
+public class ManagerIndexPartida implements Serializable {
     
     @EJB
     private PartidaServico partidaServico;
     private List<Partida> partidas;
     
-    
     @PostConstruct
-    public void init(){
+    public void init() {
+        this.partidas = partidaServico.pesquisarPartidasGeral();
         
     }
     
-    public void instanciar(){
-            this.partidas = new ArrayList<>();
+    public void instanciar() {
+        this.partidas = new ArrayList<>();
     }
-
+    
     public List<Partida> getPartidas() {
         return partidas;
     }
-
+    
     public void setPartidas(List<Partida> partidas) {
         this.partidas = partidas;
     }
-    
     
 }
