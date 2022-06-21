@@ -36,7 +36,8 @@
             <p:fieldset legend="Todos os jogadores" id="dadosFieldset">   
 
                 <h5 class="p-mt-0">Jogadores Disponíveis</h5>
-                <p:dataTable id="jogadoresDisponives" var="player" value="#{managerPartida.allPlayers}">
+                <p:dataTable id="jogadoresDisponives" var="player" value="#{managerPartida.pickedPlayers}" 
+                             emptyMessage="Nenhum player selecionado!">
                     <p:column style="width:50px">
                         <h:outputText id="dragIcon" styleClass="ui-icon pi pi-plus"/>
                         <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -67,12 +68,12 @@
                                     <h:outputText value="#{player.funcao}"/>
                                 </p:column>                   
 
-                                
+
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
                 </div>
-                
+
                 <div class="column6">
                     <p:fieldset id="jogadoresTime2" legend="Time 2" style="margin-top:20px">
                         <p:outputPanel id="dropArea2">
@@ -88,19 +89,19 @@
                                     <h:outputText value="#{player.funcao}"/>
                                 </p:column>                   
 
-                               
+
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
                 </div>
-                
+
             </div>
 
             <p:droppable for="jogadoresTime1" tolerance="touch" activeStyleClass="ui-state-highlight"
                          datasource="jogadoresDisponives" onDrop="handleDrop">
                 <p:ajax listener="#{managerPartida.onPlayerDrop1}" update="dropArea1 jogadoresDisponives"/>
             </p:droppable>
-            
+
             <p:droppable for="jogadoresTime2" tolerance="touch" activeStyleClass="ui-state-highlight"
                          datasource="jogadoresDisponives" onDrop="handleDrop">
                 <p:ajax listener="#{managerPartida.onPlayerDrop2}" update="dropArea2 jogadoresDisponives"/>
@@ -124,9 +125,25 @@
                     <div class="column2">
                         <p:selectOneRadio value="#{managerPartida.tipoEscolhaCapitaes}" unselectable="true">
                             <f:selectItem itemLabel="Sorteio" itemValue="1"/>
-                            <f:selectItem itemLabel="Picks" itemValue="2"/>                            
+                            <f:selectItem itemLabel="Picks" itemValue="2"/>
+                            <p:ajax process="@this"/>
                         </p:selectOneRadio>
                     </div>
+                </div>
+                <div class="row" >
+                    <div class="column12">
+                        <style>
+                            .ui-picklist .ui-picklist-list{
+                                width: 350px;
+                            }
+                        </style> 
+                        <p:pickList id="grupoPickList" value="#{ managerPartida.playerGroupList }" var="player"
+                                    filterMatchMode="contains" showSourceFilter="true" showTargetFilter="true"
+                                    itemValue="#{ player }" itemLabel="#{ player.nick }" converter="player_converter">
+                            <f:facet name="sourceCaption">Players</f:facet>
+                            <f:facet name="targetCaption">Players Selecionados</f:facet>
+                        </p:pickList>
+                    </div>                  
                 </div>
                 <div class="actions">
                     <p:commandButton value="Cancelar"
@@ -141,7 +158,8 @@
                                      process="@form"
                                      update="@form"                                         
                                      styleClass="btn btn-info"
-                                     onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"/>
+                                     onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"
+                                     actionListener="#{managerPartida.selecionarPartidaClassica()}"/>
                 </div>
             </p:dialog>   
 

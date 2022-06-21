@@ -86,6 +86,7 @@ public class ManagerPartida {
     private List<Player> droppedPlayers1;
     private List<Player> droppedPlayers2;
     private Player selectedPlayer;
+    private List<Player> pickedPlayers;
 
     @PostConstruct
     public void init() {
@@ -100,7 +101,7 @@ public class ManagerPartida {
             this.classica = parametros.get("classica") != null;
 
             if (this.classica) {
-                //PrimeFaces.current().executeScript("PF('selecaoDeCapitaesDialog').show();");
+                PrimeFaces.current().executeScript("PF('selecaoDeCapitaesDialog').show();");
             }
 
             if (visualizarPartidaId != null && !visualizarPartidaId.isEmpty()) {
@@ -147,6 +148,7 @@ public class ManagerPartida {
         this.droppedPlayers1 = new ArrayList<>();
         this.droppedPlayers2 = new ArrayList<>();
         this.selectedPlayer = new Player();
+        this.selectedPlayers = new ArrayList<>();
     }
 
     public List<Estatisticas> estsGerais(Team team, ItemPartida item) {
@@ -434,6 +436,14 @@ public class ManagerPartida {
         this.selectedPlayer = selectedPlayer;
     }
 
+    public List<Player> getPickedPlayers() {
+        return pickedPlayers;
+    }
+
+    public void setPickedPlayers(List<Player> pickedPlayers) {
+        this.pickedPlayers = pickedPlayers;
+    }
+
     public void excluir() {
 
     }
@@ -565,21 +575,34 @@ public class ManagerPartida {
             System.err.println(ex);
         }
     }
-    
+
     public void redirecionarPartida(ItemPartida item) {
         Mensagem.successAndRedirect("editarItem.xhtml?id=" + item.getId());
     }
 
-public void onPlayerDrop1(DragDropEvent<Player> ddEvent) {
+    public void onPlayerDrop1(DragDropEvent<Player> ddEvent) {
         Player player = ddEvent.getData();
 
         droppedPlayers1.add(player);
-        allPlayers.remove(player);
-    }    
-public void onPlayerDrop2(DragDropEvent<Player> ddEvent) {
+        this.pickedPlayers.remove(player);
+    }
+
+    public void onPlayerDrop2(DragDropEvent<Player> ddEvent) {
         Player player = ddEvent.getData();
 
         droppedPlayers2.add(player);
-        allPlayers.remove(player);
-    }    
+        this.pickedPlayers.remove(player);
+    }
+
+    public void selecionarPartidaClassica() {
+        this.pickedPlayers = this.playerGroupList.getTarget();
+        if (this.tipoEscolhaCapitaes == 1) {
+            Collections.shuffle(this.pickedPlayers);
+            droppedPlayers1.add(this.pickedPlayers.get(0));
+            this.pickedPlayers.remove(0);
+            droppedPlayers2.add(this.pickedPlayers.get(1));
+            this.pickedPlayers.remove(1);
+        }
+        PrimeFaces.current().executeScript("PF('selecaoDeCapitaesDialog').hide();");
+    }
 }

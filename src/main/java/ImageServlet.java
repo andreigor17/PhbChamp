@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * The Image servlet for serving from absolute path.
- * @author BalusC
- * @link http://balusc.blogspot.com/2007/04/imageservlet.html
+ * @author andre
+ * 
  */
 @WebServlet("/image/*")
 public class ImageServlet extends HttpServlet {
