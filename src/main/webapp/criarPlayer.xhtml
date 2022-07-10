@@ -67,7 +67,36 @@
                     </div>
                 </div>
 
-                <div class="row" >
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="SteamID"
+                                       for="steamID"/>
+                    </div>
+                    <div class="column3 text">
+                        <p:inputText id="steamID"
+                                     value="#{managerCriarPlayer.p.steamID}"/>
+                    </div>
+                    <div class="column2 bold">
+                        <p:outputLabel value="Url Steam"
+                                       for="urlSteam"/>
+                    </div>
+                    <div class="column3 text">
+                        <p:inputText id="urlSteam"
+                                     value="#{managerCriarPlayer.p.urlSteam}"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Jogos:"
+                                       for="jogosAutoComplete"/>
+                    </div>
+                    <div class="column3">
+                        <p:selectManyCheckbox converter="jogo_converter" id="jogosAutoComplete" value="#{managerCriarPlayer.jogosSelecionados}" layout="grid" columns="3" styleClass="grid-checkbox">
+                            <f:selectItems value="#{managerCriarPlayer.jogos}" var="jogo" itemLabel="#{jogo.nome}" itemValue="#{jogo}"/>
+                        </p:selectManyCheckbox>
+                    </div>
+
                     <div class="column2 bold">
                         <p:outputLabel value="Anexar foto"/>
                     </div>
@@ -78,15 +107,6 @@
                                       update="imagemPlayer"
                                       auto="true"
                                       />
-                    </div>
-                    <div class="column3 bold" >
-                        <p:outputLabel value="Jogos: "
-                                       for="funcaoPlayer"/>
-                    </div>
-                    <div class="column2">
-                        <p:selectManyCheckbox id="grid" value="#{managerCriarPlayer.jogosSelecionados}" layout="grid" columns="3" styleClass="grid-checkbox">
-                            <f:selectItems value="#{managerCriarPlayer.jogos}" var="jogo" itemLabel="#{jogo.nome}" itemValue="#{jogo}"/>
-                        </p:selectManyCheckbox>
                     </div>
 
                     <h:panelGroup id="imagemPlayer">

@@ -154,6 +154,10 @@ public class ManagerCriarPlayer implements Serializable {
         this.jogosSelecionados = jogosSelecionados;
     }
 
+    public void teste() {
+        System.out.println("teste " + this.jogosSelecionados.size());
+    }
+
     public void salvarPlayer() throws Exception {
         Player player = new Player();
 
@@ -182,6 +186,16 @@ public class ManagerCriarPlayer implements Serializable {
         //this.playerServico.delete(this.player);
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
+    }
+
+    public void adicionarJogo() {
+        this.jogosSelecionados.add(this.jogo);
+        this.jogo = new Jogo();
+
+    }
+
+    public List<Jogo> jogos() {
+        return jogos;
     }
 
 }

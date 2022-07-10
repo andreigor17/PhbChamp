@@ -56,7 +56,37 @@
                                        value="#{managerPlayer.player.funcao.nome}"/>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="SteamID: "
+                                       for="steamID"/>
+                    </div>
+                    <div class="column4 text">
+                        <p:outputLabel id="steamID"
+                                     value="#{managerPlayer.player.steamID}"/>
+                    </div>
+                    <div class="column2 bold">
+                        <p:outputLabel value="Url Steam: "
+                                       for="urlSteam"/>
+                    </div>
+                    <div class="column4 text">
+                        <h:outputLink id="urlSteam" value="#{managerPlayer.player.urlSteam}">
+                            <h:outputText value="#{managerPlayer.player.urlSteam}" />
+                        </h:outputLink>
+                    </div>
+                </div>
+
                 <div class="row" >
+
+                    <div class="column2 bold">
+                        <p:outputLabel value="Jogos:"/>
+                    </div>
+                    <div class="column4 text">
+                        <ui:repeat value="#{managerPlayer.player.jogos}" var="jogo" >
+                            <p:outputLabel  value="#{jogo.nome}"/>
+                        </ui:repeat>
+                    </div>
                     <div class="column2 bold">
                         <p:outputLabel value="Avatar:" />
                     </div>
@@ -64,6 +94,8 @@
                         <h:graphicImage value="image/#{managerPlayer.player.avatar}" width="100px" height="100px" />
 
                     </div>
+
+
                 </div>
 
 
