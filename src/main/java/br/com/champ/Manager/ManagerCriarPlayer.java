@@ -7,14 +7,16 @@ package br.com.champ.Manager;
 
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Configuracao;
+import br.com.champ.Modelo.Jogo;
 import br.com.champ.Modelo.Player;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.ConfiguracaoServico;
+import br.com.champ.Servico.JogoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -39,6 +41,8 @@ public class ManagerCriarPlayer implements Serializable {
     AnexoServico anexoServico;
     @EJB
     ConfiguracaoServico configuracaoServico;
+    @EJB
+    private JogoServico jogoServico;
 
     private Player p;
     private List<Player> players;
@@ -46,16 +50,25 @@ public class ManagerCriarPlayer implements Serializable {
     private UploadedFile file;
     private StreamedContent imagem;
     private Configuracao configuracao;
+    private List<Jogo> jogos;
+    private List<Jogo> jogosSelecionados;
+    private Jogo jogo;
 
     @PostConstruct
     public void init() {
-        instanciar();
+        try {
+            instanciar();
 
-        String visualizarPlayerId = FacesUtil
-                .getRequestParameter("id");
+            String visualizarPlayerId = FacesUtil
+                    .getRequestParameter("id");
 
-        if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
-            this.p = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+            if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
+                this.p = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+            }
+
+            this.jogos = jogoServico.pesquisar();
+        } catch (Exception ex) {
+            System.err.println(ex);
         }
 
     }
@@ -64,6 +77,9 @@ public class ManagerCriarPlayer implements Serializable {
         this.p = new Player();
         this.players = null;
         this.configuracao = new Configuracao();
+        this.jogo = new Jogo();
+        this.jogos = new ArrayList<>();
+        this.jogosSelecionados = new ArrayList<>();
     }
 
     public Player getP() {
@@ -114,10 +130,36 @@ public class ManagerCriarPlayer implements Serializable {
 
     }
 
+    public List<Jogo> getJogos() {
+        return jogos;
+    }
+
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
+    }
+
+    public Jogo getJogo() {
+        return jogo;
+    }
+
+    public void setJogo(Jogo jogo) {
+        this.jogo = jogo;
+    }
+
+    public List<Jogo> getJogosSelecionados() {
+        return jogosSelecionados;
+    }
+
+    public void setJogosSelecionados(List<Jogo> jogosSelecionados) {
+        this.jogosSelecionados = jogosSelecionados;
+    }
+
     public void salvarPlayer() throws Exception {
         Player player = new Player();
 
+        this.p.setJogos(this.jogosSelecionados);
         if (this.p.getId() == null) {
+
             player = playerServico.save(this.p, null, Url.SALVAR_PLAYER.getNome());
             this.arquivo.gravar();
         } else {

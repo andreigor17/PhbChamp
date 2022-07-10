@@ -491,9 +491,6 @@ public class ManagerPartida {
             Team t1 = new Team();
             Team t2 = new Team();
             Partida partidaX5 = new Partida();
-            ItemPartida itemPartidaAtual = new ItemPartida();
-            Partida partida = new Partida();
-            List<Partida> partidas = new ArrayList<>();
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
@@ -599,10 +596,95 @@ public class ManagerPartida {
         if (this.tipoEscolhaCapitaes == 1) {
             Collections.shuffle(this.pickedPlayers);
             droppedPlayers1.add(this.pickedPlayers.get(0));
+            this.nomeTime1 = "Time " + this.pickedPlayers.get(0).getNick();
             this.pickedPlayers.remove(0);
-            droppedPlayers2.add(this.pickedPlayers.get(1));
-            this.pickedPlayers.remove(1);
+            droppedPlayers2.add(this.pickedPlayers.get(0));
+            this.nomeTime2 = "Time " + this.pickedPlayers.get(0).getNick();
+            this.pickedPlayers.remove(0);
         }
         PrimeFaces.current().executeScript("PF('selecaoDeCapitaesDialog').hide();");
+    }
+
+    public void dialogPartidaClassica() {
+        if (this.tipoEscolhaCapitaes == 2) {
+            this.nomeTime1 = "Time " + droppedPlayers1.get(0).getNick();
+            this.nomeTime2 = "Time " + droppedPlayers2.get(0).getNick();
+        }
+
+        PrimeFaces.current().executeScript("PF('confirmarCriacaoX5Dialog').show();");
+    }
+
+    public void salvarPartidaClassica() {
+        try {
+
+            Team t1 = new Team();
+            Team t2 = new Team();
+            Partida partidaX5 = new Partida();
+
+            List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
+            List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
+
+            Team team1 = new Team();
+            t1.setAtivo(true);
+            t1.setNome(nomeTime1);
+            t1.setPlayers(droppedPlayers1);
+            team1 = teamServico.save(t1, null, Url.SALVAR_TIME.getNome());
+
+            Team team2 = new Team();
+            t2.setAtivo(true);
+            t2.setNome(nomeTime2);
+            t2.setPlayers(droppedPlayers2);
+            team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
+
+            this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, null, team1, team2, this.qtdItensPartidas);
+            partidaX5.setItemPartida(this.itemPartidas);
+            partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
+            List<ItemPartida> it = partida.getItemPartida();
+
+            List<ItemPartida> newItem = new ArrayList<>();
+
+            for (ItemPartida ip : partida.getItemPartida()) {
+                ip.setPartida(partida.getId());
+                newItem.add(ip);
+            }
+
+            partida.setItemPartida(newItem);
+
+            partida = partidaServico.salvar(partida, partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
+
+            for (ItemPartida i : it) {
+                for (Player playerTime1 : team1.getPlayers()) {
+                    Estatisticas estatisticas = new Estatisticas();
+                    estatisticas.setPlayer(playerTime1);
+                    estatisticas.setTeam(team1);
+                    estatisticas.setItemPartida(i);
+                    estsTeam1.add(estatisticas);
+
+                }
+                this.estsGerais.addAll(estsTeam1);
+
+                for (Player playerTime2 : team2.getPlayers()) {
+                    Estatisticas estatisticas = new Estatisticas();
+                    estatisticas.setPlayer(playerTime2);
+                    estatisticas.setTeam(team2);
+                    estatisticas.setItemPartida(i);
+                    estsTeam2.add(estatisticas);
+                }
+                this.estsGerais.addAll(estsTeam2);
+
+                for (Estatisticas e : this.estsGerais) {
+                    estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
+                }
+
+                estsTeam1 = new ArrayList<Estatisticas>();
+                estsTeam2 = new ArrayList<Estatisticas>();
+                this.estsGerais = new ArrayList<Estatisticas>();
+
+            }
+
+            Mensagem.successAndRedirect("Partida criada com sucesso", "visualizarPartida.xhtml?id=" + partida.getId());
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
     }
 }

@@ -23,7 +23,10 @@ public class Player extends ModeloGenerico implements Serializable {
     private boolean capitao;
     private String avatar;
     private Funcoes funcao;
-    private List<Estatisticas> estatisticas; 
+    private List<Estatisticas> estatisticas;
+    private String urlSteam;
+    private String steamID;   
+    private List<Jogo> jogos;
 
     public String getNome() {
         return nome;
@@ -104,6 +107,30 @@ public class Player extends ModeloGenerico implements Serializable {
     public void setEstatisticas(List<Estatisticas> estatisticas) {
         this.estatisticas = estatisticas;
     }        
+
+    public String getUrlSteam() {
+        return urlSteam;
+    }
+
+    public void setUrlSteam(String urlSteam) {
+        this.urlSteam = urlSteam;
+    }
+
+    public String getSteamID() {
+        return steamID;
+    }
+
+    public void setSteamID(String steamID) {
+        this.steamID = steamID;
+    }
+
+    public List<Jogo> getJogos() {
+        return jogos;
+    }
+
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
+    }
 
     @Override
     public String toString() {

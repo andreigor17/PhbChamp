@@ -1,0 +1,51 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+
+    <ui:define name="title">
+        Visualizar Jogo
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formVisualizarjogo"
+                >
+
+            <p:growl id="messages"
+                     showDetail="false"/>
+
+            <div  class="actions">
+
+
+                <p:button value="Editar" outcome="criarJogo.xhtml"
+                          icon="ui-icon-pencil"  >
+                    <f:param value="#{ managerJogo.jogo.id }" name="id"/>
+                </p:button>
+
+                <p:button value="Pesquisar" outcome="pesquisarJogos.xhtml"
+                          icon="ui-icon-search"  />
+
+            </div>
+            <p:fieldset legend="Dados">
+
+                <div class="row">
+                    <div class="column2 bold" >
+                        <p:outputLabel value="Nome:" for="nomeJogo"/>
+                    </div>
+                    <div class="column4 text" >
+                        <p:outputLabel id="nomeJogo"
+                                       value="#{managerJogo.jogo.nome}"/>
+                    </div>                    
+                </div>
+
+            </p:fieldset>           
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

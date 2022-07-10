@@ -24,7 +24,10 @@ public enum Url {
     SALVAR_ITEM_PARTIDA(11, "/itemPartidas"),
     ATUALIZAR_ITEM_PARTIDA(12, "/itemPartidas/"),
     SALVAR_MAPA(13, "/mapas"),
-    ATUALIZAR_MAPA(14, "/mapas");
+    ATUALIZAR_MAPA(14, "/mapas"),
+    SALVAR_JOGO(15, "/jogo"),
+    ATUALIZAR_JOGO(15, "/jogo"),
+    EXCLUIR_JOGO(16,"/jogo/excluir/");
 
     private String nome;
     private Integer valor;

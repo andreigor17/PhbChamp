@@ -21,11 +21,20 @@
 
             <div class="card">
                 <p:menu>
-                    <p:submenu label="Opções">
+                    <p:submenu label="Servidor">
                         <p:menuitem value="API" outcome="configuracaoAPI.xhtml" update="@form"
                                     icon="ui-icon-disk" />
-
+                        <p:menuitem value="Info" outcome="server.xhtml" />
                     </p:submenu>
+                    <p:submenu label="Jogos">
+                        <p:menuitem value="Criar" outcome="criarJogo.xhtml" icon="ui-icon-plus"/>
+                        <p:menuitem value="Pesquisar" outcome="pesquisarJogos.xhtml" icon="ui-icon-search"/>
+                    </p:submenu>
+                    <p:submenu label="Mapas CSGO">
+                        <p:menuitem value="Criar" outcome="criarMapa.xhtml"/>
+                        <p:menuitem value="Pesquisar" outcome="pesquisarMapas.xhtml"/>
+                    </p:submenu>
+
                 </p:menu>
             </div>            
 

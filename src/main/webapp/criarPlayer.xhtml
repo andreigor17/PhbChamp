@@ -79,11 +79,24 @@
                                       auto="true"
                                       />
                     </div>
+                    <div class="column3 bold" >
+                        <p:outputLabel value="Jogos: "
+                                       for="funcaoPlayer"/>
+                    </div>
+                    <div class="column2">
+                        <p:selectManyCheckbox id="grid" value="#{managerCriarPlayer.jogosSelecionados}" layout="grid" columns="3" styleClass="grid-checkbox">
+                            <f:selectItems value="#{managerCriarPlayer.jogos}" var="jogo" itemLabel="#{jogo.nome}" itemValue="#{jogo}"/>
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <h:panelGroup id="imagemPlayer">
+                        <p:graphicImage  style="max-width: 100px;max-height: 100px;" cache="false" value="#{managerCriarPlayer.imagem}">
+                        </p:graphicImage><br/>
+                    </h:panelGroup>
+
                 </div>
-                <h:panelGroup id="imagemPlayer">
-                    <p:graphicImage  style="max-width: 100px;max-height: 100px;" cache="false" value="#{managerCriarPlayer.imagem}">
-                    </p:graphicImage><br/>
-                </h:panelGroup>
+
+
 
 
 
