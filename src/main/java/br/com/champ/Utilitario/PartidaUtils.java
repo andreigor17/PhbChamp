@@ -21,15 +21,15 @@ import java.util.logging.Logger;
  */
 public class PartidaUtils {
     
-     public static List<ItemPartida> gerarPartidas(Partida p, Campeonato camp, Team time1, Team time2, int qtdItensPartidas ) {
+     public static List<ItemPartida> gerarPartidas(Partida p, Long id, Team time1, Team time2, int qtdItensPartidas ) {
 
         int i = 0;
         List<ItemPartida> partidasGeradas = new ArrayList<>();
         try {
             for (i = 1; i <= qtdItensPartidas; i++) {
                 ItemPartida newItem = new ItemPartida();
-                if (camp != null) {
-                    newItem.setCamp(camp.getId());
+                if (id != null) {
+                    newItem.setCamp(id);
                 }
 
                 newItem.setTeam1(time1);

@@ -63,8 +63,8 @@ public class ManagerJogo {
     public void setJogos(List<Jogo> jogos) {
         this.jogos = jogos;
     }
-    
-    public void limpar(){
+
+    public void limpar() {
         instanciar();
     }
 
@@ -89,11 +89,13 @@ public class ManagerJogo {
 
     public void excluir() {
         try {
-            this.jogo = jogoServico.save(this.jogo, null, Url.EXCLUIR_JOGO.getNome());
+            Jogo j = new Jogo();
+            this.jogo.setAtivo(Boolean.FALSE);
+            j = jogoServico.save(this.jogo, null, Url.ATUALIZAR_JOGO.getNome());
         } catch (Exception ex) {
             System.err.println(ex);
         }
-        Mensagem.successAndRedirect("Jogo excluído com sucesso!", "pesquisarMapas.xhtml");
+        Mensagem.successAndRedirect("Jogo excluído com sucesso!", "pesquisarJogos.xhtml");
     }
 
 }

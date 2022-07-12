@@ -20,14 +20,20 @@
 
             <div  class="actions">
 
-
-                <p:button value="Editar" outcome="criarJogo.xhtml"
-                          icon="ui-icon-pencil"  >
-                    <f:param value="#{ managerJogo.jogo.id }" name="id"/>
-                </p:button>
-
-                <p:button value="Pesquisar" outcome="pesquisarJogos.xhtml"
-                          icon="ui-icon-search"  />
+                <p:commandButton id="menuButton" value="Opções" type="button" icon="pi pi-bars"/>
+                <p:menu overlay="true" trigger="menuButton" my="left top" at="left bottom">
+                    <p:submenu label="Geral">
+                        <p:menuitem value="Pesquisar" outcome="pesquisarJogos.xhtml" icon="ui-icon-search"/>
+                        <p:menuitem value="Editar" 
+                                    icon="pi pi-pencil" outcome="criarJogo.xhtml" >
+                            <f:param value="#{ managerJogo.jogo.id }" name="id"/>
+                        </p:menuitem>
+                        <p:menuitem value="Excluir"  update="messages" icon="pi pi-refresh" actionListener="#{managerJogo.excluir()}"/>                        
+                    </p:submenu>
+                    <p:submenu label="Picks and Bans">
+                        <p:menuitem value="Gerar mapas" outcome="gerarMapas.xhtml?partidaId=#{managerPartida.partida.id}" process="@this" icon="pi pi-external-link"/>                        
+                    </p:submenu>
+                </p:menu>                                             
 
             </div>
             <p:fieldset legend="Dados">

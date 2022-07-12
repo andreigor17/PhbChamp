@@ -3,8 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
         Visualizar Campeonato
@@ -86,18 +85,13 @@
                         <p:column headerText="Rounds Perdidos" width="50%">
                             <h:outputText value="#{ ests.roundsPerdidos}" />
                         </p:column>
-
-
-
-
                     </p:dataTable>
 
                 </p:tab>
                 <p:tab id="jogos" title="Jogos">
-
-
                     <p:dataTable id="partidasDataTable"
                                  value="#{managerCamp.partidas}"
+                                 rowKey="#{partida.id}"
                                  var="partida"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -109,37 +103,34 @@
                         <f:facet name="header">
                             <p:outputLabel value="Partidas" />
                         </f:facet>
-
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options2">                        
-
-                                <p:commandButton title="Atualizar Partida"  
-                                                 value="Atualizar Partida"
-                                                 process="@this"
-                                                 update="@form"
-                                                 oncomplete="PF('atualizarPartidaDialog').show();"
-                                                 >
-                                    <f:setPropertyActionListener value="#{partida}"
-                                                                 target="#{managerCamp.partida}"/>
-                                </p:commandButton>
+                        <p:column width="1%">
+                            <p:rowToggler/>
+                        </p:column>
+                        <p:column headerText="Opções" width="3%">
+                            <div class="options">                        
+                                <p:button title="Visualizar Partida"
+                                          icon="ui-icon-search"
+                                          href="visualizarPartida.xhtml?id=#{partida.id}"/>
                             </div>
-
-
                         </p:column>
-
                         <p:column headerText="Time 1" width="15%">
-                            <p:outputLabel value="#{partida.team1.nome}"/>
-                        </p:column>
-                        <p:column headerText="Rounds" width="15%">
-                            <p:outputLabel value="#{partida.scoreT1}"/>
-                        </p:column>
+                            <p:outputLabel value="#{partida.itemPartida.get(0).team1.nome}"/>
+                        </p:column>                       
                         <p:column headerText="Time2" width="15%">
-                            <p:outputLabel value="#{partida.team2.nome}"/>
+                            <p:outputLabel value="#{partida.itemPartida.get(0).team2.nome}"/>
                         </p:column>
-                        <p:column headerText="Rounds" width="15%">
-                            <p:outputLabel value="#{partida.scoreT2}"/>
-                        </p:column>
-
+                        <p:rowExpansion>
+                            <p:dataTable id="detalheItensPartidas" var="item" value="#{ partida.itemPartida }"
+                                         styleClass="grid_24" emptyMessage="Nenhum item encontrado">
+                                <f:facet name="header">Detalhe da partida</f:facet>
+                                <p:column headerText="Mapa" width="20%">
+                                    <p:outputLabel value="#{item.mapas.nome ne null ? item.mapas.nome : 'N/A'}"/>
+                                </p:column>
+                                <p:column headerText="Placar">
+                                    <p:outputLabel  value="#{item.team1.nome}  #{item.scoreT1} x #{item.team2.nome} #{item.scoreT2}"/>
+                                </p:column>                               
+                            </p:dataTable>       
+                        </p:rowExpansion>
                     </p:dataTable>
 
 
@@ -173,54 +164,6 @@
                 </center>
 
             </p:dialog>
-
-            <h:form id="formAtualizarPartida">
-                <p:dialog widgetVar="atualizarPartidaDialog"
-                          header="Atualizar Partida"
-                          modal="true"
-                          draggable="false"
-                          closeOnEscape="true"
-                          showEffect="fade"
-                          hideEffect="fade">
-
-                    <center>
-                        <div class="column2">
-                            <p:outputLabel value="#{managerCamp.partida.team1.nome}"/>
-                        </div>
-
-                        <div class="column1">
-                            <p:inputText value="#{managerCamp.partida.scoreT1}"/>
-                        </div>
-                        <div class="column2">
-                            x
-                        </div>
-                        <div class="column2">
-                            <p:outputLabel value="#{managerCamp.partida.team2.nome}"/>
-                        </div>
-                        <div class="column1">
-                            <p:inputText value="#{managerCamp.partida.scoreT2}"/>
-                        </div>
-                        <div class="row">
-
-                            <p:commandButton value="Cancelar"
-                                             title="Cancelar"
-                                             icon="fa fa-ban"
-                                             oncomplete="PF('atualizarPartidaDialog').hide();"
-                                             styleClass="btn btn-default"/>
-
-                            <p:commandButton value="Atualizar Partida"
-                                             title="Atualizar Partida"
-                                             icon="fa fa-check"
-                                             process="@form"
-                                             update="@form"
-                                             actionListener="#{managerCamp.atualizarPartida()}"
-                                             styleClass="btn btn-info"/>
-                        </div>
-                    </center>               
-                </p:dialog>
-            </h:form>
-
-
 
         </h:form>
 
