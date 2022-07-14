@@ -63,7 +63,7 @@
             <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="tabela" title="Tabela" >
 
-                    <p:dataTable id="timesDataTable" value="#{ managerCamp.ests }" var="ests"
+                    <p:dataTable id="timesDataTable" value="#{ managerCamp.somaEsts() }" var="ests"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
                                  sortBy="#{ ests.pontos}" sortMode="descending">
 

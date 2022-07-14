@@ -235,4 +235,37 @@ public class ManagerCamp implements Serializable {
 
     }
 
+    public List<Estatisticas> somaEsts() {
+        List<Estatisticas> soma = new ArrayList<>();
+        Estatisticas est = new Estatisticas();
+        Integer kills = 0;
+        Integer deaths = 0;
+        Integer assists = 0;
+        Integer pontos = 0;
+
+        for (Team timeCamp : this.camp.getTeams()) {
+            this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
+            for (Estatisticas estats : this.estatisticasTime) {
+                if (estats.getTeam().getId().equals(timeCamp.getId())) {
+                    kills += estats.getKills();
+                    deaths += estats.getDeaths();
+                    assists += estats.getAssists();
+                }
+
+            }
+
+            est.setKills(kills);
+            est.setAssists(assists);
+            est.setDeaths(deaths);
+            est.setTeam(timeCamp);
+            soma.add(est);
+            kills = 0;
+            deaths = 0;
+            assists = 0;
+            est = new Estatisticas();
+        }
+        return soma;
+
+    }
+
 }

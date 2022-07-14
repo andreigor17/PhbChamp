@@ -187,7 +187,7 @@ public class ManagerCriarCampeonato implements Serializable {
         Campeonato c = new Campeonato();
         c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
         System.out.println("id " + c.getId());
-        c.setPartidas(gerarPartidas(c.getId()));
+        c.setPartidas(gerarPartidas(c.getId(), c));
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
@@ -217,12 +217,12 @@ public class ManagerCriarCampeonato implements Serializable {
 
     }
 
-    public List<Partida> gerarPartidas(Long id) throws Exception {
+    public List<Partida> gerarPartidas(Long id, Campeonato camp) throws Exception {
         List<Partida> matches = new ArrayList<>();
         Partida match = new Partida();
         for (int i = 0; i < this.times.size() - 1; i++) {
             for (int j = i + 1; j < this.times.size(); j++) {
-                match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id);
+                match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp);
                 matches.add(match);
             }
         }
@@ -230,7 +230,7 @@ public class ManagerCriarCampeonato implements Serializable {
         return matches;
     }
 
-    public Partida salvarPartidaClassica(Team t1, Team t2, Long id) {
+    public Partida salvarPartidaClassica(Team t1, Team t2, Long id, Campeonato camp) {
         try {
 
             Partida partidaX5 = new Partida();
@@ -263,6 +263,7 @@ public class ManagerCriarCampeonato implements Serializable {
                     estatisticas.setPlayer(playerTime1);
                     estatisticas.setTeam(team1);
                     estatisticas.setItemPartida(i);
+                    estatisticas.setCampeonato(camp);
                     estsTeam1.add(estatisticas);
 
                 }
@@ -273,6 +274,7 @@ public class ManagerCriarCampeonato implements Serializable {
                     estatisticas.setPlayer(playerTime2);
                     estatisticas.setTeam(team2);
                     estatisticas.setItemPartida(i);
+                    estatisticas.setCampeonato(camp);
                     estsTeam2.add(estatisticas);
                 }
                 this.estsGerais.addAll(estsTeam2);
