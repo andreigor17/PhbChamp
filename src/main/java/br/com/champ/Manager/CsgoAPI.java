@@ -12,7 +12,6 @@ import javax.faces.bean.ViewScoped;
 import uk.oczadly.karl.csgsi.GSIListener;
 import uk.oczadly.karl.csgsi.GSIServer;
 import uk.oczadly.karl.csgsi.config.GSIConfig;
-import uk.oczadly.karl.csgsi.config.GameNotFoundException;
 
 /**
  *
@@ -38,11 +37,9 @@ public class CsgoAPI implements Serializable {
             // Automatically locates the game directory and creates the configuration file
             Path output = config.writeFile("test_service");
             System.out.println("Written config file: " + output);
-        } catch (GameNotFoundException e) {
+        } catch (Exception e) {
             // Either CSGO or Steam installation directory could not be located
             System.err.println("Couldn't locate CSGO installation: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Couldn't write to configuration file.");
         }
     }
 
