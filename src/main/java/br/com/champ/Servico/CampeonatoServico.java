@@ -42,7 +42,7 @@ public class CampeonatoServico {
 
     }
 
-    public List<Campeonato> pesquisar(Campeonato camp) throws Exception {
+    public List<Campeonato> pesquisar() throws Exception {
         try {
             String url = pathToAPI() + "/campeonatos";
             URL obj = new URL(url);

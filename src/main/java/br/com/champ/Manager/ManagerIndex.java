@@ -2,11 +2,11 @@ package br.com.champ.Manager;
 
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
-import br.com.champ.Modelo.SportsIoMatches;
+import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
-import br.com.champ.Servico.SportIoServico;
+import br.com.champ.Servico.PartidaServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,22 +30,24 @@ public class ManagerIndex implements Serializable {
     @EJB
     EstatisticaServico estatisticaServico;
     @EJB
-    SportIoServico sportIoServico;
+    PartidaServico partidaServico;
+    @EJB
+    CampeonatoServico campeonatoServico;
 
     private Campeonato camp;
     private List<Campeonato> campsAtuais;
     private List<Team> times;
     private List<Estatisticas> estatisticasTime;
     private List<Estatisticas> ests;
-    private SportsIoMatches sportsIoMatches;
-    private List<SportsIoMatches> matches;
+    private List<Partida> partidas;
+    private List<Campeonato> camps;
 
     @PostConstruct
     public void init() {
         try {
             instanciar();
-            
-            this.matches = sportIoServico.pesquisar();
+            this.partidas = partidaServico.pesquisarPartidasGeral();
+            this.camps = campeonatoServico.pesquisar();
         } catch (Exception ex) {
             Logger.getLogger(ManagerIndex.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,8 +60,8 @@ public class ManagerIndex implements Serializable {
         this.times = new ArrayList<>();
         this.estatisticasTime = new ArrayList<>();
         this.ests = new ArrayList<>();
-        this.sportsIoMatches = new SportsIoMatches();
-        this.matches = new ArrayList<>();
+        this.partidas = new ArrayList<>();
+
     }
 
     public void limpar() {
@@ -110,28 +112,28 @@ public class ManagerIndex implements Serializable {
         this.ests = ests;
     }
 
-    public SportsIoMatches getSportsIoMatches() {
-        return sportsIoMatches;
-    }
-
-    public void setSportsIoMatches(SportsIoMatches sportsIoMatches) {
-        this.sportsIoMatches = sportsIoMatches;
-    }
-
-    public List<SportsIoMatches> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<SportsIoMatches> matches) {
-        this.matches = matches;
-    }        
-
     public void mostrarCampeonato() {
         this.camp = campServico.buscaCamp(this.camp.getId());
         if (this.camp.getId() != null) {
             estatisticasCampIndex();
         }
 
+    }
+
+    public List<Campeonato> getCamps() {
+        return camps;
+    }
+
+    public void setCamps(List<Campeonato> camps) {
+        this.camps = camps;
+    }
+
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
     }
 
     public List<Estatisticas> estatisticasCampIndex() {
@@ -145,14 +147,6 @@ public class ManagerIndex implements Serializable {
             }
         }
         return ests;
-    }
-
-    public void testeSports() {
-        try {
-            this.matches = sportIoServico.pesquisar();
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
     }
 
 }

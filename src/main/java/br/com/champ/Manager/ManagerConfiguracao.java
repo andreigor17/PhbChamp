@@ -31,12 +31,14 @@ public class ManagerConfiguracao implements Serializable {
     @EJB
     private ConfiguracaoServico configuracaoServico;
     private String path;
+    private boolean csgoServerStatus;
 
     @PostConstruct
     public void init() {
         try {
             this.configuracao = this.configuracaoServico.buscaConfig();
             this.path = APIPath.pathToAPI();
+            this.csgoServerStatus = this.configuracaoServico.csgoServerStatus();
 
         } catch (Exception ex) {
             Logger.getLogger(ManagerPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,6 +99,14 @@ public class ManagerConfiguracao implements Serializable {
             Logger.getLogger(ManagerConfiguracao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public boolean isCsgoServerStatus() {
+        return csgoServerStatus;
+    }
+
+    public void setCsgoServerStatus(boolean csgoServerStatus) {
+        this.csgoServerStatus = csgoServerStatus;
     }
 
 }

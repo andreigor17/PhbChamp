@@ -206,7 +206,7 @@ public class ManagerCamp implements Serializable {
 //        init();
 //    }
     public void pesquisarCamp() throws Exception {
-        this.camps = campeonatoServico.pesquisar(this.camp);
+        this.camps = campeonatoServico.pesquisar();
     }
 
     public void atualizarPartida() throws Exception {

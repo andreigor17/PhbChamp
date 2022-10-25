@@ -21,7 +21,7 @@ import org.json.JSONException;
  */
 @Stateless
 public class ConfiguracaoServico implements Serializable {
-    
+
     public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
@@ -84,7 +84,7 @@ public class ConfiguracaoServico implements Serializable {
         }
         return new String(os.toByteArray());
     }
-    
+
     public Configuracao buscaConfig() {
         try {
             String url = pathToAPI() + "/configuracao/1";
@@ -125,6 +125,46 @@ public class ConfiguracaoServico implements Serializable {
         }
         return null;
 
+    }
+
+    public boolean csgoServerStatus() throws Exception {
+
+        try {
+            String url = pathToAPI() + "/csgoserver/startServer";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            
+             if (responseCode == 200) {
+            return true;
+        } else {
+            return false;
+        }
+
+        } catch (IOException iOException) {
+            System.err.println(iOException);
+        } catch (JSONException jSONException) {
+            System.err.println(jSONException);
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println(numberFormatException);
+        }
+        return false;
+       
     }
 
 }
