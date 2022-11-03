@@ -22,16 +22,47 @@
             <p:fieldset legend="Filtros" id="dadosFieldset">                    
                 <div class="row">
                     <div class="column2 bold">
-                        <p:outputLabel value="Server Status:" />
+                        <p:outputLabel value="Kills:" />
                     </div>
                     <div class="column2 ">
-                        <p:outputLabel value="#{managerConfiguracao.csgoServerStatus eq true ? 'ONLINE' : 'OFFLINE'}" />
+                        <p:outputLabel value="#{managerConfiguracao.csVo.kills}" />
                     </div>
-
+                </div>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Health" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.health}" />
+                    </div>
                 </div>
 
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Name" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.name}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="CT Rounds" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.ctRounds}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="T Rounds" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.trRounds}" />
+                    </div>
+                </div>
             </p:fieldset>
-
+            <p:poll interval="2"  update="@form"/>
 
         </h:form>
 

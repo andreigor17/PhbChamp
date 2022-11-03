@@ -2,6 +2,7 @@ package br.com.champ.Servico;
 
 import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Utilitario.APIPath;
+import br.com.champ.vo.CSGOServerVo;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -53,7 +54,7 @@ public class ConfiguracaoServico implements Serializable {
                 System.out.println("Json Config " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try (OutputStream outputStream = request.getOutputStream()) {
+                try ( OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -75,7 +76,7 @@ public class ConfiguracaoServico implements Serializable {
 
     private String readResponse(HttpURLConnection request) throws IOException {
         ByteArrayOutputStream os;
-        try (InputStream is = request.getInputStream()) {
+        try ( InputStream is = request.getInputStream()) {
             os = new ByteArrayOutputStream();
             int b;
             while ((b = is.read()) != -1) {
@@ -127,7 +128,7 @@ public class ConfiguracaoServico implements Serializable {
 
     }
 
-    public boolean csgoServerStatus() throws Exception {
+    public CSGOServerVo csgoServerStatus() throws Exception {
 
         try {
             String url = pathToAPI() + "/csgoserver/startServer";
@@ -149,12 +150,12 @@ public class ConfiguracaoServico implements Serializable {
                 response.append(inputLine);
             }
             in.close();
-            
-             if (responseCode == 200) {
-            return true;
-        } else {
-            return false;
-        }
+
+            Gson gson = new Gson();
+
+            CSGOServerVo userArray = gson.fromJson(response.toString(), CSGOServerVo.class);
+
+            return userArray;
 
         } catch (IOException iOException) {
             System.err.println(iOException);
@@ -163,8 +164,8 @@ public class ConfiguracaoServico implements Serializable {
         } catch (NumberFormatException numberFormatException) {
             System.err.println(numberFormatException);
         }
-        return false;
-       
+        return null;
+
     }
 
 }

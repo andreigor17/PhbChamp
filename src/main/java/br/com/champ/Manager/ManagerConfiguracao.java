@@ -9,6 +9,7 @@ import br.com.champ.Modelo.Configuracao;
 import br.com.champ.Servico.ConfiguracaoServico;
 import br.com.champ.Utilitario.APIPath;
 import br.com.champ.Utilitario.Mensagem;
+import br.com.champ.vo.CSGOServerVo;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -32,13 +33,16 @@ public class ManagerConfiguracao implements Serializable {
     private ConfiguracaoServico configuracaoServico;
     private String path;
     private boolean csgoServerStatus;
+    private CSGOServerVo csVo;
 
     @PostConstruct
     public void init() {
         try {
+            instanciar();
             this.configuracao = this.configuracaoServico.buscaConfig();
             this.path = APIPath.pathToAPI();
-            this.csgoServerStatus = this.configuracaoServico.csgoServerStatus();
+            this.csVo = this.configuracaoServico.csgoServerStatus();
+            //this.csgoServerStatus = this.configuracaoServico.csgoServerStatus();
 
         } catch (Exception ex) {
             Logger.getLogger(ManagerPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +51,7 @@ public class ManagerConfiguracao implements Serializable {
 
     public void instanciar() throws Exception {
         this.configuracao = new Configuracao();
-
+        this.csVo = new CSGOServerVo();
     }
 
     public void renderizarMenu(String menu) {
@@ -107,6 +111,14 @@ public class ManagerConfiguracao implements Serializable {
 
     public void setCsgoServerStatus(boolean csgoServerStatus) {
         this.csgoServerStatus = csgoServerStatus;
+    }
+
+    public CSGOServerVo getCsVo() {
+        return csVo;
+    }
+
+    public void setCsVo(CSGOServerVo csVo) {
+        this.csVo = csVo;
     }
 
 }
