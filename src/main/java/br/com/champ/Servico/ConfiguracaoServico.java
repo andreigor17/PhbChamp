@@ -54,7 +54,7 @@ public class ConfiguracaoServico implements Serializable {
                 System.out.println("Json Config " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try ( OutputStream outputStream = request.getOutputStream()) {
+                try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -76,7 +76,7 @@ public class ConfiguracaoServico implements Serializable {
 
     private String readResponse(HttpURLConnection request) throws IOException {
         ByteArrayOutputStream os;
-        try ( InputStream is = request.getInputStream()) {
+        try (InputStream is = request.getInputStream()) {
             os = new ByteArrayOutputStream();
             int b;
             while ((b = is.read()) != -1) {
@@ -131,7 +131,7 @@ public class ConfiguracaoServico implements Serializable {
     public CSGOServerVo csgoServerStatus() throws Exception {
 
         try {
-            String url = pathToAPI() + "/csgoserver/startServer";
+            String url = pathToAPI() + "/csgoserver/listenServer";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -140,8 +140,8 @@ public class ConfiguracaoServico implements Serializable {
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'GET' request to URL : " + url);
+            //System.out.println("Response Code : " + responseCode);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -153,9 +153,14 @@ public class ConfiguracaoServico implements Serializable {
 
             Gson gson = new Gson();
 
+            CSGOServerVo p1 = new CSGOServerVo();
+
             CSGOServerVo userArray = gson.fromJson(response.toString(), CSGOServerVo.class);
 
-            return userArray;
+            p1 = userArray;
+            System.out.println("teste " + p1.toString());
+
+            return p1;
 
         } catch (IOException iOException) {
             System.err.println(iOException);

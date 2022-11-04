@@ -55,6 +55,11 @@ public class CSGOServerVo {
     public void setTrRounds(String trRounds) {
         this.trRounds = trRounds;
     }
+
+    @Override
+    public String toString() {
+        return "CSGOServerVo{" + "kills=" + kills + ", name=" + name + ", health=" + health + ", trRounds=" + trRounds + ", ctRounds=" + ctRounds + '}';
+    }
     
     
     

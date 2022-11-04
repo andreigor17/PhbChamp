@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import uk.oczadly.karl.csgsi.GSIListener;
+import uk.oczadly.karl.csgsi.GSIServer;
 
 /**
  *
@@ -42,6 +44,7 @@ public class ManagerConfiguracao implements Serializable {
             this.configuracao = this.configuracaoServico.buscaConfig();
             this.path = APIPath.pathToAPI();
             this.csVo = this.configuracaoServico.csgoServerStatus();
+            //System.out.println("cs " + this.csVo.getHealth());
             //this.csgoServerStatus = this.configuracaoServico.csgoServerStatus();
 
         } catch (Exception ex) {
@@ -80,6 +83,10 @@ public class ManagerConfiguracao implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+    
+    public void teste() throws Exception{
+        this.csVo = this.configuracaoServico.csgoServerStatus();
     }
 
     public void updatePath() throws IOException {
@@ -120,5 +127,7 @@ public class ManagerConfiguracao implements Serializable {
     public void setCsVo(CSGOServerVo csVo) {
         this.csVo = csVo;
     }
+    
+    
 
 }
