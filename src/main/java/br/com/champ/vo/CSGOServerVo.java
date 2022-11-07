@@ -11,10 +11,11 @@ package br.com.champ.vo;
 public class CSGOServerVo {
     
     private String kills;
-    private String name;
     private String health;
+    private String armor;
     private String trRounds;
     private String ctRounds;
+    private String playerSteamId;
 
     public String getKills() {
         return kills;
@@ -22,14 +23,6 @@ public class CSGOServerVo {
 
     public void setKills(String kills) {
         this.kills = kills;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getHealth() {
@@ -56,10 +49,15 @@ public class CSGOServerVo {
         this.trRounds = trRounds;
     }
 
-    @Override
-    public String toString() {
-        return "CSGOServerVo{" + "kills=" + kills + ", name=" + name + ", health=" + health + ", trRounds=" + trRounds + ", ctRounds=" + ctRounds + '}';
+    public String getPlayerSteamId() {
+        return playerSteamId;
     }
+
+    public void setPlayerSteamId(String playerSteamId) {
+        this.playerSteamId = playerSteamId;
+    }
+
+    
     
     
     

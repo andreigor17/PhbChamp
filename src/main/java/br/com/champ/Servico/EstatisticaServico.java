@@ -113,7 +113,7 @@ public class EstatisticaServico {
     public List<Estatisticas> estatisticaPorTime(Long id, Long id2) {
 
         try {
-            String url = pathToAPI() + "/estatisticas/estatisticasPorTime/" + id + "/" + id2;
+            String url = pathToAPI() + "/estatisticas/estatisticasPorTimeCamp/" + id + "/" + id2;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

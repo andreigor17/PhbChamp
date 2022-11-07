@@ -26,7 +26,7 @@ public abstract class ModeloGenerico implements Serializable {
      * Quando false, o objeto encontra-se excluido/cancelado. Caso contrário
      * encontra-se ativo
      */
-    private Boolean ativo = true;
+    private Boolean active = true;
     /**
      * Controle de versionamento da entidade, faz o controle de alterações
      * concorrentes
@@ -36,13 +36,14 @@ public abstract class ModeloGenerico implements Serializable {
     public ModeloGenerico() {
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
+    
 
     public int getVersao() {
         return versao;

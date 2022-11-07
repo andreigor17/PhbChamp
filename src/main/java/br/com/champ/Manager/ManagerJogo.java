@@ -90,7 +90,7 @@ public class ManagerJogo {
     public void excluir() {
         try {
             Jogo j = new Jogo();
-            this.jogo.setAtivo(Boolean.FALSE);
+            this.jogo.setActive(Boolean.FALSE);
             j = jogoServico.save(this.jogo, null, Url.ATUALIZAR_JOGO.getNome());
         } catch (Exception ex) {
             System.err.println(ex);

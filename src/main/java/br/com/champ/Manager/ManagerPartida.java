@@ -510,13 +510,13 @@ public class ManagerPartida {
             }
 
             Team team1 = new Team();
-            t1.setAtivo(true);
+            t1.setActive(true);
             t1.setNome(nomeTime1);
             t1.setPlayers(time1);
             team1 = teamServico.save(t1, null, Url.SALVAR_TIME.getNome());
 
             Team team2 = new Team();
-            t2.setAtivo(true);
+            t2.setActive(true);
             t2.setNome(nomeTime2);
             t2.setPlayers(time2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
@@ -625,13 +625,13 @@ public class ManagerPartida {
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
 
             Team team1 = new Team();
-            t1.setAtivo(true);
+            t1.setActive(true);
             t1.setNome(nomeTime1);
             t1.setPlayers(droppedPlayers1);
             team1 = teamServico.save(t1, null, Url.SALVAR_TIME.getNome());
 
             Team team2 = new Team();
-            t2.setAtivo(true);
+            t2.setActive(true);
             t2.setNome(nomeTime2);
             t2.setPlayers(droppedPlayers2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
