@@ -97,7 +97,7 @@ public class TeamServico {
     private List<Team> buscaTimes() throws Exception {
 
         try {
-            String url = pathToAPI() + "/teams";
+            String url = pathToAPI() + "/teams/teams";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

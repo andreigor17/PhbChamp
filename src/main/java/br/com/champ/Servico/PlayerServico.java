@@ -45,7 +45,7 @@ public class PlayerServico implements Serializable {
     public List<Player> pesquisar(Player player) throws Exception {
 
         try {
-            String url = pathToAPI() + "/players";
+            String url = pathToAPI() + "/players/player";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -139,7 +139,7 @@ public class PlayerServico implements Serializable {
 
     private List<Player> buscaPlayers() {
         try {
-            String url = pathToAPI() + "/players/";
+            String url = pathToAPI() + "/players/players";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
