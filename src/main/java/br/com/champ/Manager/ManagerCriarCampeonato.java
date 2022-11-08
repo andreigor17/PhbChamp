@@ -187,9 +187,7 @@ public class ManagerCriarCampeonato implements Serializable {
         Campeonato c = new Campeonato();
         c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
         System.out.println("id " + c.getId());
-        c.setPartidas(gerarPartidas(c.getId(), c));
-        c.setNome("bobocachamps");
-        System.out.println("partidas do camp " + c.getPartidas().size());
+        c.setPartidas(gerarPartidas(c.getId(), c));      
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
@@ -226,6 +224,7 @@ public class ManagerCriarCampeonato implements Serializable {
         for (int i = 0; i < this.times.size() - 1; i++) {
             for (int j = i + 1; j < this.times.size(); j++) {
                 match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp);
+                System.out.println("passou");
                 matches.add(match);
             }
         }

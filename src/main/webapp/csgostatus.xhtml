@@ -7,7 +7,7 @@
                 xmlns:map="http://xmlns.jcp.org/jsf/composite/map">
 
     <ui:define name="title">
-        Pesquisar Players
+        CSGO Server Test
     </ui:define>
 
     <ui:define name="content">
@@ -19,7 +19,26 @@
             <p:growl id="messages"
                      showDetail="false"/> 
 
-            <p:fieldset legend="Filtros" id="dadosFieldset">                    
+            <p:fieldset legend="CSGO Server" id="dadosFieldset">       
+                <div class="row">
+                    <p:commandButton value="Start server" actionListener="#{managerConfiguracao.start()}" process="@this" update="@form"/>
+                </div>
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Round Phase" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.roundPhase}" />
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Weapon" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.weapon}" />
+                    </div>
+                </div>
                 <div class="row">
                     <div class="column2 bold">
                         <p:outputLabel value="Kills:" />
@@ -28,7 +47,35 @@
                         <p:outputLabel value="#{managerConfiguracao.csVo.kills}" />
                     </div>
                 </div>
+                
+                 <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Assists" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.assists}" />
+                    </div>
+                </div>
+                
                 <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Deaths" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.deaths}" />
+                    </div>
+                </div>
+                
+                 <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="KDR" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.kdr}" />
+                    </div>
+                </div>
+                
+                 <div class="row">
                     <div class="column2 bold">
                         <p:outputLabel value="Health" />
                     </div>
@@ -36,15 +83,33 @@
                         <p:outputLabel value="#{managerConfiguracao.csVo.health}" />
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="column2 bold">
-                        <p:outputLabel value="Name" />
+                        <p:outputLabel value="Armor" />
                     </div>
                     <div class="column2 ">
-                        <p:outputLabel value="#{managerConfiguracao.csVo.name}" />
+                        <p:outputLabel value="#{managerConfiguracao.csVo.armor}" />
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Bomb State" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.bombState}" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="column2 bold">
+                        <p:outputLabel value="Bomb Countdown" />
+                    </div>
+                    <div class="column2 ">
+                        <p:outputLabel value="#{managerConfiguracao.csVo.bombCountdown}" />
+                    </div>
+                </div>
+               
                 <div class="row">
                     <div class="column2 bold">
                         <p:outputLabel value="CT Rounds" />

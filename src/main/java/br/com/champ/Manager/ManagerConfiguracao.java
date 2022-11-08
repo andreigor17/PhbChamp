@@ -12,14 +12,13 @@ import br.com.champ.Utilitario.Mensagem;
 import br.com.champ.vo.CSGOServerVo;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import uk.oczadly.karl.csgsi.GSIListener;
-import uk.oczadly.karl.csgsi.GSIServer;
 
 /**
  *
@@ -36,6 +35,7 @@ public class ManagerConfiguracao implements Serializable {
     private String path;
     private boolean csgoServerStatus;
     private CSGOServerVo csVo;
+    private boolean start = false;
 
     @PostConstruct
     public void init() {
@@ -43,7 +43,7 @@ public class ManagerConfiguracao implements Serializable {
             instanciar();
             this.configuracao = this.configuracaoServico.buscaConfig();
             this.path = APIPath.pathToAPI();
-            this.csVo = this.configuracaoServico.csgoServerStatus();
+            //this.csVo = this.configuracaoServico.csgoServerStatus();
             //System.out.println("cs " + this.csVo.getHealth());
             //this.csgoServerStatus = this.configuracaoServico.csgoServerStatus();
 
@@ -55,6 +55,10 @@ public class ManagerConfiguracao implements Serializable {
     public void instanciar() throws Exception {
         this.configuracao = new Configuracao();
         this.csVo = new CSGOServerVo();
+    }
+
+    public void start() {
+        this.start = true;
     }
 
     public void renderizarMenu(String menu) {
@@ -84,9 +88,11 @@ public class ManagerConfiguracao implements Serializable {
     public void setPath(String path) {
         this.path = path;
     }
-    
-    public void teste() throws Exception{
-        this.csVo = this.configuracaoServico.csgoServerStatus();
+
+    public void teste() throws Exception {
+        if (start) {
+            this.csVo = this.configuracaoServico.csgoServerStatus();
+        }
     }
 
     public void updatePath() throws IOException {
@@ -127,7 +133,13 @@ public class ManagerConfiguracao implements Serializable {
     public void setCsVo(CSGOServerVo csVo) {
         this.csVo = csVo;
     }
-    
-    
+
+    public boolean isStart() {
+        return start;
+    }
+
+    public void setStart(boolean start) {
+        this.start = start;
+    }
 
 }

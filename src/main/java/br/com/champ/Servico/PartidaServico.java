@@ -165,7 +165,7 @@ public class PartidaServico {
     
     public List<Partida> pesquisarPartidasGeral() {
         try {
-            String url = pathToAPI() + "/partidas";
+            String url = pathToAPI() + "/partidas/partidas";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 //            // optional default is GET

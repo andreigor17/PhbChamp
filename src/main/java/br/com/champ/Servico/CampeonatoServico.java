@@ -44,7 +44,7 @@ public class CampeonatoServico {
 
     public List<Campeonato> pesquisar() throws Exception {
         try {
-            String url = pathToAPI() + "/campeonatos";
+            String url = pathToAPI() + "/campeonatos/camps";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
