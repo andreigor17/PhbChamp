@@ -36,16 +36,17 @@ public class PlayerServico implements Serializable {
     @EJB
     private ConfiguracaoServico configuracaoServico;
 
-
     public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
     }
 
-    public List<Player> pesquisar(Player player) throws Exception {
+    public List<Player> pesquisar(String nomePlayer) throws Exception {
 
         try {
             String url = pathToAPI() + "/players/player";
+            Gson gson = new Gson();            
+            url += "?nomePlayer=" + nomePlayer;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -66,8 +67,7 @@ public class PlayerServico implements Serializable {
             in.close();
             //print in String
             System.out.println(response.toString());
-            //Read JSON response and print
-            Gson gson = new Gson();
+            //Read JSON response and print           
             List<Player> p = new ArrayList<>();
 
             //Player[] userArray = gson.fromJson(response.toString(), Player[].class);
@@ -219,7 +219,7 @@ public class PlayerServico implements Serializable {
                 System.out.println("Json Player " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try (OutputStream outputStream = request.getOutputStream()) {
+                try ( OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -241,7 +241,7 @@ public class PlayerServico implements Serializable {
 
     private String readResponse(HttpURLConnection request) throws IOException {
         ByteArrayOutputStream os;
-        try (InputStream is = request.getInputStream()) {
+        try ( InputStream is = request.getInputStream()) {
             os = new ByteArrayOutputStream();
             int b;
             while ((b = is.read()) != -1) {

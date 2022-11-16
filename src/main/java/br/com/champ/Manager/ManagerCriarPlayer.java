@@ -174,8 +174,8 @@ public class ManagerCriarPlayer implements Serializable {
 
     }
 
-    public void pesquisarPlayer() throws Exception {
-        this.players = playerServico.pesquisar(this.p);
+    public void pesquisarPlayer() throws Exception {        
+        this.players = playerServico.pesquisar(this.p.getNome());
     }
 
     public void limpar() {

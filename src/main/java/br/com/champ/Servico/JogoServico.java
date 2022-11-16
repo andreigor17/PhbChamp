@@ -37,7 +37,7 @@ public class JogoServico {
     public List<Jogo> pesquisar() throws Exception {
 
         try {
-            String url = pathToAPI() + "/jogo";
+            String url = pathToAPI() + "/jogo/jogos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
