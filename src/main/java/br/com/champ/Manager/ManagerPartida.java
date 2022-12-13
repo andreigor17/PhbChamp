@@ -138,7 +138,7 @@ public class ManagerPartida {
         this.itemPartida = new ItemPartida();
         this.itensPartidas = new ArrayList<>();
         this.selectedPlayers = new ArrayList<Player>();
-        this.allPlayers = playerServico.pesquisar(this.player);
+        this.allPlayers = playerServico.pesquisar(this.player.getNome());
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
         this.itemPartidas = new ArrayList<>();
         this.itemPartida = new ItemPartida();

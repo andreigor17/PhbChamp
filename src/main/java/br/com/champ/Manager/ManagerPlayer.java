@@ -90,7 +90,7 @@ public class ManagerPlayer implements Serializable {
         this.players = new ArrayList<>();
         this.camps = new ArrayList<>();
         this.selectedPlayers = new ArrayList<Player>();
-        this.allPlayers = playerServico.pesquisar(this.player);
+        this.allPlayers = playerServico.pesquisar(this.player.getNome());
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
         this.itemPartidas = new ArrayList<>();
         this.itemPartida = new ItemPartida();
@@ -207,7 +207,7 @@ public class ManagerPlayer implements Serializable {
     }
 
     public void pesquisarPlayer() throws Exception {
-        this.players = playerServico.pesquisar(this.player);
+        this.players = playerServico.pesquisar(this.player.getNome());
     }
 
     public void limpar() throws Exception {
