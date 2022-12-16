@@ -6,6 +6,7 @@
 package br.com.champ.Utilitario;
 
 import br.com.champ.Enums.Funcoes;
+import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +35,14 @@ public class Enums implements Serializable{
         List<SelectItem> itens = new ArrayList<SelectItem>();
         for (StatusCamp status : StatusCamp.values()) {
             itens.add(new SelectItem(status, status.getNome()));
+        }
+        return itens;
+    }
+    
+    public List<SelectItem> games() {
+        List<SelectItem> itens = new ArrayList<SelectItem>();
+        for (Game game : Game.values()) {
+            itens.add(new SelectItem(game, game.getNome()));
         }
         return itens;
     }

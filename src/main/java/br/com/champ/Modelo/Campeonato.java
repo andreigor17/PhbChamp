@@ -1,5 +1,6 @@
 package br.com.champ.Modelo;
 
+import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
@@ -18,6 +19,8 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private List<Estatisticas> estatisticas;        
     private String dataCamp;
     private String dataString;
+    private Game jogo;
+    private String dataFinal;
 
     public List<Partida> getPartidas() {
         return partidas;
@@ -74,6 +77,22 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setDataString(String dataString) {
         this.dataString = dataString;
+    }
+
+    public Game getJogo() {
+        return jogo;
+    }
+
+    public void setJogo(Game jogo) {
+        this.jogo = jogo;
+    }
+
+    public String getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
     }
 
 }

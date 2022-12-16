@@ -68,8 +68,7 @@ public class ManagerTeam implements Serializable {
         this.times = times;
     }
     
-    public void adicionarMembro() {
-        System.out.println(membros);
+    public void adicionarMembro() {        
         this.membros.add(this.membro);
         this.membro = new Player();
         
@@ -84,7 +83,7 @@ public class ManagerTeam implements Serializable {
     }
     
     public void pesquisarTime() throws Exception {
-        this.times = teamServico.pesquisar(this.team);
+        this.times = teamServico.pesquisar(this.team.getNome());
     }
     
     public void limpar() {

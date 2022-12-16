@@ -5,6 +5,7 @@
  */
 package br.com.champ.Modelo;
 
+import br.com.champ.Enums.Game;
 import br.com.champ.Enums.Maps;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.List;
 public class Partida extends ModeloGenerico implements Serializable {
 
     private List<ItemPartida> itemPartida;
+    private Game jogo;
 
     public Partida() {
     }
@@ -27,6 +29,14 @@ public class Partida extends ModeloGenerico implements Serializable {
 
     public void setItemPartida(List<ItemPartida> itemPartida) {
         this.itemPartida = itemPartida;
+    }
+
+    public Game getJogo() {
+        return jogo;
+    }
+
+    public void setJogo(Game jogo) {
+        this.jogo = jogo;
     }
         
 }

@@ -25,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -53,10 +54,14 @@ public class ManagerCriarCampeonato implements Serializable {
     private List<Estatisticas> estatisticasTime;
     private Estatisticas estatistica;
     private Date dataCamp;
+    private Date dataFinal;
     private int qtdItensPartidas;
     private List<ItemPartida> itemPartidas;
     private Partida partida;
     private List<Estatisticas> estsGerais;
+    private boolean skip;
+    private Player membro;
+    private List<Player> membros;
 
     @PostConstruct
     public void init() {
@@ -81,6 +86,8 @@ public class ManagerCriarCampeonato implements Serializable {
         this.itemPartidas = new ArrayList<>();
         this.partida = new Partida();
         this.estsGerais = new ArrayList<>();
+        this.membro = new Player();
+        this.membros = new ArrayList<>();
 
     }
 
@@ -171,14 +178,26 @@ public class ManagerCriarCampeonato implements Serializable {
     public void setEstsGerais(List<Estatisticas> estsGerais) {
         this.estsGerais = estsGerais;
     }
+    
+    public void adicionarMembro() {        
+        this.membros.add(this.membro);
+        this.membro = new Player();
+        
+    }
+    
+    public List<Player> autoCompletarPlayer() {
+        return playerServico.autoCompletePessoa();
+    }
 
     public void salvarCampeonato() throws Exception {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         String dataFormatada = formatter.format(this.dataCamp);
+        String dataFormatadaFinal = formatter.format(this.dataFinal);
 
         this.camp.setDataCamp(dataFormatada);
+        this.camp.setDataFinal(dataFormatadaFinal);
 
         this.camp.setTeams(this.times);
 
@@ -187,7 +206,7 @@ public class ManagerCriarCampeonato implements Serializable {
         Campeonato c = new Campeonato();
         c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
         System.out.println("id " + c.getId());
-        c.setPartidas(gerarPartidas(c.getId(), c));      
+        c.setPartidas(gerarPartidas(c.getId(), c));
 
         for (Team timess : this.camp.getTeams()) {
             this.estatistica = new Estatisticas();
@@ -309,6 +328,47 @@ public class ManagerCriarCampeonato implements Serializable {
 //    }
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar();
+    }
+
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false; //reset in case user goes back
+            return "confirm";
+        } else {
+            return event.getNewStep();
+        }
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public Player getMembro() {
+        return membro;
+    }
+
+    public void setMembro(Player membro) {
+        this.membro = membro;
+    }
+
+    public List<Player> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Player> membros) {
+        this.membros = membros;
     }
 
 }

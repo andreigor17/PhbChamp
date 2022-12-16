@@ -40,11 +40,12 @@ public class TeamServico {
 
     }
 
-    public List<Team> pesquisar(Team team) throws Exception {
+    public List<Team> pesquisar(String nomeTeam) throws Exception {
 
         try {
-            String url = pathToAPI() + "/teams";
-            URL obj = new URL(url);
+            String url = pathToAPI() + "/teams/team";            
+            url += "?nomePlayer=" + nomeTeam;
+            URL obj = new URL(url);            
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
             con.setRequestMethod("GET");
