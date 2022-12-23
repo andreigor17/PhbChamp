@@ -96,13 +96,14 @@
                                     <div class="row">
                                         <div class="column2 bold" >
                                             <p:outputLabel value="Tipo de jogo "
-                                                           for="tipoJogo"/>
+                                                           for="jogoSelectOneRadio"/>
                                         </div>
                                         <div class="column3">
-                                            <p:selectOneMenu id="tipoJogo" value="#{ managerCriarCampeonato.camp.jogo }"
-                                                             required="true">
+                                            <p:selectOneRadio id="jogoSelectOneRadio" value="#{ managerCriarCampeonato.camp.jogo }"
+                                                              required="true">
                                                 <f:selectItems value="#{ enums.games() }" />
-                                            </p:selectOneMenu>
+                                                <p:ajax event="valueChange" process="@this" update="@form"/>
+                                            </p:selectOneRadio>
                                         </div>
                                     </div>
                                 </div>
@@ -112,120 +113,172 @@
                     </p:tab>
 
                     <p:tab id="participantes" title="Times" rendered="#{managerCriarCampeonato.camp.jogo.nome eq 'CS'}">
-                        <p:panel header="Detalhes dos participantes">
-                            <p:messages/>
-                            <p:panel header="Dados"  style="min-height: 180px">
-                                <div class="row" style="padding: 15px">
-                                    <div class="row">
-                                        <div class="column2 bold">
-                                            <p:outputLabel value="Selecionar integrantes"
-                                                           for="timeAutoComplete"/>
-                                        </div>
-                                        <div class="column3">
-                                            <p:autoComplete id="timeAutoComplete" value="#{managerCriarCampeonato.time}"
-                                                            forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
-                                                            itemLabel="#{team.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarTime()}"
-                                                            converter="time_converter"  requiredMessage="Time é obrigatório"/>
-                                        </div>
-                                        <p:dataTable id="timesDataTable" value="#{ managerCriarCampeonato.times }" var="team"
-                                                     rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
-
-                                            <p:column headerText="Nome" width="50%">
-                                                <h:outputText value="#{ team.nome }" />
-                                            </p:column>
-
-
-                                        </p:dataTable>
-                                    </div>
-                                </div>
-                            </p:panel>
-                        </p:panel>
-                    </p:tab>
-
-                    <p:tab id="participantes2" title="players" rendered="#{managerCriarCampeonato.camp.jogo.nome ne 'CS'}">
                         <p:panel header="Detalhes dos participantes" style="min-height: 180px">
                             <p:messages/>                            
-                                <div class="row" style="padding: 15px">
-                                    <div class="column2 bold">
-                                        <p:outputLabel value="Selecionar jogador:"
-                                                       for="jogadorAutoComplete"/>
-                                    </div>
-                                    <div class="column3">
-                                        <p:autoComplete id="jogadorAutoComplete" value="#{managerCriarCampeonato.membro}"
-                                                        forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
-                                                        itemLabel="#{player.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarPlayer()}"
-                                                        converter="player_converter"  requiredMessage="Jogador é obrigatório"/>
-                                    </div>
+                            <div class="row" style="padding: 15px">                                
+                                <div class="column2 bold">
+                                    <p:outputLabel value="Selecionar integrantes"
+                                                   for="timeAutoComplete"/>
                                 </div>
-                                <div class="command">
-                                    <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarMembro()}"
-                                                     update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
-
+                                <div class="column3">
+                                    <p:autoComplete id="timeAutoComplete" value="#{managerCriarCampeonato.time}"
+                                                    forceSelection="true" dropdown="true" var="team" itemValue="#{team}" scrollHeight="200"
+                                                    itemLabel="#{team.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarTime()}"
+                                                    converter="time_converter"  requiredMessage="Time é obrigatório"/>
                                 </div>
-                                <p:dataTable id="playersDataTable" value="#{ managerCriarCampeonato.membros }" var="player"
-                                             rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum player adicionado">
+                            </div>
+                            <div class="command">
+                                <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarTime()}"
+                                                 update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
 
-                                    <p:column headerText="Nome" width="50%">
-                                        <h:outputText value="#{ player.nome }" />
-                                    </p:column>
-                                    <p:column headerText="Nick" width="50%">
-                                        <h:outputText value="#{ player.nick }" />
-                                    </p:column>
+                            </div>
+                            <p:dataTable id="timesDataTable" value="#{ managerCriarCampeonato.times }" var="team"
+                                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado">
 
-                                </p:dataTable>
+                                <p:column headerText="Nome" width="50%">
+                                    <h:outputText value="#{ team.nome }" />
+                                </p:column>
+                            </p:dataTable>                                                         
+                        </p:panel>                        
+                    </p:tab>
 
-                            </p:panel>                        
+                    <p:tab id="participantes2" title="Players" rendered="#{ managerCriarCampeonato.camp.jogo.nome ne 'CS'}">
+                        <p:panel header="Detalhes dos participantes" style="min-height: 180px">
+                            <p:messages/>                            
+                            <div class="row" style="padding: 15px">
+                                <div class="column2 bold">
+                                    <p:outputLabel value="Selecionar jogador:"
+                                                   for="jogadorAutoComplete"/>
+                                </div>
+                                <div class="column3">
+                                    <p:autoComplete id="jogadorAutoComplete" value="#{managerCriarCampeonato.membro}"
+                                                    forceSelection="true" dropdown="true" var="player" itemValue="#{player}" scrollHeight="200"
+                                                    itemLabel="#{player.nome}" completeMethod="#{managerCriarCampeonato.autoCompletarPlayer()}"
+                                                    converter="player_converter"  requiredMessage="Jogador é obrigatório"/>
+                                </div>
+                            </div>
+                            <div class="command">
+                                <p:commandButton value="Adicionar" actionListener="#{managerCriarCampeonato.adicionarMembro()}"
+                                                 update="formCamp:dadosFieldset" process="formCamp:dadosFieldset"/>
+
+                            </div>
+                            <p:dataTable id="playersDataTable" value="#{ managerCriarCampeonato.membros }" var="player"
+                                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum player adicionado">
+
+                                <p:column headerText="Nome" width="50%">
+                                    <h:outputText value="#{ player.nome }" />
+                                </p:column>
+                                <p:column headerText="Nick" width="50%">
+                                    <h:outputText value="#{ player.nick }" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>                        
                     </p:tab>
 
                     <p:tab id="rounds" title="Rounds">
                         <p:panel header="Rounds">
-                            <p:messages/>
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <div class="row">
-                                    <div class="column3">
-                                        <p:outputLabel value="Selecione o número de rounds:"/>
-                                    </div>
-
-                                    <div class="column2">
-                                        <p:selectOneRadio value="#{managerCriarCampeonato.qtdItensPartidas}" unselectable="true">
-                                            <f:selectItem itemLabel="MD1" itemValue="1"/>
-                                            <f:selectItem itemLabel="MD3" itemValue="3"/>
-                                            <f:selectItem itemLabel="MD5" itemValue="5"/>
-                                        </p:selectOneRadio>
-                                    </div>
+                            <p:messages/>                            
+                            <div class="row">
+                                <div class="column3">
+                                    <p:outputLabel value="Selecione o número de rounds:"/>
                                 </div>
 
-                            </h:panelGrid>
+                                <div class="column2">
+                                    <p:selectOneRadio value="#{managerCriarCampeonato.qtdItensPartidas}" unselectable="true">
+                                        <f:selectItem itemLabel="MD1" itemValue="1"/>
+                                        <f:selectItem itemLabel="MD3" itemValue="3"/>
+                                        <f:selectItem itemLabel="MD5" itemValue="5"/>
+                                    </p:selectOneRadio>
+                                </div>
+                            </div>                            
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="confirm" title="Confirmação">
-                        <p:panel header="Confirmation">
-                            <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                                <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Nome do Campeonato: "/>
-                                    <h:outputText value="#{managerCriarCampeonato.camp.nome}" styleClass="outputLabel" />
+                    <p:tab id="confirm" title="Confirmação">                        
+                        <p:panel header="Dados do campeonato"  style="min-height: 380px">
+                            <p:messages/>
+                            <div class="row" style="padding: 15px">
+                                <div class="row">
+                                    <div class="column2 bold">
+                                        <p:outputLabel value="Nome do Campeonato:" style="text-align: left !important;"/>  
+                                    </div>
+                                    <div class="column2">
+                                        <p:outputLabel id="nomeCamp2"
+                                                       value="#{managerCriarCampeonato.camp.nome}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column2 bold">
+                                        <p:outputLabel for="dataCalendar2" style="text-align: left !important;" value="Data Inicial: "/>
+                                    </div>
+                                    <div class="column2">
+                                        <p:outputLabel id="dataCalendar2" value="#{managerCriarCampeonato.dataCamp}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column2 bold">
+                                        <p:outputLabel for="dataCalendarFinal2" style="text-align: left !important" value="Data Final: "/>
+                                    </div>
+                                    <div class="column2">
+                                        <p:outputLabel id="dataCalendarFinal2" value="#{managerCriarCampeonato.dataFinal}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column2 bold" >
+                                        <p:outputLabel value="Tipo de jogo: " for="jogoText" style="text-align: left !important;"/>
+                                    </div>
+                                    <div class="column2">
+                                        <p:outputLabel id="jogoText" value="#{managerCriarCampeonato.camp.jogo.nome}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column2 bold" >
+                                        <p:outputLabel value="Número de rounds:" style="text-align: left !important;"/>
+                                    </div>
+                                    <div class="column2">
+                                        <p:outputLabel id="roundsConf" value="#{managerCriarCampeonato.qtdItensPartidas}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column2 bold" >
+                                        <p:outputLabel value="Participantes: " style="text-align: left !important;"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="column6">
+                                            <p:dataTable id="timesDataTableConf" value="#{ managerCriarCampeonato.times }" var="team"
+                                                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
+                                                         style="#{not empty managerCriarCampeonato.times ? '' : 'display:none;'}">
 
-                                    <h:outputText value="Data Inicial "/>
-                                    <h:outputText value="#{managerCriarCampeonato.camp.dataCamp}" styleClass="outputLabel"/>
+                                                <p:column headerText="Nome" width="50%">
+                                                    <h:outputText value="#{ team.nome }" />
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="column6">
+                                            <p:dataTable id="playersDataTableConf" value="#{ managerCriarCampeonato.membros }" var="player"
+                                                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum player adicionado"
+                                                         style="#{not empty managerCriarCampeonato.membros ? '' : 'display:none;'}">
 
-                                    <h:outputText value="Data Final "/>
-                                    <h:outputText value="#{managerCriarCampeonato.camp.dataFinal}" styleClass="outputLabel"/>
-                                </h:panelGrid>
-
-                                <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Tipo de Jogo: "/>
-                                    <h:outputText value="#{managerCriarCampeonato.camp.jogo.nome}" styleClass="outputLabel" />
-
-                                    <h:outputText value="Rounds "/>
-                                    <h:outputText value="#{managerCriarCampeonato.qtdItensPartidas}" styleClass="outputLabel"/>
-
-                                </h:panelGrid>
-
-
-                            </h:panelGrid>
-
-                            <p:commandButton value="Salvar" action="#{managerCriarCampeonato.salvarCampeonato()}"  process="@this"/>
+                                                <p:column headerText="Nome" width="50%">
+                                                    <h:outputText value="#{ player.nome }" />
+                                                </p:column>
+                                                <p:column headerText="Nick" width="50%">
+                                                    <h:outputText value="#{ player.nick }" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <div class="row">
+                                    <p:commandButton value="Salvar" action="#{managerCriarCampeonato.salvarCampeonato()}"  process="@this"/>
+                                </div>
+                            </div>
                         </p:panel>
                     </p:tab>
                 </p:wizard>

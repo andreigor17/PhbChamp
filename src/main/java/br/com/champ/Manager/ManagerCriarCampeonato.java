@@ -1,5 +1,6 @@
 package br.com.champ.Manager;
 
+import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
@@ -87,7 +88,7 @@ public class ManagerCriarCampeonato implements Serializable {
         this.partida = new Partida();
         this.estsGerais = new ArrayList<>();
         this.membro = new Player();
-        this.membros = new ArrayList<>();
+        this.membros = new ArrayList<>();        
 
     }
 
@@ -182,6 +183,12 @@ public class ManagerCriarCampeonato implements Serializable {
     public void adicionarMembro() {        
         this.membros.add(this.membro);
         this.membro = new Player();
+        
+    }
+    
+    public void adicionarTime() {        
+        this.times.add(this.time);
+        this.time = new Team();
         
     }
     
