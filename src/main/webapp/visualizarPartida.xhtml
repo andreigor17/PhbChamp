@@ -38,7 +38,7 @@
             <p:tabView id="tabview">
                 <p:tab id="tabGeral" title="Geral">
                     <p:dataTable id="geralTime1"
-                                 rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? '' : 'display:none;'}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? true : false}"
                                  value="#{managerPartida.somaEstsTeam(managerPartida.itensPartidas.get(0).team1)}"
                                  var="ests1"
                                  paginator="true"
@@ -76,7 +76,7 @@
                     </p:dataTable>
 
                     <p:dataTable id="geralPlayer1"
-                                 rendered="#{ managerPartida.itensPartidas.get(0).player1 ne null ? '' : 'display:none;'}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).player1 ne null ? true : false}"
                                  value="#{managerPartida.somaEstsPlayer(managerPartida.itensPartidas.get(0).player1)}"
                                  var="ests1"
                                  paginator="true"
@@ -114,7 +114,7 @@
                     </p:dataTable>
 
                     <p:dataTable id="geralTime2"
-                                 rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? '' : 'display:none;'}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? true : false}"
                                  value="#{managerPartida.somaEstsTeam(managerPartida.itensPartidas.get(0).team2)}"
                                  var="ests2"
                                  paginator="true"
@@ -152,7 +152,7 @@
                     </p:dataTable>
 
                     <p:dataTable id="geralPlayer2"
-                                 rendered="#{ managerPartida.itensPartidas.get(0).player2 ne null ? '' : 'display:none;'}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).player2 ne null ? true : false}"
                                  value="#{managerPartida.somaEstsPlayer(managerPartida.itensPartidas.get(0).player2)}"
                                  var="ests1"
                                  paginator="true"
@@ -198,8 +198,8 @@
                         </div>
 
                         <p:dataTable id="partidaTime1"
-                                     rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? '' : 'display:none;'}"
-                                     value="#{managerPartida.estsGerais(item.team1, item)}"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? true : false}"
+                                     value="#{managerPartida.estsGeraisTeam(item.team1, item)}"
                                      var="ests1"
                                      paginator="true"
                                      paginatorPosition="bottom"
@@ -234,10 +234,48 @@
                             </p:column>
                         </p:dataTable>
 
+                        <p:dataTable id="partidaPlayer1"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).player1 ne null ? true : false}"
+                                     value="#{managerPartida.estsGeraisPlayer(item.player1, item)}"
+                                     var="ests1"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum set jogado na partida...">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player1.nome}" />
+                            </f:facet>
+
+                            <p:column headerText="Opções" width="5%">
+                                <div class="options">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
+                                </div>
+                            </p:column>
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
+                            </p:column>                            
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests1.kills}"/>
+                            </p:column>
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests1.assists}"/>
+                            </p:column>
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests1.deaths}"/>
+                            </p:column>
+                        </p:dataTable>
+
+
 
                         <p:dataTable id="partidaTime2"
-                                     rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? '' : 'display:none;'}"
-                                     value="#{managerPartida.estsGerais(item.team2, item)}"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? true : false}"
+                                     value="#{managerPartida.estsGeraisTeam(item.team2, item)}"
                                      var="ests2"
                                      paginator="true"
                                      paginatorPosition="bottom"
@@ -245,10 +283,48 @@
                                      currentPageReportTemplate="{currentPage} de {totalPages}"
                                      rows="10"
                                      rowsPerPageTemplate="5,10,15"
-                                     emptyMessage="Nenhum time encontrado na partida...">
+                                     emptyMessage="Nenhum round jogado na partida...">
 
                             <f:facet name="header">
                                 <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team2.nome}" />
+                            </f:facet>
+
+                            <p:column headerText="Opções" width="5%">
+                                <div class="options">
+                                    <p:button title="Visualizar Player"
+                                              icon="ui-icon-search"
+                                              href="visualizarPlayer.xhtml?id=#{ests2.player.id}"/>
+                                </div>
+                            </p:column>
+
+                            <p:column headerText="Nome" width="30%">
+                                <p:outputLabel  value="#{ests2.player.nome}   '#{ests2.player.nick}' #{ests2.player.sobreNome} "/>
+                            </p:column>                            
+                            <p:column headerText="K" width="5%"   >                                  
+                                <p:outputLabel value="#{ests2.kills}"/>
+                            </p:column>
+                            <p:column headerText="A" width="5%">
+                                <p:outputLabel value="#{ests2.assists}"/>
+                            </p:column>
+                            <p:column headerText="D" width="5%">
+                                <p:outputLabel value="#{ests2.deaths}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dataTable id="partidaPlayer2"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).player2 ne null ? true : false}"
+                                     value="#{managerPartida.estsGeraisPlayer(item.player2, item)}"
+                                     var="ests2"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="Nenhum set jogado na partida...">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player2.nome}" />
                             </f:facet>
 
                             <p:column headerText="Opções" width="5%">
@@ -275,6 +351,7 @@
 
 
                         </p:dataTable>
+
 
                     </p:tab>  
 

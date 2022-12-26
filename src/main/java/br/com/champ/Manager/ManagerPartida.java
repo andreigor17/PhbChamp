@@ -151,9 +151,12 @@ public class ManagerPartida {
         this.selectedPlayers = new ArrayList<>();
     }
 
-    public List<Estatisticas> estsGerais(Team team, ItemPartida item) {
-        List<Estatisticas> e = estatisticasServico.estatisticaPorItemPartida(team.getId(), item.getId());
-        return e;
+    public List<Estatisticas> estsGeraisTeam(Team team, ItemPartida item) {
+        return estatisticasServico.estatisticaPorItemPartidaTeam(team.getId(), item.getId());
+    }
+
+    public List<Estatisticas> estsGeraisPlayer(Player player, ItemPartida item) {
+        return estatisticasServico.estatisticaPorItemPartidaTeam(player.getId(), item.getId());
     }
 
     public List<Estatisticas> somaEstsTeam(Team team) {
