@@ -3,8 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
         Visualizar Partida
@@ -39,7 +38,8 @@
             <p:tabView id="tabview">
                 <p:tab id="tabGeral" title="Geral">
                     <p:dataTable id="geralTime1"
-                                 value="#{managerPartida.somaEsts(managerPartida.itensPartidas.get(0).team1)}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? '' : 'display:none;'}"
+                                 value="#{managerPartida.somaEstsTeam(managerPartida.itensPartidas.get(0).team1)}"
                                  var="ests1"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -75,8 +75,47 @@
 
                     </p:dataTable>
 
+                    <p:dataTable id="geralPlayer1"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).player1 ne null ? '' : 'display:none;'}"
+                                 value="#{managerPartida.somaEstsPlayer(managerPartida.itensPartidas.get(0).player1)}"
+                                 var="ests1"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum mapa jogado na partida...">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player1.nome}" />
+                        </f:facet>
+
+                        <p:column headerText="Opções" width="5%">
+                            <div class="options">
+                                <p:button title="Visualizar Player"
+                                          icon="ui-icon-search"
+                                          href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
+                            </div>
+                        </p:column>
+                        <p:column headerText="Nome" width="30%">
+                            <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
+                        </p:column>                            
+                        <p:column headerText="K" width="5%"   >                                  
+                            <p:outputLabel value="#{ests1.kills}"/>
+                        </p:column>
+                        <p:column headerText="A" width="5%">
+                            <p:outputLabel value="#{ests1.assists}"/>
+                        </p:column>
+                        <p:column headerText="D" width="5%">
+                            <p:outputLabel value="#{ests1.deaths}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
                     <p:dataTable id="geralTime2"
-                                 value="#{managerPartida.somaEsts(managerPartida.itensPartidas.get(0).team2)}"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? '' : 'display:none;'}"
+                                 value="#{managerPartida.somaEstsTeam(managerPartida.itensPartidas.get(0).team2)}"
                                  var="ests2"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -110,8 +149,43 @@
                         <p:column headerText="D" width="5%">
                             <p:outputLabel value="#{ests2.deaths}"/>
                         </p:column>
+                    </p:dataTable>
 
+                    <p:dataTable id="geralPlayer2"
+                                 rendered="#{ managerPartida.itensPartidas.get(0).player2 ne null ? '' : 'display:none;'}"
+                                 value="#{managerPartida.somaEstsPlayer(managerPartida.itensPartidas.get(0).player2)}"
+                                 var="ests1"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum mapa jogado na partida...">
 
+                        <f:facet name="header">
+                            <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player1.nome}" />
+                        </f:facet>
+
+                        <p:column headerText="Opções" width="5%">
+                            <div class="options">
+                                <p:button title="Visualizar Player"
+                                          icon="ui-icon-search"
+                                          href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
+                            </div>
+                        </p:column>
+                        <p:column headerText="Nome" width="30%">
+                            <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
+                        </p:column>                            
+                        <p:column headerText="K" width="5%"   >                                  
+                            <p:outputLabel value="#{ests1.kills}"/>
+                        </p:column>
+                        <p:column headerText="A" width="5%">
+                            <p:outputLabel value="#{ests1.assists}"/>
+                        </p:column>
+                        <p:column headerText="D" width="5%">
+                            <p:outputLabel value="#{ests1.deaths}"/>
+                        </p:column>
 
                     </p:dataTable>
                 </p:tab>
@@ -124,6 +198,7 @@
                         </div>
 
                         <p:dataTable id="partidaTime1"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).team1 ne null ? '' : 'display:none;'}"
                                      value="#{managerPartida.estsGerais(item.team1, item)}"
                                      var="ests1"
                                      paginator="true"
@@ -157,14 +232,11 @@
                             <p:column headerText="D" width="5%">
                                 <p:outputLabel value="#{ests1.deaths}"/>
                             </p:column>
-
-
-
-
                         </p:dataTable>
 
 
                         <p:dataTable id="partidaTime2"
+                                     rendered="#{ managerPartida.itensPartidas.get(0).team2 ne null ? '' : 'display:none;'}"
                                      value="#{managerPartida.estsGerais(item.team2, item)}"
                                      var="ests2"
                                      paginator="true"

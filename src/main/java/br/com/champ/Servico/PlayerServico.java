@@ -137,7 +137,7 @@ public class PlayerServico implements Serializable {
         return buscaPlayers();
     }
 
-    private List<Player> buscaPlayers() {
+    public List<Player> buscaPlayers() {
         try {
             String url = pathToAPI() + "/players/players";
             URL obj = new URL(url);

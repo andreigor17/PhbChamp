@@ -63,9 +63,9 @@
             <p:tabView id="tabview" styleClass="row" >
                 <p:tab id="tabela" title="Tabela" >
 
-                    <p:dataTable id="timesDataTable" value="#{ managerCamp.somaEsts() }" var="ests"
+                    <p:dataTable id="timesDataTable" value="#{ managerCamp.somaEstsTime() }" var="ests"
                                  rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
-                                 sortBy="#{ ests.pontos}" sortMode="descending">
+                                 sortBy="#{ ests.pontos}" sortMode="descending" style="#{not empty managerCamp.camp.teams ? '' : 'display:none;'}">
 
                         <p:column headerText="Nome" width="50%">
                             <h:outputText value="#{ ests.team.nome }" />
@@ -87,9 +87,33 @@
                         </p:column>
                     </p:dataTable>
 
+                    <p:dataTable id="playersDataTable" value="#{ managerCamp.somaEstsPlayers() }" var="ests"
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
+                                 sortBy="#{ ests.pontos}" sortMode="descending" style="#{not empty managerCamp.camp.players ? '' : 'display:none;'}">
+
+                        <p:column headerText="Nome" width="50%">
+                            <h:outputText value="#{ ests.player.nick }" />
+                        </p:column>
+                        <p:column headerText="Pontos" width="50%">
+                            <h:outputText value="#{ ests.pontos}" />
+                        </p:column>
+                        <p:column headerText="PA" width="50%">
+                            <h:outputText value="#{ ests.kills}" />
+                        </p:column>
+                        <p:column headerText="PC" width="50%">
+                            <h:outputText value="#{ ests.deaths}" />
+                        </p:column>
+                        <p:column headerText="Sets Ganhos" width="50%">
+                            <h:outputText value="#{ ests.roundsGanhos}" />
+                        </p:column>
+                        <p:column headerText="Sets Perdidos" width="50%">
+                            <h:outputText value="#{ ests.roundsPerdidos}" />
+                        </p:column>
+                    </p:dataTable>
+
                 </p:tab>
                 <p:tab id="jogos" title="Jogos">
-                    <p:dataTable id="partidasDataTable"
+                    <p:dataTable id="partidasDataTableTeam"
                                  value="#{managerCamp.partidas}"
                                  rowKey="#{partida.id}"
                                  var="partida"
@@ -98,7 +122,7 @@
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  currentPageReportTemplate="{currentPage} de {totalPages}"
                                  rows="10"
-                                 rowsPerPageTemplate="5,10,15">
+                                 rowsPerPageTemplate="5,10,15" style="#{not empty managerCamp.camp.teams ? '' : 'display:none;'}">
 
                         <f:facet name="header">
                             <p:outputLabel value="Partidas" />
@@ -133,6 +157,46 @@
                         </p:rowExpansion>
                     </p:dataTable>
 
+                    <p:dataTable id="partidasDataTablePlayer"
+                                 value="#{managerCamp.partidas}"
+                                 rowKey="#{partida.id}"
+                                 var="partida"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="{currentPage} de {totalPages}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15" style="#{not empty managerCamp.camp.players ? '' : 'display:none;'}">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="Partidas" />
+                        </f:facet>
+                        <p:column width="1%">
+                            <p:rowToggler/>
+                        </p:column>
+                        <p:column headerText="Opções" width="3%">
+                            <div class="options">                        
+                                <p:button title="Visualizar Partida"
+                                          icon="ui-icon-search"
+                                          href="visualizarPartida.xhtml?id=#{partida.id}"/>
+                            </div>
+                        </p:column>
+                        <p:column headerText="Time 1" width="15%">
+                            <p:outputLabel value="#{partida.itemPartida.get(0).player1.nome}"/>
+                        </p:column>                       
+                        <p:column headerText="Time2" width="15%">
+                            <p:outputLabel value="#{partida.itemPartida.get(0).player2.nome}"/>
+                        </p:column>
+                        <p:rowExpansion>
+                            <p:dataTable id="detalheItensPartidas" var="item" value="#{ partida.itemPartida }"
+                                         styleClass="grid_24" emptyMessage="Nenhum item encontrado">
+                                <f:facet name="header">Detalhe da partida</f:facet>                               
+                                <p:column headerText="Placar">
+                                    <p:outputLabel  value="#{item.team1.nome}  #{item.scoreT1} x #{item.team2.nome} #{item.scoreT2}"/>
+                                </p:column>                               
+                            </p:dataTable>       
+                        </p:rowExpansion>
+                    </p:dataTable>
 
                 </p:tab>
             </p:tabView>

@@ -1,6 +1,5 @@
 package br.com.champ.Manager;
 
-import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
@@ -17,6 +16,7 @@ import br.com.champ.Servico.TeamServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import br.com.champ.Utilitario.PartidaUtils;
+import br.com.champ.Utilitario.Utils;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import org.primefaces.event.FlowEvent;
 @ViewScoped
 @ManagedBean
 public class ManagerCriarCampeonato implements Serializable {
-
+    
     @EJB
     TeamServico teamServico;
     @EJB
@@ -63,20 +63,20 @@ public class ManagerCriarCampeonato implements Serializable {
     private boolean skip;
     private Player membro;
     private List<Player> membros;
-
+    
     @PostConstruct
     public void init() {
         instanciar();
-
+        
         String visualizarCampId = FacesUtil
                 .getRequestParameter("id");
-
+        
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
         }
-
+        
     }
-
+    
     public void instanciar() {
         this.camp = new Campeonato();
         this.camps = new ArrayList<>();
@@ -88,105 +88,105 @@ public class ManagerCriarCampeonato implements Serializable {
         this.partida = new Partida();
         this.estsGerais = new ArrayList<>();
         this.membro = new Player();
-        this.membros = new ArrayList<>();        
-
+        this.membros = new ArrayList<>();
+        
     }
-
+    
     public Campeonato getCamp() {
         return camp;
     }
-
+    
     public void setCamp(Campeonato camp) {
         this.camp = camp;
     }
-
+    
     public List<Campeonato> getCamps() {
         return camps;
     }
-
+    
     public void setCamps(List<Campeonato> camps) {
         this.camps = camps;
     }
-
+    
     public List<Team> getTimes() {
         return times;
     }
-
+    
     public void setTimes(List<Team> times) {
         this.times = times;
     }
-
+    
     public Team getTime() {
         return time;
     }
-
+    
     public void setTime(Team time) {
         this.time = time;
     }
-
+    
     public List<Estatisticas> getEstatisticasTime() {
         return estatisticasTime;
     }
-
+    
     public void setEstatisticasTime(List<Estatisticas> estatisticasTime) {
         this.estatisticasTime = estatisticasTime;
     }
-
+    
     public Estatisticas getEstatistica() {
         return estatistica;
     }
-
+    
     public void setEstatistica(Estatisticas estatistica) {
         this.estatistica = estatistica;
     }
-
+    
     public Date getDataCamp() {
         return dataCamp;
     }
-
+    
     public void setDataCamp(Date dataCamp) {
         this.dataCamp = dataCamp;
     }
-
+    
     public int getQtdItensPartidas() {
         return qtdItensPartidas;
     }
-
+    
     public void setQtdItensPartidas(int qtdItensPartidas) {
         this.qtdItensPartidas = qtdItensPartidas;
     }
-
+    
     public List<ItemPartida> getItemPartidas() {
         return itemPartidas;
     }
-
+    
     public void setItemPartidas(List<ItemPartida> itemPartidas) {
         this.itemPartidas = itemPartidas;
     }
-
+    
     public Partida getPartida() {
         return partida;
     }
-
+    
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
-
+    
     public List<Estatisticas> getEstsGerais() {
         return estsGerais;
     }
-
+    
     public void setEstsGerais(List<Estatisticas> estsGerais) {
         this.estsGerais = estsGerais;
     }
     
-    public void adicionarMembro() {        
+    public void adicionarMembro() {
         this.membros.add(this.membro);
         this.membro = new Player();
         
     }
     
-    public void adicionarTime() {        
+    public void adicionarTime() {
         this.times.add(this.time);
         this.time = new Team();
         
@@ -195,135 +195,189 @@ public class ManagerCriarCampeonato implements Serializable {
     public List<Player> autoCompletarPlayer() {
         return playerServico.autoCompletePessoa();
     }
-
+    
     public void salvarCampeonato() throws Exception {
-
+        
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
+        
         String dataFormatada = formatter.format(this.dataCamp);
         String dataFormatadaFinal = formatter.format(this.dataFinal);
-
+        
         this.camp.setDataCamp(dataFormatada);
         this.camp.setDataFinal(dataFormatadaFinal);
-
+        
         this.camp.setTeams(this.times);
-
+        this.camp.setPlayers(this.membros);
+        
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
-
+        
         Campeonato c = new Campeonato();
         c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
-        System.out.println("id " + c.getId());
         c.setPartidas(gerarPartidas(c.getId(), c));
-
-        for (Team timess : this.camp.getTeams()) {
-            this.estatistica = new Estatisticas();
-            this.estatistica.setTeam(timess);
-            this.estatistica.setCampeonato(c);
-            this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
-            this.estatisticasTime.add(estatistica);
-            timess.setEstatisticas(estatisticasTime);
-            //this.teamServico.update(timess);
-
-        }
-
+        
+//        if (Utils.isNotEmpty(this.camp.getTeams())) {
+//            for (Team timess : this.camp.getTeams()) {
+//                this.estatistica = new Estatisticas();
+//                this.estatistica.setTeam(timess);
+//                this.estatistica.setCampeonato(c);
+//                this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
+//            }
+//        }
+//        
+//        if (Utils.isNotEmpty(this.camp.getPlayers())) {
+//            for (Player p : this.camp.getPlayers()) {
+//                this.estatistica = new Estatisticas();
+//                this.estatistica.setPlayer(p);
+//                this.estatistica.setCampeonato(c);
+//                this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
+//            }
+//        }
         Campeonato c2 = new Campeonato();
         c2 = campeonatoServico.save(c, c.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
-
-        System.out.println("id2 " + c2.getId());
-        System.out.println("volta " + c2.getPartidas().size());
         Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + c2.getId());
     }
-
+    
     public List<Team> autoCompletarTime() throws Exception {
         return teamServico.autoCompleteTime();
     }
-
+    
     public void adicionarCamp() {
         this.times.add(this.time);
         this.time = new Team();
-
+        
     }
-
+    
     public List<Partida> gerarPartidas(Long id, Campeonato camp) throws Exception {
         List<Partida> matches = new ArrayList<>();
         Partida match = new Partida();
-        for (int i = 0; i < this.times.size() - 1; i++) {
-            for (int j = i + 1; j < this.times.size(); j++) {
-                match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp);
-                System.out.println("passou");
-                matches.add(match);
+        if (Utils.isNotEmpty(this.times)) {
+            for (int i = 0; i < this.times.size() - 1; i++) {
+                for (int j = i + 1; j < this.times.size(); j++) {
+                    match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp, null, null);
+                    System.out.println("passou");
+                    matches.add(match);
+                }
             }
         }
-        System.out.println("Partidas " + matches.size());
+        if (Utils.isNotEmpty(this.membros)) {
+            for (int i = 0; i < this.membros.size() - 1; i++) {
+                for (int j = i + 1; j < this.membros.size(); j++) {
+                    match = salvarPartidaClassica(null, null, id, camp, this.membros.get(i), this.membros.get(j));
+                    System.out.println("passou");
+                    matches.add(match);
+                }
+            }
+        }
         return matches;
     }
-
-    public Partida salvarPartidaClassica(Team t1, Team t2, Long id, Campeonato camp) {
+    
+    public Partida salvarPartidaClassica(Team t1, Team t2, Long id, Campeonato camp, Player p1, Player p2) {
         try {
-
+            
             Partida partidaX5 = new Partida();
-
+            
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
-
+            
             Team team1 = t1;
             Team team2 = t2;
-
-            this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, id, team1, team2, this.qtdItensPartidas);
+            
+            if (Utils.isNotEmpty(t1) && Utils.isNotEmpty(t2)) {
+                this.itemPartidas = PartidaUtils.gerarPartidasTimes(partidaX5, id, team1, team2, this.qtdItensPartidas);
+            }
+            
+            if (Utils.isNotEmpty(p1) && Utils.isNotEmpty(p2)) {
+                this.itemPartidas = PartidaUtils.gerarPartidasPlayers(partidaX5, id, p1, p2, this.qtdItensPartidas);
+            }
+            
             partidaX5.setItemPartida(this.itemPartidas);
+            partidaX5.setJogo(camp.getJogo());
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
             List<ItemPartida> it = partida.getItemPartida();
-
+            
             List<ItemPartida> newItem = new ArrayList<>();
-
+            
             for (ItemPartida ip : partida.getItemPartida()) {
                 ip.setPartida(partida.getId());
                 newItem.add(ip);
             }
-
+            
             partida.setItemPartida(newItem);
-
+            
             partida = partidaServico.salvar(partida, partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
-
-            for (ItemPartida i : it) {
-                for (Player playerTime1 : team1.getPlayers()) {
+            
+            if (Utils.isNotEmpty(t1) && Utils.isNotEmpty(t2)) {
+                for (ItemPartida i : it) {
+                    for (Player playerTime1 : team1.getPlayers()) {
+                        Estatisticas estatisticas = new Estatisticas();
+                        estatisticas.setPlayer(playerTime1);
+                        estatisticas.setTeam(team1);
+                        estatisticas.setItemPartida(i);
+                        estatisticas.setCampeonato(camp);
+                        estsTeam1.add(estatisticas);
+                        
+                    }
+                    this.estsGerais.addAll(estsTeam1);
+                    
+                    for (Player playerTime2 : team2.getPlayers()) {
+                        Estatisticas estatisticas = new Estatisticas();
+                        estatisticas.setPlayer(playerTime2);
+                        estatisticas.setTeam(team2);
+                        estatisticas.setItemPartida(i);
+                        estatisticas.setCampeonato(camp);
+                        estsTeam2.add(estatisticas);
+                    }
+                    this.estsGerais.addAll(estsTeam2);
+                    
+                    for (Estatisticas e : this.estsGerais) {
+                        estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
+                    }
+                    
+                    estsTeam1 = new ArrayList<Estatisticas>();
+                    estsTeam2 = new ArrayList<Estatisticas>();
+                    this.estsGerais = new ArrayList<Estatisticas>();
+                    
+                }
+            }
+            
+            if (Utils.isNotEmpty(p1) && Utils.isNotEmpty(p2)) {
+                for (ItemPartida i : it) {
+                    
                     Estatisticas estatisticas = new Estatisticas();
-                    estatisticas.setPlayer(playerTime1);
-                    estatisticas.setTeam(team1);
+                    estatisticas.setPlayer(p1);
                     estatisticas.setItemPartida(i);
                     estatisticas.setCampeonato(camp);
                     estsTeam1.add(estatisticas);
-
+                    
+                    this.estsGerais.addAll(estsTeam1);
+                    
+                    Estatisticas estatisticas2 = new Estatisticas();
+                    estatisticas2.setPlayer(p2);
+                    estatisticas2.setTeam(team2);
+                    estatisticas2.setItemPartida(i);
+                    estatisticas2.setCampeonato(camp);
+                    estsTeam2.add(estatisticas2);
+                    
+                    this.estsGerais.addAll(estsTeam2);
+                    
+                    for (Estatisticas e : this.estsGerais) {
+                        estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
+                    }
+                    
+                    estsTeam1 = new ArrayList<Estatisticas>();
+                    estsTeam2 = new ArrayList<Estatisticas>();
+                    this.estsGerais = new ArrayList<Estatisticas>();
+                    
                 }
-                this.estsGerais.addAll(estsTeam1);
-
-                for (Player playerTime2 : team2.getPlayers()) {
-                    Estatisticas estatisticas = new Estatisticas();
-                    estatisticas.setPlayer(playerTime2);
-                    estatisticas.setTeam(team2);
-                    estatisticas.setItemPartida(i);
-                    estatisticas.setCampeonato(camp);
-                    estsTeam2.add(estatisticas);
-                }
-                this.estsGerais.addAll(estsTeam2);
-
-                for (Estatisticas e : this.estsGerais) {
-                    estatisticasServico.salvar(e, null, Url.SALVAR_ESTATISTICA.getNome());
-                }
-
-                estsTeam1 = new ArrayList<Estatisticas>();
-                estsTeam2 = new ArrayList<Estatisticas>();
-                this.estsGerais = new ArrayList<Estatisticas>();
-
             }
-
+            
         } catch (Exception ex) {
             System.err.println(ex);
         }
-
+        
         return partida;
     }
-
+    
     public void limpar() {
         instanciar();
     }
@@ -336,15 +390,15 @@ public class ManagerCriarCampeonato implements Serializable {
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar();
     }
-
+    
     public boolean isSkip() {
         return skip;
     }
-
+    
     public void setSkip(boolean skip) {
         this.skip = skip;
     }
-
+    
     public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false; //reset in case user goes back
@@ -353,29 +407,29 @@ public class ManagerCriarCampeonato implements Serializable {
             return event.getNewStep();
         }
     }
-
+    
     public Date getDataFinal() {
         return dataFinal;
     }
-
+    
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
-
+    
     public Player getMembro() {
         return membro;
     }
-
+    
     public void setMembro(Player membro) {
         this.membro = membro;
     }
-
+    
     public List<Player> getMembros() {
         return membros;
     }
-
+    
     public void setMembros(List<Player> membros) {
         this.membros = membros;
     }
-
+    
 }

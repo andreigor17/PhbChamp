@@ -276,7 +276,9 @@
                                     </div>
                                 </div>                               
                                 <div class="row">
-                                    <p:commandButton value="Salvar" action="#{managerCriarCampeonato.salvarCampeonato()}"  process="@this"/>
+                                    <p:commandButton value="Salvar" action="#{managerCriarCampeonato.salvarCampeonato()}"  
+                                                      onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"
+                                                      process="@this"/>
                                 </div>
                             </div>
                         </p:panel>

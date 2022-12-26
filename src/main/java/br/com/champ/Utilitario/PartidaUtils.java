@@ -5,15 +5,12 @@
  */
 package br.com.champ.Utilitario;
 
-import br.com.champ.Manager.ManagerPartida;
-import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.ItemPartida;
 import br.com.champ.Modelo.Partida;
+import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class PartidaUtils {
     
-     public static List<ItemPartida> gerarPartidas(Partida p, Long id, Team time1, Team time2, int qtdItensPartidas ) {
+     public static List<ItemPartida> gerarPartidasTimes(Partida p, Long id, Team time1, Team time2, int qtdItensPartidas ) {
 
         int i = 0;
         List<ItemPartida> partidasGeradas = new ArrayList<>();
@@ -34,6 +31,27 @@ public class PartidaUtils {
 
                 newItem.setTeam1(time1);
                 newItem.setTeam2(time2);
+                partidasGeradas.add(newItem);
+            }
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
+        return partidasGeradas;
+    }
+     
+     public static List<ItemPartida> gerarPartidasPlayers(Partida p, Long id, Player player1, Player player2, int qtdItensPartidas ) {
+
+        int i = 0;
+        List<ItemPartida> partidasGeradas = new ArrayList<>();
+        try {
+            for (i = 1; i <= qtdItensPartidas; i++) {
+                ItemPartida newItem = new ItemPartida();
+                if (id != null) {
+                    newItem.setCamp(id);
+                }
+
+                newItem.setPlayer1(player1);
+                newItem.setPlayer2(player2);
                 partidasGeradas.add(newItem);
             }
         } catch (Exception ex) {

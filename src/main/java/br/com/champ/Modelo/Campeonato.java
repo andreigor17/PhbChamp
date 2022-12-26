@@ -14,6 +14,7 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     private String nome;
     private List<Team> teams;
+    private List<Player> players;
     private StatusCamp status;
     private List<Partida> partidas;
     private List<Estatisticas> estatisticas;        
@@ -93,6 +94,14 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setDataFinal(String dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
 }

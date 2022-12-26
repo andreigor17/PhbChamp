@@ -138,7 +138,7 @@ public class ManagerPartida {
         this.itemPartida = new ItemPartida();
         this.itensPartidas = new ArrayList<>();
         this.selectedPlayers = new ArrayList<Player>();
-        this.allPlayers = playerServico.pesquisar(this.player.getNome());
+        this.allPlayers = playerServico.buscaPlayers();
         this.playerGroupList = new DualListModel<>(this.allPlayers, this.selectedPlayers);
         this.itemPartidas = new ArrayList<>();
         this.itemPartida = new ItemPartida();
@@ -156,13 +156,13 @@ public class ManagerPartida {
         return e;
     }
 
-    public List<Estatisticas> somaEsts(Team team) {
+    public List<Estatisticas> somaEstsTeam(Team team) {
         List<Estatisticas> soma = new ArrayList<>();
         Estatisticas est = new Estatisticas();
         Integer kills = 0;
         Integer deaths = 0;
         Integer assists = 0;
-        List<Estatisticas> ests = estatisticasServico.estatisticaPorPartida(team.getId(), this.partida.getId());
+        List<Estatisticas> ests = estatisticasServico.estatisticaPorPartidaTeam(team.getId(), this.partida.getId());
         for (Player p : team.getPlayers()) {
             for (Estatisticas e : ests) {
                 if (e.getPlayer().getId().equals(p.getId())) {
@@ -184,6 +184,36 @@ public class ManagerPartida {
             assists = 0;
             est = new Estatisticas();
         }
+        return soma;
+
+    }
+
+    public List<Estatisticas> somaEstsPlayer(Player player) {
+        List<Estatisticas> soma = new ArrayList<>();
+        Estatisticas est = new Estatisticas();
+        Integer kills = 0;
+        Integer deaths = 0;
+        Integer assists = 0;
+        List<Estatisticas> ests = estatisticasServico.estatisticaPorPartidaPlayer(player.getId(), this.partida.getId());
+        for (Estatisticas e : ests) {
+            if (e.getPlayer().getId().equals(player.getId())) {
+                kills += e.getKills();
+                deaths += e.getDeaths();
+                assists += e.getAssists();
+
+            }
+
+        }
+        est.setKills(kills);
+        est.setAssists(assists);
+        est.setDeaths(deaths);
+        est.setPlayer(player);
+        soma.add(est);
+        kills = 0;
+        deaths = 0;
+        assists = 0;
+        est = new Estatisticas();
+
         return soma;
 
     }
@@ -521,7 +551,7 @@ public class ManagerPartida {
             t2.setPlayers(time2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
-            this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, null, team1, team2, this.qtdItensPartidas);
+            this.itemPartidas = PartidaUtils.gerarPartidasTimes(partidaX5, null, team1, team2, this.qtdItensPartidas);
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
             List<ItemPartida> it = partida.getItemPartida();
@@ -636,7 +666,7 @@ public class ManagerPartida {
             t2.setPlayers(droppedPlayers2);
             team2 = teamServico.save(t2, null, Url.SALVAR_TIME.getNome());
 
-            this.itemPartidas = PartidaUtils.gerarPartidas(partidaX5, null, team1, team2, this.qtdItensPartidas);
+            this.itemPartidas = PartidaUtils.gerarPartidasTimes(partidaX5, null, team1, team2, this.qtdItensPartidas);
             partidaX5.setItemPartida(this.itemPartidas);
             partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
             List<ItemPartida> it = partida.getItemPartida();

@@ -4,6 +4,7 @@ import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.Estatisticas;
 import br.com.champ.Modelo.Partida;
+import br.com.champ.Modelo.Player;
 import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
@@ -235,7 +236,7 @@ public class ManagerCamp implements Serializable {
 
     }
 
-    public List<Estatisticas> somaEsts() {
+    public List<Estatisticas> somaEstsTime() {
         List<Estatisticas> soma = new ArrayList<>();
         Estatisticas est = new Estatisticas();
         Integer kills = 0;
@@ -258,6 +259,39 @@ public class ManagerCamp implements Serializable {
             est.setAssists(assists);
             est.setDeaths(deaths);
             est.setTeam(timeCamp);
+            soma.add(est);
+            kills = 0;
+            deaths = 0;
+            assists = 0;
+            est = new Estatisticas();
+        }
+        return soma;
+
+    }
+    
+    public List<Estatisticas> somaEstsPlayers() {
+        List<Estatisticas> soma = new ArrayList<>();
+        Estatisticas est = new Estatisticas();
+        Integer kills = 0;
+        Integer deaths = 0;
+        Integer assists = 0;
+        Integer pontos = 0;
+
+        for (Player player : this.camp.getPlayers()) {
+            this.estatisticasTime = estatisticaServico.estatisticaPorTime(player.getId(), this.camp.getId());
+            for (Estatisticas estats : this.estatisticasTime) {
+                if (estats.getPlayer().getId().equals(player.getId())) {
+                    kills += estats.getKills();
+                    deaths += estats.getDeaths();
+                    assists += estats.getAssists();
+                }
+
+            }
+
+            est.setKills(kills);
+            est.setAssists(assists);
+            est.setDeaths(deaths);
+            est.setPlayer(player);
             soma.add(est);
             kills = 0;
             deaths = 0;

@@ -21,6 +21,8 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
     private Long partida;
     private Team team1;
     private Team team2;
+    private Player player1;
+    private Player player2;
     private Long camp;
     private Estatisticas estatisticas;
 
@@ -46,7 +48,7 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
 
     public void setMapas(Mapas mapas) {
         this.mapas = mapas;
-    }   
+    }
 
     public Team getTeam1() {
         return team1;
@@ -62,15 +64,15 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
 
     public void setTeam2(Team team2) {
         this.team2 = team2;
-    }       
-    
+    }
+
     public Estatisticas getEstatisticas() {
         return estatisticas;
     }
 
     public void setEstatisticas(Estatisticas estatisticas) {
         this.estatisticas = estatisticas;
-    }   
+    }
 
     public Long getPartida() {
         return partida;
@@ -87,5 +89,21 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
     public void setCamp(Long camp) {
         this.camp = camp;
     }
-    
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
 }
