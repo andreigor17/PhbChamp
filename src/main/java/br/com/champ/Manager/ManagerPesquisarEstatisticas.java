@@ -46,8 +46,8 @@ public class ManagerPesquisarEstatisticas implements Serializable{
                 .getRequestParameter("id");
         if (visualizarItemId != null && !visualizarItemId.isEmpty()) {
             this.itemPartida = this.itemPartidaServico.buscaItem(Long.parseLong(visualizarItemId));
-            this.estsTime1Visualizar = estatisticasServico.estatisticaPorItemPartida(this.itemPartida.getTeam1().getId(), this.itemPartida.getId());
-            this.estsTime2Visualizar = estatisticasServico.estatisticaPorItemPartida(this.itemPartida.getTeam2().getId(), this.itemPartida.getId());
+            this.estsTime1Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam1().getId(), this.itemPartida.getId());
+            this.estsTime2Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam2().getId(), this.itemPartida.getId());
 
         }
 
