@@ -53,7 +53,7 @@
                             <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team1.nome}" />
                         </f:facet>
 
-                        <p:column headerText="Opções" width="5%">
+                        <p:column  width="3%">
                             <div class="options">
                                 <p:button title="Visualizar Player"
                                           icon="ui-icon-search"
@@ -84,14 +84,13 @@
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  currentPageReportTemplate="{currentPage} de {totalPages}"
                                  rows="10"
-                                 rowsPerPageTemplate="5,10,15"
-                                 emptyMessage="Nenhum mapa jogado na partida...">
+                                 rowsPerPageTemplate="5,10,15">
 
                         <f:facet name="header">
                             <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player1.nome}" />
                         </f:facet>
 
-                        <p:column headerText="Opções" width="5%">
+                        <p:column  width="3%">
                             <div class="options">
                                 <p:button title="Visualizar Player"
                                           icon="ui-icon-search"
@@ -101,14 +100,17 @@
                         <p:column headerText="Nome" width="30%">
                             <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
                         </p:column>                            
-                        <p:column headerText="K" width="5%"   >                                  
+                        <p:column headerText="PA" width="5%"   >                                  
                             <p:outputLabel value="#{ests1.kills}"/>
                         </p:column>
-                        <p:column headerText="A" width="5%">
-                            <p:outputLabel value="#{ests1.assists}"/>
-                        </p:column>
-                        <p:column headerText="D" width="5%">
+                        <p:column headerText="PC" width="5%">
                             <p:outputLabel value="#{ests1.deaths}"/>
+                        </p:column>
+                        <p:column headerText="SG" width="5%">
+                            <p:outputLabel value="#{ests1.roundsGanhos}"/>
+                        </p:column>
+                        <p:column headerText="SP" width="5%">
+                            <p:outputLabel value="#{ests1.roundsPerdidos}"/>
                         </p:column>
 
                     </p:dataTable>
@@ -129,7 +131,7 @@
                             <p:outputLabel value="#{managerPartida.itensPartidas.get(0).team2.nome}" />
                         </f:facet>
 
-                        <p:column headerText="Opções" width="5%">
+                        <p:column  width="3%">
                             <div class="options">
                                 <p:button title="Visualizar Player"
                                           icon="ui-icon-search"
@@ -164,27 +166,30 @@
                                  emptyMessage="Nenhum mapa jogado na partida...">
 
                         <f:facet name="header">
-                            <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player1.nome}" />
+                            <p:outputLabel value="#{managerPartida.itensPartidas.get(0).player2.nome}" />
                         </f:facet>
 
-                        <p:column headerText="Opções" width="5%">
+                        <p:column  width="3%">
                             <div class="options">
                                 <p:button title="Visualizar Player"
                                           icon="ui-icon-search"
                                           href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
                             </div>
                         </p:column>
-                        <p:column headerText="Nome" width="30%">
+                         <p:column headerText="Nome" width="30%">
                             <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
                         </p:column>                            
-                        <p:column headerText="K" width="5%"   >                                  
+                        <p:column headerText="PA" width="5%"   >                                  
                             <p:outputLabel value="#{ests1.kills}"/>
                         </p:column>
-                        <p:column headerText="A" width="5%">
-                            <p:outputLabel value="#{ests1.assists}"/>
-                        </p:column>
-                        <p:column headerText="D" width="5%">
+                        <p:column headerText="PC" width="5%">
                             <p:outputLabel value="#{ests1.deaths}"/>
+                        </p:column>
+                        <p:column headerText="SG" width="5%">
+                            <p:outputLabel value="#{ests1.roundsGanhos}"/>
+                        </p:column>
+                        <p:column headerText="SP" width="5%">
+                            <p:outputLabel value="#{ests1.roundsPerdidos}"/>
                         </p:column>
 
                     </p:dataTable>

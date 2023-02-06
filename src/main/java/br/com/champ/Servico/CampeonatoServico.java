@@ -36,7 +36,7 @@ public class CampeonatoServico {
         return configuracaoServico.buscaConfig();
 
     }
-    
+
     public String pathToAPI() throws IOException {
         return APIPath.pathToAPI();
 
@@ -185,7 +185,7 @@ public class CampeonatoServico {
                 System.out.println("Montagem do campeonato: " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try (OutputStream outputStream = request.getOutputStream()) {
+                try ( OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -206,9 +206,50 @@ public class CampeonatoServico {
         return null;
     }
 
+    public Campeonato delete(Campeonato camp, String uri) throws Exception {
+
+        String url = pathToAPI() + uri + camp.getId();
+
+        try {
+            // Cria um objeto HttpURLConnection:
+            HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
+
+            try {
+                // Define que a conexão pode enviar informações e obtê-las de volta:
+                request.setDoOutput(true);
+                request.setDoInput(true);
+
+                // Define o content-type:
+                request.setRequestProperty("Content-Type", "application/json");
+
+                // Define o método da requisição:
+                request.setRequestMethod("DELETE");
+
+                // Conecta na URL:
+                request.connect();
+                // Montando o  Json
+                Gson gson = new Gson();
+                String json = gson.toJson(camp);
+
+                // Escreve o objeto JSON usando o OutputStream da requisição:
+                try ( OutputStream outputStream = request.getOutputStream()) {
+                    outputStream.write(json.getBytes("UTF-8"));
+                }
+
+                // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
+                //int response = request.getResponseCode();                           
+            } finally {
+                request.disconnect();
+            }
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+        return null;
+    }
+
     private String readResponse(HttpURLConnection request) throws IOException {
         ByteArrayOutputStream os;
-        try (InputStream is = request.getInputStream()) {
+        try ( InputStream is = request.getInputStream()) {
             os = new ByteArrayOutputStream();
             int b;
             while ((b = is.read()) != -1) {

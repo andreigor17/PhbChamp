@@ -16,6 +16,8 @@ import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -69,11 +71,8 @@ public class ManagerCamp implements Serializable {
         for (Team timeCamp : this.camp.getTeams()) {
             this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
             for (Estatisticas estats : this.estatisticasTime) {
-                //estats = estatisticaServico.pesquisar(estats.getId());
                 this.ests.add(estats);
             }
-//            timeCamp.setEstatisticas(this.ests);
-//            this.timesVisualizar.add(timeCamp);
         }
 
     }
@@ -201,11 +200,15 @@ public class ManagerCamp implements Serializable {
         instanciar();
     }
 
-//    public void removeCamp() {
-//        this.campeonatoServico.delete(this.camp);
-//        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
-//        init();
-//    }
+    public void removeCamp() {
+        try {
+            this.campeonatoServico.delete(this.camp, Url.EXCLUIR_CAMPEONATO.getNome());
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerCamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
+        init();
+    }
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar();
     }
@@ -268,7 +271,7 @@ public class ManagerCamp implements Serializable {
         return soma;
 
     }
-    
+
     public List<Estatisticas> somaEstsPlayers() {
         List<Estatisticas> soma = new ArrayList<>();
         Estatisticas est = new Estatisticas();

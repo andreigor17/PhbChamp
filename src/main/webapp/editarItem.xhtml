@@ -3,8 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
         Editar Partida
@@ -28,8 +27,7 @@
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          currentPageReportTemplate="{currentPage} de {totalPages}"
                          rows="10"
-                         rowsPerPageTemplate="5,10,15"
-                         emptyMessage="Nenhum mapa jogado na partida...">
+                         rowsPerPageTemplate="5,10,15">
 
                 <f:facet name="header">
                     <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team1.nome}" />
@@ -91,8 +89,7 @@
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          currentPageReportTemplate="{currentPage} de {totalPages}"
                          rows="10"
-                         rowsPerPageTemplate="5,10,15"
-                         emptyMessage="Nenhum time encontrado na partida...">
+                         rowsPerPageTemplate="5,10,15">
 
                 <f:facet name="header">
                     <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team2.nome}" />

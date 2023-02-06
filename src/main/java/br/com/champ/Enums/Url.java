@@ -17,6 +17,7 @@ public enum Url {
     ATUALIZAR_TIME(4, "/teams/"),
     SALVAR_CAMPEONATO(5, "/campeonatos"),
     ATUALIZAR_CAMPEONATO(6, "/campeonatos/"),
+    EXCLUIR_CAMPEONATO(16,"/campeonatos/excluir/"),
     SALVAR_PARTIDA(7, "/partidas"),
     ATUALIZAR_PARTIDA(8, "/partidas/"),
     SALVAR_ESTATISTICA(9, "/estatisticas"),

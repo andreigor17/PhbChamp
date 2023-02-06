@@ -26,7 +26,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class ManagerPesquisarEstatisticas implements Serializable{
+public class ManagerPesquisarEstatisticas implements Serializable {
 
     @EJB
     private EstatisticaServico estatisticasServico;
@@ -46,8 +46,13 @@ public class ManagerPesquisarEstatisticas implements Serializable{
                 .getRequestParameter("id");
         if (visualizarItemId != null && !visualizarItemId.isEmpty()) {
             this.itemPartida = this.itemPartidaServico.buscaItem(Long.parseLong(visualizarItemId));
-            this.estsTime1Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam1().getId(), this.itemPartida.getId());
-            this.estsTime2Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam2().getId(), this.itemPartida.getId());
+            if (this.itemPartida.getTeam1() != null && this.itemPartida.getTeam2() != null) {
+                this.estsTime1Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam1().getId(), this.itemPartida.getId());
+                this.estsTime2Visualizar = estatisticasServico.estatisticaPorItemPartidaTeam(this.itemPartida.getTeam2().getId(), this.itemPartida.getId());
+            } else {
+                this.estsTime1Visualizar = estatisticasServico.estatisticaPorItemPartidaPlayer(this.itemPartida.getPlayer1().getId(), this.itemPartida.getId());
+                this.estsTime2Visualizar = estatisticasServico.estatisticaPorItemPartidaPlayer(this.itemPartida.getPlayer2().getId(), this.itemPartida.getId());
+            }
 
         }
 

@@ -215,23 +215,6 @@ public class ManagerCriarCampeonato implements Serializable {
         c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
         c.setPartidas(gerarPartidas(c.getId(), c));
         
-//        if (Utils.isNotEmpty(this.camp.getTeams())) {
-//            for (Team timess : this.camp.getTeams()) {
-//                this.estatistica = new Estatisticas();
-//                this.estatistica.setTeam(timess);
-//                this.estatistica.setCampeonato(c);
-//                this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
-//            }
-//        }
-//        
-//        if (Utils.isNotEmpty(this.camp.getPlayers())) {
-//            for (Player p : this.camp.getPlayers()) {
-//                this.estatistica = new Estatisticas();
-//                this.estatistica.setPlayer(p);
-//                this.estatistica.setCampeonato(c);
-//                this.estatisticaServico.salvar(estatistica, null, Url.SALVAR_ESTATISTICA.getNome());
-//            }
-//        }
         Campeonato c2 = new Campeonato();
         c2 = campeonatoServico.save(c, c.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
         Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + c2.getId());
