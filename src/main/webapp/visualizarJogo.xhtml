@@ -29,10 +29,7 @@
                             <f:param value="#{ managerJogo.jogo.id }" name="id"/>
                         </p:menuitem>
                         <p:menuitem value="Excluir"  update="messages" icon="pi pi-refresh" actionListener="#{managerJogo.excluir()}"/>                        
-                    </p:submenu>
-                    <p:submenu label="Picks and Bans">
-                        <p:menuitem value="Gerar mapas" outcome="gerarMapas.xhtml?partidaId=#{managerPartida.partida.id}" process="@this" icon="pi pi-external-link"/>                        
-                    </p:submenu>
+                    </p:submenu>                    
                 </p:menu>                                             
 
             </div>

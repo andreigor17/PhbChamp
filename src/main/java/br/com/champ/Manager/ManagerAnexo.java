@@ -21,8 +21,8 @@ public class ManagerAnexo implements Serializable {
     private String caminho;
     private byte[] arquivo;
     private String nome;
-    public String REAL_PATH_OPT = "/opt/uploads";
-    public String pathWindows = "D:\\uploads";
+    public String REAL_PATH_OPT = "/opt/uploads/images/";
+    public String pathWindows = "D:\\uploads/images/";
 
     public ManagerAnexo() {
     }

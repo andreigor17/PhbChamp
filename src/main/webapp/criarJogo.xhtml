@@ -3,9 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:map="http://xmlns.jcp.org/jsf/composite/map"
-                xmlns:fox="http://java.sun.com/jsf/composite/fox">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
         Criar Jogo 
@@ -42,12 +40,10 @@
 
                 <center>
 
-                    <p:commandButton value="Cancelar"
-                                     title="Cancelar"
-                                     icon="ui-icon-close"
-                                     process="@this"
-                                     update="@form"
-                                     />
+                    <p:button value="Cancelar"
+                              title="Cancelar"
+                              icon="ui-icon-close"
+                              href="pesquisarJogos.xhtml"/>
 
                     <p:commandButton value="Salvar"
                                      title="Salvar Player"

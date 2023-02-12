@@ -461,11 +461,11 @@ fieldset {
 }
 
 body .ui-button.rounded-button {
-  border-radius: 2rem;
+    border-radius: 2rem;
 }
 body .ui-button.rounded-button.ui-button-icon-only {
-  border-radius: 50%;
-  height: 2.357rem;
+    border-radius: 50%;
+    height: 2.357rem;
 }
 
 .ui-button-link{
@@ -1830,9 +1830,9 @@ span.URGENTE{
 @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Sarala:wght@400;700&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
 body {
@@ -1842,7 +1842,7 @@ body {
 }
 
 header {
-    
+
 }
 
 .cabecalho-inicial {
@@ -1944,5 +1944,10 @@ footer {
 
 footer > p {
     margin: 0px;
+
+    .img-frame {
+        border: 1px solid black;
+        padding: 10px;
+    }
 }
 

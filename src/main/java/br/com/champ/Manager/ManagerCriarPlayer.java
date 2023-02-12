@@ -15,6 +15,7 @@ import br.com.champ.Servico.JogoServico;
 import br.com.champ.Servico.PlayerServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
@@ -43,11 +43,10 @@ public class ManagerCriarPlayer implements Serializable {
     ConfiguracaoServico configuracaoServico;
     @EJB
     private JogoServico jogoServico;
-
     private Player p;
     private List<Player> players;
-    ManagerAnexo arquivo = new ManagerAnexo();
     private UploadedFile file;
+    private String fileTemp;
     private StreamedContent imagem;
     private Configuracao configuracao;
     private List<Jogo> jogos;
@@ -64,6 +63,9 @@ public class ManagerCriarPlayer implements Serializable {
 
             if (visualizarPlayerId != null && !visualizarPlayerId.isEmpty()) {
                 this.p = this.playerServico.buscaPlayer(Long.parseLong(visualizarPlayerId));
+                if (this.p.getId() != null) {
+                    this.fileTemp = this.p.getAvatar();
+                }
             }
 
             this.jogos = jogoServico.pesquisar();
@@ -123,11 +125,9 @@ public class ManagerCriarPlayer implements Serializable {
     }
 
     public void doUpload(FileUploadEvent event) {
-        this.arquivo.fileUpload(event, ".png", "/image/"); //Tratamento de exceção.
-        this.p.setAvatar(this.arquivo.getNome());
-        imagem = new DefaultStreamedContent();
-        this.setFile(event.getFile());
-
+        anexoServico.fileUpload(event, ".png");
+        this.p.setAvatar("/opt/uploads/images/" + event.getFile().getFileName());
+        this.fileTemp = "/opt/uploads/images/" + event.getFile().getFileName();
     }
 
     public List<Jogo> getJogos() {
@@ -165,7 +165,6 @@ public class ManagerCriarPlayer implements Serializable {
         if (this.p.getId() == null) {
 
             player = playerServico.save(this.p, null, Url.SALVAR_PLAYER.getNome());
-            this.arquivo.gravar();
         } else {
             player = playerServico.save(this.p, this.p.getId(), Url.ATUALIZAR_PLAYER.getNome());
         }
@@ -174,7 +173,7 @@ public class ManagerCriarPlayer implements Serializable {
 
     }
 
-    public void pesquisarPlayer() throws Exception {        
+    public void pesquisarPlayer() throws Exception {
         this.players = playerServico.pesquisar(this.p.getNome());
     }
 
@@ -192,6 +191,14 @@ public class ManagerCriarPlayer implements Serializable {
         this.jogosSelecionados.add(this.jogo);
         this.jogo = new Jogo();
 
+    }
+
+    public String getFileTemp() {
+        return fileTemp;
+    }
+
+    public void setFileTemp(String fileTemp) {
+        this.fileTemp = fileTemp;
     }
 
     public List<Jogo> jogos() {

@@ -13,6 +13,7 @@ import br.com.champ.Generico.ModeloGenerico;
 public class Jogo extends ModeloGenerico{
     
     private String nome;
+    private String imagem;
 
     public String getNome() {
         return nome;

@@ -7,19 +7,17 @@ package br.com.champ.Manager;
 
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Mapas;
+import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.MapaServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
@@ -33,9 +31,10 @@ public class ManagerMapa {
 
     @EJB
     MapaServico mapaServico;
+    @EJB
+    AnexoServico anexoServico;
     private Mapas mapa;
     private List<Mapas> mapas;
-    ManagerAnexo arquivo = new ManagerAnexo();
     private UploadedFile file;
     private StreamedContent imagem;
     private String fotoMapa;
@@ -109,30 +108,35 @@ public class ManagerMapa {
     }
 
     public void doUpload(FileUploadEvent event) {
-        this.arquivo.fileUpload(event, ".png", "/image/"); //Tratamento de exceção.
-        this.mapa.setAvatar(this.arquivo.getNome());
-        imagem = new DefaultStreamedContent();
-        this.setFile(event.getFile());
+        anexoServico.fileUpload(event, ".png");
+        this.mapa.setAvatar("/opt/uploads/images/" + event.getFile().getFileName());
 
     }
 
     public void salvar() {
         Mapas m = new Mapas();
-        try {
-            m = mapaServico.save(this.mapa, null, Url.SALVAR_MAPA.getNome());
-            this.arquivo.gravar();
-        } catch (Exception ex) {
-            System.err.println(ex);
+        if (this.mapa.getId() != null) {
+            try {
+                m = mapaServico.save(this.mapa, this.mapa.getId(), Url.ATUALIZAR_MAPA.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+            Mensagem.successAndRedirect("Mapa atualizado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
+        } else {
+            try {
+                m = mapaServico.save(this.mapa, null, Url.SALVAR_MAPA.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+            Mensagem.successAndRedirect("Mapa criado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
         }
-        Mensagem.successAndRedirect("Mapa criado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
-
     }
-    
-    public void visualizarMapa(Mapas mapa){
+
+    public void visualizarMapa(Mapas mapa) {
         Mensagem.successAndRedirect("Operação realizada com sucesso!", "visualizarMapas.xhtml?id=" + mapa.getId());
     }
 
     public void excluir() {
 
-    }    
+    }
 }

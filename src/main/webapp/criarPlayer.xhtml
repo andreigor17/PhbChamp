@@ -92,9 +92,13 @@
                                        for="jogosAutoComplete"/>
                     </div>
                     <div class="column3">
-                        <p:selectManyCheckbox converter="jogo_converter" id="jogosAutoComplete" value="#{managerCriarPlayer.jogosSelecionados}" layout="grid" columns="3" styleClass="grid-checkbox">
+                        <p:selectCheckboxMenu id="jogosAutoComplete" converter="jogo_converter" value="#{managerCriarPlayer.jogosSelecionados}" label="Jogos" 
+                                              multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250"
+                                              emptyLabel="Selecione um jogo..." updateLabel="true">               
                             <f:selectItems value="#{managerCriarPlayer.jogos}" var="jogo" itemLabel="#{jogo.nome}" itemValue="#{jogo}"/>
-                        </p:selectManyCheckbox>
+                        </p:selectCheckboxMenu>
+
+
                     </div>
 
                     <div class="column2 bold">
@@ -108,18 +112,15 @@
                                       auto="true"
                                       />
                     </div>
-
-                    <h:panelGroup id="imagemPlayer">
-                        <p:graphicImage  style="max-width: 100px;max-height: 100px;" cache="false" value="#{managerCriarPlayer.imagem}">
-                        </p:graphicImage><br/>
-                    </h:panelGroup>
-
                 </div>
 
-
-
-
-
+                <div class="row">
+                    <h:panelGroup id="imagemPlayer">
+                        <p:graphicImage class="img-frame"  style="max-width: 100px;max-height: 100px;" 
+                                        value="image/#{managerCriarPlayer.fileTemp}">
+                        </p:graphicImage><br/>
+                    </h:panelGroup>
+                </div>
             </p:fieldset>
 
             <div class="actions">

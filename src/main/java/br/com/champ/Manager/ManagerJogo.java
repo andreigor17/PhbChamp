@@ -31,11 +31,11 @@ public class ManagerJogo {
 
     @PostConstruct
     public void init() {
-        String visualizarMapaId = FacesUtil
+        String visualizarJogoId = FacesUtil
                 .getRequestParameter("id");
 
-        if (visualizarMapaId != null && !visualizarMapaId.isEmpty()) {
-            this.jogo = this.jogoServico.pesquisarJogo(Long.parseLong(visualizarMapaId));
+        if (visualizarJogoId != null && !visualizarJogoId.isEmpty()) {
+            this.jogo = this.jogoServico.pesquisarJogo(Long.parseLong(visualizarJogoId));
 
         } else {
             instanciar();
@@ -78,13 +78,23 @@ public class ManagerJogo {
 
     public void salvar() {
         Jogo j = new Jogo();
-        try {
-            j = jogoServico.save(this.jogo, null, Url.SALVAR_JOGO.getNome());
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
-        Mensagem.successAndRedirect("Jogo criado com sucesso", "visualizarJogo.xhtml?id=" + j.getId());
+        if (this.jogo.getId() != null) {
+            try {
+                j = jogoServico.save(this.jogo, this.jogo.getId(), Url.ATUALIZAR_JOGO.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+            Mensagem.successAndRedirect("Jogo atualizado com sucesso!", "visualizarJogo.xhtml?id=" + j.getId());
 
+        } else {
+            try {
+                j = jogoServico.save(this.jogo, null, Url.SALVAR_JOGO.getNome());
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+            Mensagem.successAndRedirect("Jogo criado com sucesso!", "visualizarJogo.xhtml?id=" + j.getId());
+
+        }
     }
 
     public void excluir() {
