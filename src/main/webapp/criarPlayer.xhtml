@@ -21,7 +21,29 @@
                      showDetail="false"/>
 
             <p:fieldset legend="Dados" id="dadosFieldset">
+                <div class="row" style="display: flex; align-items: flex-start; justify-content: flex-start">
+                    <div class="column6" style="margin-left: 10%; margin-bottom: 20px">
+                        <h:panelGroup id="usuarioPanel">
+                            <div class="molduraUser" style=" position: relative; height: 120px !important; background-color: rgba(87, 107, 112, 0.69) !important; width: 120px !important; display: flex; justify-content: center; align-items: center; border-radius: 10px; border: 1px solid #2F3D40">
+                                <img src="media/images/user.svg" style="position: absolute; z-index: 99" ></img>
+                                <div style="#{(managerCriarPlayer.file ne null) ? 'display: none':'teste'}">
+                                    <p:fileUpload id="upload" 
+                                                  listener="#{managerCriarPlayer.doUpload}"
+                                                  value="#{managerCriarPlayer.file}"
+                                                  update="usuarioPanel"
+                                                  auto="true"
+                                                  />
 
+                                </div>
+                                <h:panelGroup id="imagemPlayer" style="z-index: 100">
+                                    <p:graphicImage class="img-frame"  style="max-width: 100px;max-height: 100px;border-radius: 10px; z-index: 100" 
+                                                    value="image/#{managerCriarPlayer.fileTemp}">
+                                    </p:graphicImage><br/>
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="column2 bold">
                         <p:outputLabel value="Nome"
@@ -105,22 +127,11 @@
                         <p:outputLabel value="Anexar foto"/>
                     </div>
                     <div class="column2">
-                        <p:fileUpload id="upload" 
-                                      listener="#{managerCriarPlayer.doUpload}"
-                                      value="#{managerCriarPlayer.file}"
-                                      update="imagemPlayer"
-                                      auto="true"
-                                      />
+
                     </div>
                 </div>
 
-                <div class="row">
-                    <h:panelGroup id="imagemPlayer">
-                        <p:graphicImage class="img-frame"  style="max-width: 100px;max-height: 100px;" 
-                                        value="image/#{managerCriarPlayer.fileTemp}">
-                        </p:graphicImage><br/>
-                    </h:panelGroup>
-                </div>
+
             </p:fieldset>
 
             <div class="actions">

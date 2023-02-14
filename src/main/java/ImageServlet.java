@@ -31,7 +31,6 @@ public class ImageServlet extends HttpServlet {
         File file = null;
 
         file = new File(request.getPathInfo());
-
         getFileCopy(response, filename, file);
     }
 
