@@ -14,7 +14,7 @@ import br.com.champ.Generico.ModeloGenerico;
 public class VersaoJogo extends ModeloGenerico {
 
     private String nome;
-    private String anexo;
+    private Anexo anexo;
 
     public String getNome() {
         return nome;
@@ -24,11 +24,11 @@ public class VersaoJogo extends ModeloGenerico {
         this.nome = nome;
     }
 
-    public String getAnexo() {
+    public Anexo getAnexo() {
         return anexo;
     }
 
-    public void setAnexo(String anexo) {
+    public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
     }
 

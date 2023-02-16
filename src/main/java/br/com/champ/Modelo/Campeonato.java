@@ -22,6 +22,7 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private String dataString;
     private Game jogo;
     private String dataFinal;
+    private Anexo anexo;
 
     public List<Partida> getPartidas() {
         return partidas;
@@ -102,6 +103,14 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 
 }

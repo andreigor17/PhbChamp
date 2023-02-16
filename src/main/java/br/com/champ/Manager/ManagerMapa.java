@@ -34,6 +34,7 @@ public class ManagerMapa {
     @EJB
     AnexoServico anexoServico;
     private Mapas mapa;
+    private String fileTemp;
     private List<Mapas> mapas;
     private UploadedFile file;
     private StreamedContent imagem;
@@ -47,6 +48,9 @@ public class ManagerMapa {
 
         if (visualizarMapaId != null && !visualizarMapaId.isEmpty()) {
             this.mapa = this.mapaServico.pesquisarMapa(Long.parseLong(visualizarMapaId));
+            if (this.mapa.getId() != null && this.mapa.getAnexo() != null) {
+                this.fileTemp = this.mapa.getAnexo().getNome();
+            }
 
         } else {
             instanciar();
@@ -108,27 +112,26 @@ public class ManagerMapa {
     }
 
     public void doUpload(FileUploadEvent event) {
-        anexoServico.fileUpload(event, ".png");
-        this.mapa.setAvatar("/opt/uploads/images/" + event.getFile().getFileName());
+        this.mapa.setAnexo(anexoServico.fileUpload(event, ".png"));
+        this.fileTemp = this.mapa.getAnexo().getNome();
 
     }
 
     public void salvar() {
-        Mapas m = new Mapas();
         if (this.mapa.getId() != null) {
             try {
-                m = mapaServico.save(this.mapa, this.mapa.getId(), Url.ATUALIZAR_MAPA.getNome());
+                this.mapa = mapaServico.save(this.mapa, this.mapa.getId(), Url.ATUALIZAR_MAPA.getNome());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
-            Mensagem.successAndRedirect("Mapa atualizado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
+            Mensagem.successAndRedirect("Mapa atualizado com sucesso", "visualizarMapas.xhtml?id=" + this.mapa.getId());
         } else {
             try {
-                m = mapaServico.save(this.mapa, null, Url.SALVAR_MAPA.getNome());
+                this.mapa = mapaServico.save(this.mapa, null, Url.SALVAR_MAPA.getNome());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
-            Mensagem.successAndRedirect("Mapa criado com sucesso", "visualizarMapas.xhtml?id=" + m.getId());
+            Mensagem.successAndRedirect("Mapa criado com sucesso", "visualizarMapas.xhtml?id=" + this.mapa.getId());
         }
     }
 
@@ -139,4 +142,13 @@ public class ManagerMapa {
     public void excluir() {
 
     }
+
+    public String getFileTemp() {
+        return fileTemp;
+    }
+
+    public void setFileTemp(String fileTemp) {
+        this.fileTemp = fileTemp;
+    }
+
 }

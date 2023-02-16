@@ -20,13 +20,13 @@ public class Player extends ModeloGenerico implements Serializable {
     private String sobreNome;
     private String nick;
     private boolean possuiTime = false;
-    private boolean capitao;
-    private String avatar;
+    private boolean capitao;    
     private Funcoes funcao;
     private List<Estatisticas> estatisticas;
     private String urlSteam;
     private String steamID;   
     private List<Jogo> jogos;
+    private Anexo anexo;
 
     public String getNome() {
         return nome;
@@ -84,14 +84,6 @@ public class Player extends ModeloGenerico implements Serializable {
         this.capitao = capitao;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public Funcoes getFuncao() {
         return funcao;
     }
@@ -130,6 +122,14 @@ public class Player extends ModeloGenerico implements Serializable {
 
     public void setJogos(List<Jogo> jogos) {
         this.jogos = jogos;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 
     @Override

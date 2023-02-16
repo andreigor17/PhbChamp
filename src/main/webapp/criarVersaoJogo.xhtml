@@ -6,7 +6,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
-        Criar Jogo 
+        Criar Versão Jogo 
     </ui:define>
 
     <ui:define name="content">
@@ -27,24 +27,24 @@
                     </div>
                     <div class="column3 text">
                         <p:inputText id="nomeJogo"
-                                     value="#{managerJogo.jogo.nome}"
+                                     value="#{managerVersaoJogo.versao.nome}"
                                      required="true"
                                      requiredMessage="Informe o nome do jogo!"/>
                     </div>
 
                 </div>
-
-                <div class="row">
-
-                    <p:dataTable id="playersDataTable" value="#{ managerJogo.versoes }" var="versao"
-                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma versão adicionado">
-
-                        <p:column headerText="Nome" width="50%">
-                            <h:outputText value="#{ versao.nome }" />
-                        </p:column>
-                       
-
-                    </p:dataTable>
+                
+                <div class="row" >
+                    <div class="column2 bold">
+                        <p:outputLabel value="Anexar foto"/>
+                    </div>
+                    <div class="column2">
+                        <p:fileUpload id="upload" 
+                                      listener="#{managerVersaoJogo.doUpload}"
+                                      value="#{managerVersaoJogo.file}"                                     
+                                      auto="true"
+                                      />
+                    </div>
                 </div>
 
             </p:fieldset>
@@ -59,11 +59,11 @@
                               href="pesquisarJogos.xhtml"/>
 
                     <p:commandButton value="Salvar"
-                                     title="Salvar Jogo"
+                                     title="Salvar Versão"
                                      icon="ui-icon-check"
                                      process="@form"
                                      update="@form"                                     
-                                     actionListener="#{managerJogo.salvar()}"
+                                     actionListener="#{managerVersaoJogo.salvar()}"
                                      />
 
                 </center>

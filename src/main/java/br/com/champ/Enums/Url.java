@@ -11,39 +11,40 @@ package br.com.champ.Enums;
  */
 public enum Url {
 
-    SALVAR_PLAYER(1, "/players"),
-    ATUALIZAR_PLAYER(2, "/players/"),
-    SALVAR_TIME(3, "/teams"),
-    ATUALIZAR_TIME(4, "/teams/"),
-    SALVAR_CAMPEONATO(5, "/campeonatos"),
-    ATUALIZAR_CAMPEONATO(6, "/campeonatos/"),
-    EXCLUIR_CAMPEONATO(16,"/campeonatos/excluir/"),
-    SALVAR_PARTIDA(7, "/partidas"),
-    ATUALIZAR_PARTIDA(8, "/partidas/"),
-    SALVAR_ESTATISTICA(9, "/estatisticas"),
-    ATUALIZAR_ESTATISTICA(10, "/estatisticas/"),
-    SALVAR_ITEM_PARTIDA(11, "/itemPartidas"),
-    ATUALIZAR_ITEM_PARTIDA(12, "/itemPartidas/"),
-    SALVAR_MAPA(13, "/mapas"),
-    ATUALIZAR_MAPA(14, "/mapas"),
-    SALVAR_JOGO(15, "/jogo"),
-    ATUALIZAR_JOGO(15, "/jogo"),
-    EXCLUIR_JOGO(16,"/jogo/excluir/");
+    SALVAR_PLAYER("/players"),
+    ATUALIZAR_PLAYER("/players/"),
+    SALVAR_TIME("/teams"),
+    ATUALIZAR_TIME("/teams/"),
+    SALVAR_CAMPEONATO("/campeonatos"),
+    ATUALIZAR_CAMPEONATO("/campeonatos/"),
+    EXCLUIR_CAMPEONATO("/campeonatos/excluir/"),
+    SALVAR_PARTIDA("/partidas"),
+    ATUALIZAR_PARTIDA("/partidas/"),
+    SALVAR_ESTATISTICA("/estatisticas"),
+    ATUALIZAR_ESTATISTICA("/estatisticas/"),
+    SALVAR_ITEM_PARTIDA("/itemPartidas"),
+    ATUALIZAR_ITEM_PARTIDA("/itemPartidas/"),
+    SALVAR_MAPA("/mapas"),
+    ATUALIZAR_MAPA("/mapas"),
+    SALVAR_JOGO("/jogo"),
+    ATUALIZAR_JOGO("/jogo"),
+    EXCLUIR_JOGO("/jogo/excluir/"),
+    SALVAR_ANEXO("/anexos"),
+    ATUALIZAR_ANEXO("/anexos"),
+    EXCLUIR_ANEXO("/anexos/excluir/"),
+    SALVAR_VERSAO("/versao"),
+    ATUALIZAR_VERSAO("/versao"),
+    EXCLUIR_VERSAO("/versao/excluir/");
 
-    private String nome;
-    private Integer valor;
+    private String nome;    
 
     public String getNome() {
         return nome;
     }
 
-    public Integer getValor() {
-        return valor;
-    }
 
-    private Url(Integer valor, String nome) {
-        this.nome = nome;
-        this.valor = valor;
+    private Url(String nome) {
+        this.nome = nome;        
     }
 
 }

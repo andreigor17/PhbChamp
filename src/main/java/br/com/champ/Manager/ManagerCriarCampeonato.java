@@ -211,13 +211,13 @@ public class ManagerCriarCampeonato implements Serializable {
         
         this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
         
-        Campeonato c = new Campeonato();
-        c = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
-        c.setPartidas(gerarPartidas(c.getId(), c));
         
-        Campeonato c2 = new Campeonato();
-        c2 = campeonatoServico.save(c, c.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
-        Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + c2.getId());
+        this.camp = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
+        this.camp = campeonatoServico.buscaCamp(this.camp.getId());
+        this.camp.setPartidas(gerarPartidas(this.camp.getId(), this.camp));
+                
+        this.camp = campeonatoServico.save(this.camp, this.camp.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
+        Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
     }
     
     public List<Team> autoCompletarTime() throws Exception {
@@ -236,8 +236,7 @@ public class ManagerCriarCampeonato implements Serializable {
         if (Utils.isNotEmpty(this.times)) {
             for (int i = 0; i < this.times.size() - 1; i++) {
                 for (int j = i + 1; j < this.times.size(); j++) {
-                    match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp, null, null);
-                    System.out.println("passou");
+                    match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp, null, null);                    
                     matches.add(match);
                 }
             }
@@ -245,8 +244,7 @@ public class ManagerCriarCampeonato implements Serializable {
         if (Utils.isNotEmpty(this.membros)) {
             for (int i = 0; i < this.membros.size() - 1; i++) {
                 for (int j = i + 1; j < this.membros.size(); j++) {
-                    match = salvarPartidaClassica(null, null, id, camp, this.membros.get(i), this.membros.get(j));
-                    System.out.println("passou");
+                    match = salvarPartidaClassica(null, null, id, camp, this.membros.get(i), this.membros.get(j));                    
                     matches.add(match);
                 }
             }
@@ -256,9 +254,7 @@ public class ManagerCriarCampeonato implements Serializable {
     
     public Partida salvarPartidaClassica(Team t1, Team t2, Long id, Campeonato camp, Player p1, Player p2) {
         try {
-            
-            Partida partidaX5 = new Partida();
-            
+                                    
             List<Estatisticas> estsTeam1 = new ArrayList<Estatisticas>();
             List<Estatisticas> estsTeam2 = new ArrayList<Estatisticas>();
             
@@ -266,28 +262,30 @@ public class ManagerCriarCampeonato implements Serializable {
             Team team2 = t2;
             
             if (Utils.isNotEmpty(t1) && Utils.isNotEmpty(t2)) {
-                this.itemPartidas = PartidaUtils.gerarPartidasTimes(partidaX5, id, team1, team2, this.qtdItensPartidas);
+                this.itemPartidas = PartidaUtils.gerarPartidasTimes(this.partida, id, team1, team2, this.qtdItensPartidas);
             }
             
             if (Utils.isNotEmpty(p1) && Utils.isNotEmpty(p2)) {
-                this.itemPartidas = PartidaUtils.gerarPartidasPlayers(partidaX5, id, p1, p2, this.qtdItensPartidas);
+                this.itemPartidas = PartidaUtils.gerarPartidasPlayers(this.partida, id, p1, p2, this.qtdItensPartidas);
             }
             
-            partidaX5.setItemPartida(this.itemPartidas);
-            partidaX5.setJogo(camp.getJogo());
-            partida = partidaServico.salvar(partidaX5, null, Url.SALVAR_PARTIDA.getNome());
-            List<ItemPartida> it = partida.getItemPartida();
+            this.partida.setItemPartida(this.itemPartidas);
+            this.partida.setJogo(camp.getJogo());
+            this.partida = partidaServico.salvar(this.partida, null, Url.SALVAR_PARTIDA.getNome());
+            
+            this.partida = partidaServico.pesquisar(this.partida.getId());
+            List<ItemPartida> it = this.partida.getItemPartida();
             
             List<ItemPartida> newItem = new ArrayList<>();
             
-            for (ItemPartida ip : partida.getItemPartida()) {
-                ip.setPartida(partida.getId());
+            for (ItemPartida ip : this.partida.getItemPartida()) {
+                ip.setPartida(this.partida.getId());
                 newItem.add(ip);
             }
             
-            partida.setItemPartida(newItem);
+            this.partida.setItemPartida(newItem);
             
-            partida = partidaServico.salvar(partida, partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
+            this.partida = partidaServico.salvar(this.partida, this.partida.getId(), Url.ATUALIZAR_PARTIDA.getNome());
             
             if (Utils.isNotEmpty(t1) && Utils.isNotEmpty(t2)) {
                 for (ItemPartida i : it) {
@@ -358,7 +356,7 @@ public class ManagerCriarCampeonato implements Serializable {
             System.err.println(ex);
         }
         
-        return partida;
+        return this.partida;
     }
     
     public void limpar() {

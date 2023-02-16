@@ -5,12 +5,9 @@
  */
 package br.com.champ.Manager;
 
-import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Campeonato;
 import br.com.champ.Modelo.ItemPartida;
-import br.com.champ.Modelo.Partida;
 import br.com.champ.Modelo.Player;
-import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.AnexoServico;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.ItemPartidaServico;
@@ -21,7 +18,6 @@ import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +25,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.primefaces.PrimeFaces;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -219,7 +214,5 @@ public class ManagerPlayer implements Serializable {
         Mensagem.successAndRedirect("pesquisarPlayer.xhtml");
         init();
     }
-
-   
 
 }

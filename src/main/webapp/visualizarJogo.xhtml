@@ -45,6 +45,23 @@
                     </div>                    
                 </div>
 
+                <div class="row">
+
+                    <p:dataTable id="playersDataTable" value="#{ managerJogo.versoes }" var="versao"
+                                 rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma versão adicionado">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="Versões Cadastrados" />
+                        </f:facet>
+
+                        <p:column headerText="Nome" width="50%">
+                            <h:outputText value="#{ versao.nome }" />
+                        </p:column>
+
+
+                    </p:dataTable>
+                </div>
+
             </p:fieldset>           
 
         </h:form>

@@ -20,7 +20,7 @@
 
 
             <div class="card">
-                <p:menu>
+                <p:tieredMenu>
                     <p:submenu label="Servidor">
                         <p:menuitem value="API Path" outcome="configuracaoAPI.xhtml" update="@form"
                                     icon="ui-icon-gear" />
@@ -28,15 +28,21 @@
                         <p:menuitem value="Info" outcome="server.xhtml"  icon="ui-icon-disk"/>
                     </p:submenu>
                     <p:submenu label="Jogos">
-                        <p:menuitem value="Criar" outcome="criarJogo.xhtml" icon="ui-icon-plus"/>
-                        <p:menuitem value="Pesquisar" outcome="pesquisarJogos.xhtml" icon="ui-icon-search"/>
+                        <p:submenu label="Tipo Jogo">
+                            <p:menuitem value="Criar" outcome="criarJogo.xhtml" icon="ui-icon-plus"/>
+                            <p:menuitem value="Pesquisar" outcome="pesquisarJogos.xhtml" icon="ui-icon-search"/>
+                        </p:submenu>
+                        <p:submenu label="Versão Jogo">
+                            <p:menuitem value="Criar" outcome="criarVersaoJogo.xhtml" icon="ui-icon-plus"/>
+                            <p:menuitem value="Pesquisar" outcome="pesquisarVersaoJogo.xhtml" icon="ui-icon-search"/>
+                        </p:submenu>                        
                     </p:submenu>
                     <p:submenu label="Mapas CSGO">
                         <p:menuitem value="Criar" outcome="criarMapa.xhtml"/>
                         <p:menuitem value="Pesquisar" outcome="pesquisarMapas.xhtml"/>
                     </p:submenu>
 
-                </p:menu>
+                </p:tieredMenu>
             </div>            
 
         </h:form>

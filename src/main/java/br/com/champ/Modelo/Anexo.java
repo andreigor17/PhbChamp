@@ -2,36 +2,17 @@ package br.com.champ.Modelo;
 
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
 
 /**
  *
  * @author andre
  */
-@Entity
-public class Anexo extends ModeloGenerico implements Serializable{
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Anexo extends ModeloGenerico implements Serializable {
+
     private byte[] imagem;
     private String nome;
     private String nomeExibicao;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataArquivo;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String dataArquivo;
 
     public String getNome() {
         return nome;
@@ -49,11 +30,11 @@ public class Anexo extends ModeloGenerico implements Serializable{
         this.nomeExibicao = nomeExibicao;
     }
 
-    public Date getDataArquivo() {
+    public String getDataArquivo() {
         return dataArquivo;
     }
 
-    public void setDataArquivo(Date dataArquivo) {
+    public void setDataArquivo(String dataArquivo) {
         this.dataArquivo = dataArquivo;
     }
 
@@ -64,7 +45,5 @@ public class Anexo extends ModeloGenerico implements Serializable{
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-    
-    
-    
+
 }

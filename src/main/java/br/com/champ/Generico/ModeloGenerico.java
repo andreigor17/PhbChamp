@@ -5,6 +5,7 @@
  */
 package br.com.champ.Generico;
 
+import br.com.champ.Modelo.Anexo;
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,6 @@ import javax.persistence.Version;
 @MappedSuperclass
 public abstract class ModeloGenerico implements Serializable {
 
-
     public Long id;
 
     /**
@@ -32,6 +32,8 @@ public abstract class ModeloGenerico implements Serializable {
      * concorrentes
      */
     private int versao;
+    private String dataCriacao;
+    private String dataAtualizacao;
 
     public ModeloGenerico() {
     }
@@ -43,7 +45,6 @@ public abstract class ModeloGenerico implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-    
 
     public int getVersao() {
         return versao;
@@ -60,7 +61,21 @@ public abstract class ModeloGenerico implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
+    public String getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(String dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public String getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(String dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 
 }

@@ -18,6 +18,7 @@ public class Team extends ModeloGenerico implements Serializable{
     private String nome;
     private List<Player> players;
     private List<Estatisticas> estatisticas;
+    private Anexo anexo;
 
     public String getNome() {
         return nome;
@@ -44,7 +45,13 @@ public class Team extends ModeloGenerico implements Serializable{
         this.estatisticas = estatisticas;
     }
 
-   
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
+    }
 
    
 }

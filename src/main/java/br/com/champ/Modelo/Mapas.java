@@ -17,7 +17,7 @@ public class Mapas extends ModeloGenerico implements Serializable {
 
     private String nome;
     private List<ItemPartida> itemPartida;
-    private String avatar;
+    private Anexo anexo;
 
     public String getNome() {
         return nome;
@@ -35,12 +35,12 @@ public class Mapas extends ModeloGenerico implements Serializable {
         this.itemPartida = itemPartida;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public Anexo getAnexo() {
+        return anexo;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 
 }

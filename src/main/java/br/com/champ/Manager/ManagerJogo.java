@@ -6,7 +6,9 @@ package br.com.champ.Manager;
 
 import br.com.champ.Enums.Url;
 import br.com.champ.Modelo.Jogo;
+import br.com.champ.Modelo.VersaoJogo;
 import br.com.champ.Servico.JogoServico;
+import br.com.champ.Servico.VersaoJogoServico;
 import br.com.champ.Utilitario.FacesUtil;
 import br.com.champ.Utilitario.Mensagem;
 import java.util.ArrayList;
@@ -26,8 +28,11 @@ public class ManagerJogo {
 
     @EJB
     private JogoServico jogoServico;
+    @EJB
+    private VersaoJogoServico versaoServico;
     private Jogo jogo;
     private List<Jogo> jogos;
+    private List<VersaoJogo> versoes;
 
     @PostConstruct
     public void init() {
@@ -36,6 +41,9 @@ public class ManagerJogo {
 
         if (visualizarJogoId != null && !visualizarJogoId.isEmpty()) {
             this.jogo = this.jogoServico.pesquisarJogo(Long.parseLong(visualizarJogoId));
+            if (this.jogo.getId() != null) {
+                this.versoes = this.jogo.getVersoes();
+            }
 
         } else {
             instanciar();
@@ -46,6 +54,7 @@ public class ManagerJogo {
     public void instanciar() {
         this.jogo = new Jogo();
         this.jogos = new ArrayList<>();
+        this.versoes = new ArrayList<>();
     }
 
     public Jogo getJogo() {
@@ -64,6 +73,14 @@ public class ManagerJogo {
         this.jogos = jogos;
     }
 
+    public List<VersaoJogo> getVersoes() {
+        return versoes;
+    }
+
+    public void setVersoes(List<VersaoJogo> versoes) {
+        this.versoes = versoes;
+    }
+
     public void limpar() {
         instanciar();
     }
@@ -77,22 +94,21 @@ public class ManagerJogo {
     }
 
     public void salvar() {
-        Jogo j = new Jogo();
         if (this.jogo.getId() != null) {
             try {
-                j = jogoServico.save(this.jogo, this.jogo.getId(), Url.ATUALIZAR_JOGO.getNome());
+                this.jogo = jogoServico.save(this.jogo, this.jogo.getId(), Url.ATUALIZAR_JOGO.getNome());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
-            Mensagem.successAndRedirect("Jogo atualizado com sucesso!", "visualizarJogo.xhtml?id=" + j.getId());
+            Mensagem.successAndRedirect("Jogo atualizado com sucesso!", "visualizarJogo.xhtml?id=" + this.jogo.getId());
 
         } else {
             try {
-                j = jogoServico.save(this.jogo, null, Url.SALVAR_JOGO.getNome());
+                this.jogo = jogoServico.save(this.jogo, null, Url.SALVAR_JOGO.getNome());
             } catch (Exception ex) {
                 System.err.println(ex);
             }
-            Mensagem.successAndRedirect("Jogo criado com sucesso!", "visualizarJogo.xhtml?id=" + j.getId());
+            Mensagem.successAndRedirect("Jogo criado com sucesso!", "visualizarJogo.xhtml?id=" + this.jogo.getId());
 
         }
     }
