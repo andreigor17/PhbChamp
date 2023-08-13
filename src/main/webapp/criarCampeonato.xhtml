@@ -96,14 +96,15 @@
                                     <div class="row">
                                         <div class="column2 bold" >
                                             <p:outputLabel value="Tipo de jogo "
-                                                           for="jogoSelectOneRadio"/>
+                                                           for="jogoAutoComplete"/>
                                         </div>
                                         <div class="column3">
-                                            <p:selectOneRadio id="jogoSelectOneRadio" value="#{ managerCriarCampeonato.camp.jogo }"
-                                                              required="true">
-                                                <f:selectItems value="#{ enums.games() }" />
+                                            <p:autoComplete id="jogoAutoComplete" value="#{managerCriarCampeonato.jogo}"
+                                                            forceSelection="true" dropdown="true" var="jogo" itemValue="#{jogo}" scrollHeight="200"
+                                                            itemLabel="#{jogo.nome}" completeMethod="#{managerCriarCampeonato.jogos()}"
+                                                            converter="jogo_converter"  requiredMessage="Jogo é obrigatório">
                                                 <p:ajax event="valueChange" process="@this" update="@form"/>
-                                            </p:selectOneRadio>
+                                            </p:autoComplete>
                                         </div>
                                     </div>
                                 </div>
@@ -277,8 +278,8 @@
                                 </div>                               
                                 <div class="row">
                                     <p:commandButton value="Salvar" action="#{managerCriarCampeonato.salvarCampeonato()}"  
-                                                      onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"
-                                                      process="@this"/>
+                                                     onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"
+                                                     process="@this"/>
                                 </div>
                             </div>
                         </p:panel>

@@ -57,21 +57,13 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="column2 bold">
-                        <p:outputLabel value="SteamID: "
-                                       for="steamID"/>
-                    </div>
-                    <div class="column4 text">
-                        <p:outputLabel id="steamID"
-                                     value="#{managerPlayer.player.steamID}"/>
-                    </div>
+                <div class="row">                    
                     <div class="column2 bold">
                         <p:outputLabel value="Url Steam: "
                                        for="urlSteam"/>
                     </div>
                     <div class="column4 text">
-                        <h:outputLink id="urlSteam" value="#{managerPlayer.player.urlSteam}">
+                        <h:outputLink id="urlSteam" value="https://steamcommunity.com/id/#{managerPlayer.player.urlSteam}">
                             <h:outputText value="#{managerPlayer.player.urlSteam}" />
                         </h:outputLink>
                     </div>
@@ -91,7 +83,7 @@
                         <p:outputLabel value="Avatar:" />
                     </div>
                     <div class="column4">
-                        <h:graphicImage value="image/#{managerPlayer.player.avatar}" width="100px" height="100px" />
+                        <h:graphicImage value="image/#{managerPlayer.player.anexo.nome}" width="100px" height="100px" />
 
                     </div>
 

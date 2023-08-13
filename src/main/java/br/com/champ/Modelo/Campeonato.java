@@ -1,5 +1,6 @@
 package br.com.champ.Modelo;
 
+import br.com.champ.Enums.Categoria;
 import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
 import br.com.champ.Generico.ModeloGenerico;
@@ -23,6 +24,7 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private Game jogo;
     private String dataFinal;
     private Anexo anexo;
+    private Categoria categoria;
 
     public List<Partida> getPartidas() {
         return partidas;
@@ -111,6 +113,14 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
 }

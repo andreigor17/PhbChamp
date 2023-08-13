@@ -5,6 +5,7 @@
  */
 package br.com.champ.Utilitario;
 
+import br.com.champ.Enums.Categoria;
 import br.com.champ.Enums.Funcoes;
 import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
@@ -21,8 +22,8 @@ import javax.faces.model.SelectItem;
  */
 @ViewScoped
 @ManagedBean
-public class Enums implements Serializable{
-    
+public class Enums implements Serializable {
+
     public List<SelectItem> funcoes() {
         List<SelectItem> itens = new ArrayList<SelectItem>();
         for (Funcoes funcao : Funcoes.values()) {
@@ -30,7 +31,7 @@ public class Enums implements Serializable{
         }
         return itens;
     }
-    
+
     public List<SelectItem> statusCamp() {
         List<SelectItem> itens = new ArrayList<SelectItem>();
         for (StatusCamp status : StatusCamp.values()) {
@@ -38,7 +39,7 @@ public class Enums implements Serializable{
         }
         return itens;
     }
-    
+
     public List<SelectItem> games() {
         List<SelectItem> itens = new ArrayList<SelectItem>();
         for (Game game : Game.values()) {
@@ -46,5 +47,13 @@ public class Enums implements Serializable{
         }
         return itens;
     }
-    
+
+    public List<SelectItem> categorias() {
+        List<SelectItem> itens = new ArrayList<SelectItem>();
+        for (Categoria categoria : Categoria.values()) {
+            itens.add(new SelectItem(categoria, categoria.getNome()));
+        }
+        return itens;
+    }
+
 }

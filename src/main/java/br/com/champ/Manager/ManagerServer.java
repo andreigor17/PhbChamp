@@ -27,12 +27,13 @@ public class ManagerServer implements Serializable {
 
     private static final Logger log = Logger.getLogger(ManagerServer.class.getName());
     private List<String> returns;
+    private String csgoServerReturn;
 
     @PostConstruct
     public void init() {
         instanciar();
         try {
-            this.returns = executeShellHDSize();
+            //this.returns = executeShellHDSize();
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -40,6 +41,37 @@ public class ManagerServer implements Serializable {
 
     public void instanciar() {
         this.returns = new ArrayList<>();
+    }
+
+    public void iniciarSteamCmd() {
+        String os = System.getProperty("os.name").toLowerCase();
+        String steamCmdPath = "";
+        String csgoPath = "";
+
+        if (os.contains("win")) {
+            steamCmdPath = "D:\\SteamCMD\\steamcmd.exe"; // Caminho para o executável do SteamCMD no Windows
+            csgoPath = "C:\\CSGO"; // Pasta onde o CS:GO foi instalado no Windows
+        } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+            steamCmdPath = "/home/andre/Steam/"; // Caminho para o executável do SteamCMD no Linux
+            csgoPath = "/path/to/csgo"; // Pasta onde o CS:GO foi instalado no Linux
+        }
+
+        String steamCmdCommand = steamCmdPath + " +login anonymous +force_install_dir " + csgoPath + " +app_update 740 validate +quit";
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", steamCmdCommand);
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                csgoServerReturn = "Servidor CS:GO iniciado com sucesso!";
+            } else {
+                csgoServerReturn = "Ocorreu um erro ao iniciar o servidor CS:GO.";
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> executeCommand(final String command) throws IOException {
@@ -97,6 +129,14 @@ public class ManagerServer implements Serializable {
 
     public void setReturns(List<String> returns) {
         this.returns = returns;
+    }
+
+    public String getCsgoServerReturn() {
+        return csgoServerReturn;
+    }
+
+    public void setCsgoServerReturn(String csgoServerReturn) {
+        this.csgoServerReturn = csgoServerReturn;
     }
 
 }
