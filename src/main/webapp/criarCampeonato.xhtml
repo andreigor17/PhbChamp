@@ -71,16 +71,16 @@
                                         <p:outputLabel for="dataCalendar" style="text-align: left !important;" value="Data Inicial: "/>
                                     </div>
                                     <div class="column3">
-                                        <p:calendar id="dataCalendar" value="#{managerCriarCampeonato.dataCamp}" showOn="button"
+                                        <p:calendar id="dataCalendar" value="#{managerCriarCampeonato.dataCamp}" mindate="#{managerHelper.dataAtual()}" showOn="button"
                                                     pattern="dd/MM/yyyy"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="column2 bold">
-                                        <p:outputLabel for="dataCalendarFinal" style="text-align: left !important" value="Data Final "/>
+                                        <p:outputLabel for="dataCalendarFinal" style="text-align: left !important"  value="Data Final "/>
                                     </div>
                                     <div class="column3">
-                                        <p:calendar id="dataCalendarFinal" value="#{managerCriarCampeonato.dataFinal}" showOn="button"
+                                        <p:calendar id="dataCalendarFinal" value="#{managerCriarCampeonato.dataFinal}"  mindate="#{managerHelper.dataAtual()}" showOn="button"
                                                     pattern="dd/MM/yyyy"/>
                                     </div>
                                 </div>
@@ -106,6 +106,20 @@
                                                 <p:ajax event="valueChange" process="@this" update="@form"/>
                                             </p:autoComplete>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="column2 bold" >
+                                            <p:outputLabel value="Categoria "
+                                                           for="categoriaOneRadio"/>
+                                        </div>
+                                        <div class="column3">
+                                            <p:selectOneRadio id="categoriaOneRadio" value="#{ managerCriarCampeonato.camp.categoria }"
+                                                              required="true">
+                                                <f:selectItems value="#{ enums.categorias() }" />
+                                                <p:ajax event="valueChange" process="@this" update="@form"/>
+                                            </p:selectOneRadio>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -113,7 +127,7 @@
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="participantes" title="Times" rendered="#{managerCriarCampeonato.camp.jogo.nome eq 'CS'}">
+                    <p:tab id="participantes" title="Times" rendered="#{managerCriarCampeonato.camp.categoria.nome ne 'INDIVIDUAL'}">
                         <p:panel header="Detalhes dos participantes" style="min-height: 180px">
                             <p:messages/>                            
                             <div class="row" style="padding: 15px">                                
@@ -143,7 +157,7 @@
                         </p:panel>                        
                     </p:tab>
 
-                    <p:tab id="participantes2" title="Players" rendered="#{ managerCriarCampeonato.camp.jogo.nome ne 'CS'}">
+                    <p:tab id="participantes2" title="Players" rendered="#{ managerCriarCampeonato.camp.jogo.nome eq 'INDIVIDUAL'}">
                         <p:panel header="Detalhes dos participantes" style="min-height: 180px">
                             <p:messages/>                            
                             <div class="row" style="padding: 15px">

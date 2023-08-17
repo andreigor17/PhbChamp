@@ -18,7 +18,7 @@ import java.util.List;
 public class Partida extends ModeloGenerico implements Serializable {
 
     private List<ItemPartida> itemPartida;
-    private Game jogo;
+    private Jogo jogo;
 
     public Partida() {
     }
@@ -31,12 +31,12 @@ public class Partida extends ModeloGenerico implements Serializable {
         this.itemPartida = itemPartida;
     }
 
-    public Game getJogo() {
+    public Jogo getJogo() {
         return jogo;
     }
 
-    public void setJogo(Game jogo) {
+    public void setJogo(Jogo jogo) {
         this.jogo = jogo;
     }
-        
+
 }

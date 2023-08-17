@@ -21,7 +21,7 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private List<Estatisticas> estatisticas;        
     private String dataCamp;
     private String dataString;
-    private Game jogo;
+    private Jogo jogo;
     private String dataFinal;
     private Anexo anexo;
     private Categoria categoria;
@@ -83,11 +83,11 @@ public class Campeonato extends ModeloGenerico implements Serializable {
         this.dataString = dataString;
     }
 
-    public Game getJogo() {
+    public Jogo getJogo() {
         return jogo;
     }
 
-    public void setJogo(Game jogo) {
+    public void setJogo(Jogo jogo) {
         this.jogo = jogo;
     }
 
