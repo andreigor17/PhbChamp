@@ -6,7 +6,8 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
-        Visualizar Partida
+        #{managerPartida.partida.itemPartida.get(0).team1.nome.concat(' ').concat(managerPartida.scoreT1).concat(' x ')
+          .concat(managerPartida.scoreT2).concat(' ').concat(managerPartida.partida.itemPartida.get(0).team2.nome)}
     </ui:define>
 
     <ui:define name="content">
@@ -176,7 +177,7 @@
                                           href="visualizarPlayer.xhtml?id=#{ests1.player.id}"/>
                             </div>
                         </p:column>
-                         <p:column headerText="Nome" width="30%">
+                        <p:column headerText="Nome" width="30%">
                             <p:outputLabel  value="#{ests1.player.nome}   '#{ests1.player.nick}' #{ests1.player.sobreNome} "/>
                         </p:column>                            
                         <p:column headerText="PA" width="5%"   >                                  
@@ -195,7 +196,7 @@
                     </p:dataTable>
                 </p:tab>
                 <c:forEach items="#{managerPartida.itensPartidas}" var="item">
-                    <p:tab id="tab" title="#{item.mapas.nome ne null ? item.mapas.nome : 'N/A'}">
+                    <p:tab id="tab" title="#{item.mapas.nome ne null ? item.mapas.nome .concat(' - ').concat(item.scoreT1).concat(' x ').concat(item.scoreT2) : 'N/A' }">
 
                         <div  class="actions">
                             <p:commandButton id="menuButton" value="Atualizar Partida" icon="pi pi-bars"

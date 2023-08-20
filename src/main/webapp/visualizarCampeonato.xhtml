@@ -20,7 +20,7 @@
             <div  class="actions">
 
                 <p:commandButton title="Cancelar Campeonato"
-                                 value="Excluir"
+                                 value="Cancelar"
                                  icon="ui-icon-close"                                  
                                  process="@this"
                                  update="@form"
@@ -152,7 +152,7 @@
                                     <p:outputLabel value="#{item.mapas.nome ne null ? item.mapas.nome : 'N/A'}"/>
                                 </p:column>
                                 <p:column headerText="Placar">
-                                    <p:outputLabel  value="#{item.team1.nome}  #{item.scoreT1} x #{item.team2.nome} #{item.scoreT2}"/>
+                                    <p:outputLabel  value="#{item.team1.nome}  #{item.scoreT1} x #{item.scoreT2}  #{item.team2.nome} "/>
                                 </p:column>                               
                             </p:dataTable>       
                         </p:rowExpansion>

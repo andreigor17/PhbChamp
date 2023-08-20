@@ -45,7 +45,7 @@
                             <p:outputLabel id="nomeMapa" style="text-align: center !important" value="#{mapa.nome}"/>
                         </div>
                         <div class="row" style="display: flex; justify-content: center; align-items: center">
-                            <h:graphicImage value="image/#{mapa.avatar}" width="200px" height="100px" style="border-radius: 10px"/>
+                            <h:graphicImage value="image/#{mapa.anexo.nome}" width="200px" height="100px" style="border-radius: 10px"/>
                         </div>
                     </ui:repeat>
                 </div>
@@ -57,7 +57,7 @@
                                 <div class="card-body" style="display: flex; justify-content: space-around; align-items: center;">                                    
                                     <h5 class="card-title">#{pb.team.nome}</h5>
                                     <h4 class="card-text">#{pb.mapas ne null ? ' '.concat(pb.tipoPickBan.nome).concat(' - ').concat(pb.mapas.nome) : pb.tipoPickBan.nome }</h4>
-                                    <h:graphicImage value="image/#{pb.mapas.avatar}" style="height: 65px; width: 130px; object-fit: cover; border: 1px solid white" rendered="#{pb.mapas ne null}"/>                                        
+                                    <h:graphicImage value="image/#{pb.mapas.anexo.nome}" style="height: 65px; width: 130px; object-fit: cover; border: 1px solid white" rendered="#{pb.mapas ne null}"/>                                        
                                     <p:commandButton title="Selecionar Mapa"
                                                      value="Selecionar" 
                                                      rendered="#{pb.mapas eq null}"
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="row" style="display: flex; justify-content: center; align-items: center">                           
-                            <h:graphicImage value="image/#{mapa.avatar}" width="200px" height="100px" />
+                            <h:graphicImage value="image/#{mapa.anexo.nome}" width="200px" height="100px" />
                         </div>
                     </ui:repeat>
                 </div>
@@ -137,7 +137,7 @@
                             <div class="row" style="display: flex; justify-items: center; align-items: center">                                
                                 <h:commandButton action="#{managerPartida.pickarMapa(mapa)}" style="border-radius: 10px;
                                                  margin: 10px; width: 350px !important; height: 175px !important" 
-                                                 image="image/#{mapa.avatar}" >
+                                                 image="image/#{mapa.anexo.nome}" >
                                     <p:ajax process="@this" update="@form"/>
                                 </h:commandButton>
                             </div>

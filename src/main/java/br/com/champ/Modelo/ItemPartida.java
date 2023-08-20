@@ -15,8 +15,8 @@ import java.io.Serializable;
  */
 public class ItemPartida extends ModeloGenerico implements Serializable {
 
-    private int scoreT1;
-    private int scoreT2;
+    private Integer scoreT1;
+    private Integer scoreT2;
     private Mapas mapas;
     private Long partida;
     private Team team1;
@@ -25,20 +25,21 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
     private Player player2;
     private Long camp;
     private Estatisticas estatisticas;
+    private Team timeVencedor;
 
-    public int getScoreT1() {
+    public Integer getScoreT1() {
         return scoreT1;
     }
 
-    public void setScoreT1(int scoreT1) {
+    public void setScoreT1(Integer scoreT1) {
         this.scoreT1 = scoreT1;
     }
 
-    public int getScoreT2() {
+    public Integer getScoreT2() {
         return scoreT2;
     }
 
-    public void setScoreT2(int scoreT2) {
+    public void setScoreT2(Integer scoreT2) {
         this.scoreT2 = scoreT2;
     }
 
@@ -104,6 +105,14 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
 
     public void setPlayer2(Player player2) {
         this.player2 = player2;
+    }
+
+    public Team getTimeVencedor() {
+        return timeVencedor;
+    }
+
+    public void setTimeVencedor(Team timeVencedor) {
+        this.timeVencedor = timeVencedor;
     }
 
 }

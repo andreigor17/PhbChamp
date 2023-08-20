@@ -112,13 +112,6 @@ public class ManagerIndex implements Serializable {
         this.ests = ests;
     }
 
-    public void mostrarCampeonato() {
-        this.camp = campServico.buscaCamp(this.camp.getId());
-        if (this.camp.getId() != null) {
-            estatisticasCampIndex();
-        }
-
-    }
 
     public List<Campeonato> getCamps() {
         return camps;
@@ -136,17 +129,5 @@ public class ManagerIndex implements Serializable {
         this.partidas = partidas;
     }
 
-    public List<Estatisticas> estatisticasCampIndex() {
-        if (this.camp != null && this.camp.getId() != null) {
-            for (Team timeCamp : this.camp.getTeams()) {
-                this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
-                for (Estatisticas estats : this.estatisticasTime) {
-                    //estats = estatisticaServico.pesquisar(estats.getId());
-                    this.ests.add(estats);
-                }
-            }
-        }
-        return ests;
-    }
 
 }

@@ -30,14 +30,26 @@ import org.json.JSONException;
 @Stateless
 public class ItemPartidaServico {
 
-    public List<ItemPartida> salvar(List<ItemPartida> partida, String uri) throws Exception {
+    private String readResponse(HttpURLConnection request) throws IOException {
+        ByteArrayOutputStream os;
+        try (InputStream is = request.getInputStream()) {
+            os = new ByteArrayOutputStream();
+            int b;
+            while ((b = is.read()) != -1) {
+                os.write(b);
+            }
+        }
+        return new String(os.toByteArray());
+    }
+
+    public String salvar(ItemPartida item, Long id, String uri) throws Exception {
 
         String url;
-//        if (id != null) {
-//            url = pathToAPI() + uri;
-//        } else {
-        url = pathToAPI() + uri;
-        //}
+        if (id != null) {
+            url = pathToAPI() + uri + id;
+        } else {
+            url = pathToAPI() + uri;
+        }
 
         try {
             // Cria um objeto HttpURLConnection:
@@ -52,18 +64,17 @@ public class ItemPartidaServico {
                 request.setRequestProperty("Content-Type", "application/json");
 
                 // Define o método da requisição:
-//                if (id != null) {
-                request.setRequestMethod("PUT");
-//                } else {
-//                    request.setRequestMethod("POST");
-//                }
+                if (id != null) {
+                    request.setRequestMethod("PUT");
+                } else {
+                    request.setRequestMethod("POST");
+                }
 
                 // Conecta na URL:
                 request.connect();
                 // Montando o  Json
                 Gson gson = new Gson();
-                String json = gson.toJson(partida);
-                System.out.println("Montagem do item: " + json);
+                String json = gson.toJson(item);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
                 try (OutputStream outputStream = request.getOutputStream()) {
@@ -72,38 +83,14 @@ public class ItemPartidaServico {
 
                 // Caso você queira usar o código HTTP para fazer alguma coisa, descomente esta linha.
                 //int response = request.getResponseCode();
-                List<ItemPartida> p = new ArrayList<>();
-
-                Type userListType = new TypeToken<ArrayList<ItemPartida>>() {
-                }.getType();
-
-                ArrayList<ItemPartida> userArray = gson.fromJson(readResponse(request), userListType);
-
-                for (ItemPartida user : userArray) {
-                    p.add(user);
-                }
-
-                return p;
-
+                return readResponse(request);
             } finally {
                 request.disconnect();
             }
         } catch (IOException ex) {
-            System.err.println("erro " + ex);
+            System.err.println(ex);
         }
         return null;
-    }
-
-    private String readResponse(HttpURLConnection request) throws IOException {
-        ByteArrayOutputStream os;
-        try (InputStream is = request.getInputStream()) {
-            os = new ByteArrayOutputStream();
-            int b;
-            while ((b = is.read()) != -1) {
-                os.write(b);
-            }
-        }
-        return new String(os.toByteArray());
     }
 
     public void delete(ItemPartida partida) {
@@ -158,7 +145,7 @@ public class ItemPartidaServico {
         return null;
 
     }
-    
+
     public ItemPartida buscaItem(Long id) {
         try {
             String url = pathToAPI() + "/itemPartidas/" + id;

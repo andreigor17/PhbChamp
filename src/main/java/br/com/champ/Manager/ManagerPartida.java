@@ -87,6 +87,8 @@ public class ManagerPartida {
     private List<Player> droppedPlayers2;
     private Player selectedPlayer;
     private List<Player> pickedPlayers;
+    private int scoreT1;
+    private int scoreT2;
 
     @PostConstruct
     public void init() {
@@ -121,6 +123,7 @@ public class ManagerPartida {
                     this.itensPartidas = this.partida.getItemPartida();
                     this.mapas = mapaServico.pesquisar();
                     this.pickBanVo = PickBanUtils.gerarListaPB(this.partida.getItemPartida().get(0).getTeam1(), this.partida.getItemPartida().get(0).getTeam2(), this.partida.getItemPartida().size());
+                    gerarScore();
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -151,12 +154,40 @@ public class ManagerPartida {
         this.selectedPlayers = new ArrayList<>();
     }
 
+    public void gerarScore() {
+        for (ItemPartida ip : this.partida.getItemPartida()) {
+            if (ip.getTimeVencedor() != null) {
+                if (ip.getTimeVencedor().getId().equals(ip.getTeam1().getId())) {
+                    scoreT1 = scoreT1 + 1;
+                } else {
+                    scoreT2 = scoreT2 + 1;
+                }
+            }
+        }
+    }
+
     public List<Estatisticas> estsGeraisTeam(Team team, ItemPartida item) {
         return estatisticasServico.estatisticaPorItemPartidaTeam(team.getId(), item.getId());
     }
 
     public List<Estatisticas> estsGeraisPlayer(Player player, ItemPartida item) {
         return estatisticasServico.estatisticaPorItemPartidaTeam(player.getId(), item.getId());
+    }
+
+    public int getScoreT1() {
+        return scoreT1;
+    }
+
+    public void setScoreT1(int scoreT1) {
+        this.scoreT1 = scoreT1;
+    }
+
+    public int getScoreT2() {
+        return scoreT2;
+    }
+
+    public void setScoreT2(int scoreT2) {
+        this.scoreT2 = scoreT2;
     }
 
     public List<Estatisticas> somaEstsTeam(Team team) {

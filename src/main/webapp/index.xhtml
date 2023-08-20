@@ -95,26 +95,16 @@
                                  emptyMessage="Nenhum Campeonato encontrado...">
 
 
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options2">
+                        <p:column headerText="Opções" width="5%">
+                            <div class="options">
                                 <p:button title="Visualizar Campeonato"
                                           icon="ui-icon-search"
                                           href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
 
-                                <p:commandButton title="Remover Campeonato"
-                                                 icon="ui-icon-trash"
-                                                 process="@this"
-                                                 update="@form"
-                                                 oncomplete="PF('confirmarRemoverCampDialog').show();">
-                                    <f:setPropertyActionListener value="#{campeonato}"
-                                                                 target="#{managerCriarCampeonato.camp}"/>
-                                </p:commandButton>
                             </div>
-
-
                         </p:column>
 
-                        <p:column headerText="Nome" width="40%">
+                        <p:column headerText="Nome" width="20%">
                             <p:outputLabel value="#{campeonato.nome}" />
                         </p:column>                
                         <p:column headerText="Status" width="20%">
@@ -139,6 +129,9 @@
                                     <h:outputText value="Finalizado"/>
                                 </span>
                             </p:panel>
+                        </p:column>
+                        <p:column headerText="Jogo" width="10%">
+                            <p:outputLabel value="#{campeonato.jogo.nome}"/>
                         </p:column>
                     </p:dataTable>
 

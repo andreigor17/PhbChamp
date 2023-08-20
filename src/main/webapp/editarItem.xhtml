@@ -142,12 +142,65 @@
 
             </p:dataTable>
 
+
             <div class="actions">   
                 <center>
-                    <p:commandButton value="Salvar" actionListener="#{managerPesquisarEstatisticas.salvar()}"/>
+                    <p:commandButton value="Salvar" onclick="PF('confirmacaoEdicaoPartida').show();"/>
                     <p:commandButton value="Cancelar" actionListener="#{managerPesquisarEstatisticas.cancelar()}"/>
                 </center>
             </div>
+
+
+            <p:dialog id="confirmacaoEdicaoPartida"
+                      widgetVar="confirmacaoEdicaoPartida"
+                      header="Placar do mapa"
+                      modal="true"
+                      resizable="false"
+                      draggable="false"
+                      closeOnEscape="true"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+
+
+                <center>
+                    <div class="row">
+                        <div class="column2">
+                            <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team1.nome}" for="nomeTime1"/>
+                        </div>
+                        <div class="column2">
+                            <p:inputText id="nomeTime1" value="#{managerPesquisarEstatisticas.itemPartida.scoreT1}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column2">
+                            <p:outputLabel value="#{managerPesquisarEstatisticas.itemPartida.team2.nome}" for="nomeTime2"/>
+                        </div>
+                        <div class="column2">
+                            <p:inputText id="nomeTime2" value="#{managerPesquisarEstatisticas.itemPartida.scoreT2}"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p:commandButton value="Cancelar"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-ban"
+                                         oncomplete="PF('confirmacaoEdicaoPartida').hide();"
+                                         styleClass="btn btn-default"/>
+
+                        <p:commandButton value="Salvar"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         process="@form"
+                                         update="@form"
+                                         actionListener="#{managerPesquisarEstatisticas.salvar()}"
+                                         styleClass="btn btn-info"
+                                         onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"/>
+                    </div>
+
+                </center>
+
+            </p:dialog>          
 
 
         </h:form>
