@@ -86,59 +86,90 @@
                         <h:graphicImage value="image/#{managerPlayer.player.anexo.nome}" width="100px" height="100px" />
 
                     </div>
-
-
                 </div>
-
-
             </p:fieldset>
 
-            <p:tabView id="tabview" styleClass="row" >
-                <p:tab id="campeonatos" title="Campeonatos" >
+            <p:fieldset legend="Estatísticas">
+                <c:forEach items="#{managerPlayer.player.jogos}" var="jogo">
+                    <p:tabView id="tabview" styleClass="row" >
+                        <p:tab id="jogos" title="#{jogo.nome}" >
+                            <p:dataTable id="playersDataTable" value="#{ managerPlayer.somaEstsPayer() }" var="ests"
+                                         rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum time adicionado"
+                                         sortBy="#{ ests.kills}" sortMode="descending" >
 
-                    <p:dataTable id="campDataTable"
-                                 value="#{managerPlayer.camps}"
-                                 var="campeonato"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                                 rows="10"
-                                 rowsPerPageTemplate="5,10,15"
-                                 emptyMessage="Nenhum Campeonato encontrado...">
+                                <p:column headerText="Kills" width="50%">
+                                    <h:outputText value="#{ ests.kills}" />
+                                </p:column>
+                                <p:column headerText="Deaths" width="50%">
+                                    <h:outputText value="#{ ests.deaths}" />
+                                </p:column>
+                                <p:column headerText="RG" width="50%">
+                                    <h:outputText value="#{ ests.roundsGanhos}" />
+                                </p:column>
+                                <p:column headerText="RP" width="50%">
+                                    <h:outputText value="#{ ests.roundsPerdidos}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                </c:forEach> 
+            </p:fieldset>
 
-                        <f:facet name="header">
-                            <p:outputLabel value="Campeonatos" />
-                        </f:facet>
-
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options2">
-                                <p:button title="Visualizar Camp"
-                                          icon="ui-icon-search"
-                                          href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
-
-                            </div>
-
-                        </p:column>
-
-                        <p:column headerText="Nome" width="60%">
-                            <p:outputLabel value="#{campeonato.nome}" />
-                        </p:column>
+            <p:fieldset legend="Campeonatos">
 
 
+                <p:dataTable id="campDataTable"
+                             value="#{managerPlayer.camps}"
+                             var="campeonato"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             currentPageReportTemplate="{currentPage} de {totalPages}"
+                             rows="10"
+                             rowsPerPageTemplate="5,10,15"
+                             emptyMessage="Nenhum Campeonato encontrado...">
 
+                    <f:facet name="header">
+                        <p:outputLabel value="Campeonatos" />
+                    </f:facet>
 
+                    <p:column headerText="Opções" width="10%">
+                        <div class="options2">
+                            <p:button title="Visualizar Camp"
+                                      icon="ui-icon-search"
+                                      href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
 
-                    </p:dataTable>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Nome" width="60%">
+                        <p:outputLabel value="#{campeonato.nome}" />
+                    </p:column>
+                    <p:column headerText="Status" width="20%">
+                        <p:panel rendered="#{campeonato.status.nome eq 'Em Andamento'}" style="border: none">
+                            <span style="display: block;
+                                  border-radius: 20px;
+                                  padding: 4px 15px;
+                                  background-color:  #dbe6fe;
+                                  color: #648fe9;
+                                  font-weight: bold;">
+                                <h:outputText value="Em Andamento"/>
+                            </span>
+                        </p:panel>
+                        <p:panel rendered="#{campeonato.status.nome eq 'Finalizado'}" style="border: none">
+                            <span style="display: block;
+                                  text-align: center;
+                                  border-radius: 20px;
+                                  padding: 4px 15px;
+                                  background-color: #f43e61;
+                                  color: #fff;
+                                  font-weight: bold;">
+                                <h:outputText value="Finalizado"/>
+                            </span>
+                        </p:panel>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
 
-                </p:tab>
-                <p:tab id="estatisticas" title="Estatisticas">
-
-
-
-
-                </p:tab>
-            </p:tabView>
 
 
 

@@ -39,7 +39,7 @@ public class ImageServlet extends HttpServlet {
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
 
-        if (file.exists()) {
+        if (file.exists() && !file.isDirectory()) {
             Files.copy(file.toPath(), response.getOutputStream());
         }
     }

@@ -91,7 +91,56 @@ public class CampeonatoServico {
 
     }
 
-    public List<Campeonato> buscaCampPorPlayer(Player player) {
+    public List<Campeonato> buscaCampPorPlayer(String uri, Long playerId, Long jogoId) {
+        try {
+            String url = pathToAPI() + uri + "?playerId=" + playerId;
+            
+            if (jogoId != null) {
+                url = url + "&jogoId=" + jogoId;
+            }
+
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            //print in String
+            System.out.println(response.toString());
+            //Read JSON response and print
+            Gson gson = new Gson();
+            List<Campeonato> c = new ArrayList<>();
+
+            //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            Type userListType = new TypeToken<ArrayList<Campeonato>>() {
+            }.getType();
+
+            ArrayList<Campeonato> userArray = gson.fromJson(response.toString(), userListType);
+
+            for (Campeonato campeonato : userArray) {
+                c.add(campeonato);
+            }
+
+            return c;
+        } catch (IOException iOException) {
+            System.err.println(iOException);
+        } catch (JSONException jSONException) {
+            System.err.println(jSONException);
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println(numberFormatException);
+        }
         return null;
 
     }
@@ -185,7 +234,7 @@ public class CampeonatoServico {
                 System.out.println("Montagem do campeonato: " + json);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try ( OutputStream outputStream = request.getOutputStream()) {
+                try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -232,7 +281,7 @@ public class CampeonatoServico {
                 String json = gson.toJson(camp);
 
                 // Escreve o objeto JSON usando o OutputStream da requisição:
-                try ( OutputStream outputStream = request.getOutputStream()) {
+                try (OutputStream outputStream = request.getOutputStream()) {
                     outputStream.write(json.getBytes("UTF-8"));
                 }
 
@@ -249,7 +298,7 @@ public class CampeonatoServico {
 
     private String readResponse(HttpURLConnection request) throws IOException {
         ByteArrayOutputStream os;
-        try ( InputStream is = request.getInputStream()) {
+        try (InputStream is = request.getInputStream()) {
             os = new ByteArrayOutputStream();
             int b;
             while ((b = is.read()) != -1) {

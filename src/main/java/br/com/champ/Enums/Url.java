@@ -18,6 +18,7 @@ public enum Url {
     SALVAR_CAMPEONATO("/campeonatos"),
     ATUALIZAR_CAMPEONATO("/campeonatos/"),
     EXCLUIR_CAMPEONATO("/campeonatos/excluir/"),
+    CAMPEONATOS_PLAYERS("/campeonatos/camp_players"),
     SALVAR_PARTIDA("/partidas"),
     ATUALIZAR_PARTIDA("/partidas/"),
     SALVAR_ESTATISTICA("/estatisticas"),
