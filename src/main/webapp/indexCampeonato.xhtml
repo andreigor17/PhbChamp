@@ -4,61 +4,33 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                >
+                xmlns:fox="http://java.sun.com/jsf/composite/fox">
 
     <ui:define name="title">
-        PhbChamp
+        Campeonatos
     </ui:define>
+
     <ui:define name="content">
 
-        <h:form id="formIndex"
-                enctype="multipart/form-data"
-                class="form-horizontal">
+        <h:form id="formIndexCamp"
+                >
 
             <p:growl id="messages"
-                     showDetail="false"/> 
+                     showDetail="false"/>
 
+            <div class="row">
+                <div class="column4">
+                    <p:tieredMenu style="width:200px">                                               
+                        <p:menuitem value="Criar" icon="pi pi-fw pi-plus" outcome="criarCampeonato.xhtml"/>
+                        <p:divider />
+                        <p:menuitem value="Pesquisar" outcome="pesquisarCampeonato.xhtml" icon="pi pi-fw pi-search"/>
 
-            <p:tabView id="tabview" styleClass="row" >
-                <p:tab id="jogos" title="Últimas Partidas">
-                    <p:dataTable id="partidaDataTable" value="#{managerIndex.partidas}" var="partida"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                                 rowsPerPageTemplate="5,10,15"
-                                 rows="5" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma partida encontrada">
+                    </p:tieredMenu>
+                </div>
 
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options">
-                                <p:button title="Visualizar Partida"
-                                          icon="ui-icon-search"
-                                          href="visualizarPartida.xhtml?id=#{partida.id}"/>                                
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="Times" width="50%">                            
-                            <p:outputLabel value="#{partida.itemPartida.get(0).team1.nome}   X   #{partida.itemPartida.get(0).team2.nome} "/>                                                  
-                        </p:column>                
-                        <p:column width="35%" exportable="false">
-                            <f:facet name="header">
-                                <h:outputText value="Mapas(s)" />
-                            </f:facet>                    
-
-                            <ui:repeat value="#{partida.itemPartida}" var="item">
-                                <p:outputLabel value="#{item.mapas.nome ne null ? item.mapas.nome : 'N/A'}"/>
-                            </ui:repeat>
-
-                        </p:column>   
-                        <p:column width="15%" headerText="Campeonato">
-                            <p:outputLabel value="#{partida.itemPartida.get(0).camp ne null ? managerIndex.nomeCamp(partida.itemPartida.get(0).camp) : 'Partida Clássica'}"/>
-                        </p:column>
-
-                    </p:dataTable>
-                </p:tab>
-
-                <p:tab id="camps" title="Últimos Campeonatos" >
-
+                <div class="column8">
                     <p:dataTable id="campDataTable"
-                                 value="#{managerIndex.camps}"
+                                 value="#{managerCamp.camps}"
                                  var="campeonato"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -108,11 +80,9 @@
                             <p:outputLabel value="#{campeonato.jogo.nome}"/>
                         </p:column>
                     </p:dataTable>
-
-                </p:tab>   
-            </p:tabView>
+                </div>
+            </div>
         </h:form>
-
 
     </ui:define>
 

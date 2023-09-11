@@ -7,6 +7,7 @@ import br.com.champ.Modelo.Team;
 import br.com.champ.Servico.CampeonatoServico;
 import br.com.champ.Servico.EstatisticaServico;
 import br.com.champ.Servico.PartidaServico;
+import br.com.champ.Utilitario.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +113,6 @@ public class ManagerIndex implements Serializable {
         this.ests = ests;
     }
 
-
     public List<Campeonato> getCamps() {
         return camps;
     }
@@ -129,5 +129,15 @@ public class ManagerIndex implements Serializable {
         this.partidas = partidas;
     }
 
+    public String nomeCamp(Long idCamp) {
+        if (idCamp != null) {
+            Campeonato camp = campeonatoServico.buscaCamp(idCamp);
+            if (Utils.isNotEmpty(camp)) {
+                String nome = camp.getNome();
+                return nome;
+            }
+        }
+        return null;
+    }
 
 }

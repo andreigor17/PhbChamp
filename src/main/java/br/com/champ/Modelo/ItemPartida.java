@@ -5,7 +5,6 @@
  */
 package br.com.champ.Modelo;
 
-import br.com.champ.Enums.Maps;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 
@@ -26,6 +25,7 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
     private Long camp;
     private Estatisticas estatisticas;
     private Team timeVencedor;
+    private boolean jogado;
 
     public Integer getScoreT1() {
         return scoreT1;
@@ -113,6 +113,14 @@ public class ItemPartida extends ModeloGenerico implements Serializable {
 
     public void setTimeVencedor(Team timeVencedor) {
         this.timeVencedor = timeVencedor;
+    }
+
+    public boolean isJogado() {
+        return jogado;
+    }
+
+    public void setJogado(boolean jogado) {
+        this.jogado = jogado;
     }
 
 }

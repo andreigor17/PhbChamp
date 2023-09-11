@@ -22,6 +22,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -68,10 +70,21 @@ public class ManagerCamp implements Serializable {
             this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
         }
 
-        for (Team timeCamp : this.camp.getTeams()) {
-            this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
-            for (Estatisticas estats : this.estatisticasTime) {
-                this.ests.add(estats);
+        if (this.camp.getId() != null) {
+            for (Team timeCamp : this.camp.getTeams()) {
+                this.estatisticasTime = estatisticaServico.estatisticaPorTime(timeCamp.getId(), this.camp.getId());
+                for (Estatisticas estats : this.estatisticasTime) {
+                    this.ests.add(estats);
+                }
+            }
+        }
+        HttpServletRequest uri = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        if (uri.getRequestURI().contains("indexCampeonato.xhtml")) {
+            try {
+                this.camps = campeonatoServico.pesquisar();
+            } catch (Exception ex) {
+                Logger.getLogger(ManagerCamp.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -209,6 +222,7 @@ public class ManagerCamp implements Serializable {
         Mensagem.successAndRedirect("pesquisarCampeonato.xhtml");
         init();
     }
+
     public void pesquisarCamp() throws Exception {
         this.camps = campeonatoServico.pesquisar();
     }

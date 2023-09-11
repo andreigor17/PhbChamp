@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author andre
  */
 public class Estatisticas extends ModeloGenerico implements Serializable {
-    
+
     private Integer kills = 0;
     private Integer deaths = 0;
     private Integer assists = 0;
@@ -16,6 +16,11 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
     private Integer roundsPerdidos = 0;
     private Integer partidas = 0;
     private Integer pontos = 0;
+    private Integer golsPro = 0;
+    private Integer golsContra = 0;
+    private Integer saldoDeGols = 0;
+    private Integer partidasGanhas = 0;
+    private Integer partidasPerdidas = 0;
     private Team team;
     private Campeonato campeonato;
     private ItemPartida itemPartida;
@@ -109,9 +114,46 @@ public class Estatisticas extends ModeloGenerico implements Serializable {
         this.player = player;
     }
 
-    @Override
-    public String toString() {
-        return "Estatisticas{" + "kills=" + kills + ", deaths=" + deaths + ", assists=" + assists + '}';
+    public Integer getGolsPro() {
+        return golsPro;
     }
+
+    public void setGolsPro(Integer golsPro) {
+        this.golsPro = golsPro;
+    }
+
+    public Integer getGolsContra() {
+        return golsContra;
+    }
+
+    public void setGolsContra(Integer golsContra) {
+        this.golsContra = golsContra;
+    }
+
+    public Integer getSaldoDeGols() {
+        return saldoDeGols;
+    }
+
+    public void setSaldoDeGols(Integer saldoDeGols) {
+        this.saldoDeGols = saldoDeGols;
+    }
+
+    public Integer getPartidasGanhas() {
+        return partidasGanhas;
+    }
+
+    public void setPartidasGanhas(Integer partidasGanhas) {
+        this.partidasGanhas = partidasGanhas;
+    }
+
+    public Integer getPartidasPerdidas() {
+        return partidasPerdidas;
+    }
+
+    public void setPartidasPerdidas(Integer partidasPerdidas) {
+        this.partidasPerdidas = partidasPerdidas;
+    }
+
+    
 
 }

@@ -19,6 +19,7 @@ public class Partida extends ModeloGenerico implements Serializable {
 
     private List<ItemPartida> itemPartida;
     private Jogo jogo;
+    private Team timeVencedor;
 
     public Partida() {
     }
@@ -37,6 +38,14 @@ public class Partida extends ModeloGenerico implements Serializable {
 
     public void setJogo(Jogo jogo) {
         this.jogo = jogo;
+    }
+
+    public Team getTimeVencedor() {
+        return timeVencedor;
+    }
+
+    public void setTimeVencedor(Team timeVencedor) {
+        this.timeVencedor = timeVencedor;
     }
 
 }

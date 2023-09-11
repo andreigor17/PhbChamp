@@ -163,6 +163,55 @@ public class PartidaServico {
 
     }
     
+    public List<Partida> pesquisarPartidasPorJogo(String nomeJogo) {
+        try {
+            String url = pathToAPI() + "/partidas/partida_jogo?nomeJogo=" + nomeJogo;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+//            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            int responseCode = con.getResponseCode();
+            //System.out.println("\nSending 'GET' request to URL : " + url);
+            //System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            //print in String
+            //System.out.println(response.toString());
+            //Read JSON response and print
+            Gson gson = new Gson();
+            List<Partida> c = new ArrayList<>();
+
+            //Team[] userArray = gson.fromJson(response.toString(), Team[].class);
+            Type userListType = new TypeToken<ArrayList<Partida>>() {
+            }.getType();
+
+            ArrayList<Partida> userArray = gson.fromJson(response.toString(), userListType);
+
+            for (Partida partida : userArray) {
+                c.add(partida);
+            }
+
+            return c;
+        } catch (IOException iOException) {
+            System.err.println(iOException);
+        } catch (JSONException jSONException) {
+            System.err.println(jSONException);
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println(numberFormatException);
+        }
+        return null;
+
+    }
+    
     public List<Partida> pesquisarPartidasGeral() {
         try {
             String url = pathToAPI() + "/partidas/partidas";
