@@ -52,9 +52,9 @@
 
                 <p:wizard flowListener="#{managerCriarCampeonato.onFlowProcess}">
                     <p:tab id="basicos" title="Dados Básicos">
-                        <p:panel header="Dados"  style="min-height: 180px">
+                        <p:panel header="Dados"  style="min-height: 280px">
                             <p:messages/>
-                            <div class="row" style="padding: 15px">
+                            <div class="row" style="padding: 25px">
                                 <div class="row">
                                     <div class="column3 bold" style="text-align: left; width: auto !important; margin-right: 37px">
                                         <p:outputLabel value="Nome do Campeonato:" />  
@@ -83,7 +83,7 @@
                                         <p:calendar id="dataCalendarFinal" value="#{managerCriarCampeonato.dataFinal}"  mindate="#{managerHelper.dataAtual()}" showOn="button"
                                                     pattern="dd/MM/yyyy"/>
                                     </div>
-                                </div>
+                                </div>                                
                             </div>
                         </p:panel>
                     </p:tab>
@@ -110,10 +110,23 @@
                                     </div>
                                     <div class="row">
                                         <div class="column2 bold" >
+                                            <p:outputLabel value="Tipo Campeonato "
+                                                           for="tipoCampeonatoOneRadio"/>
+                                        </div>
+                                        <div class="column4">
+                                            <p:selectOneRadio id="tipoCampeonatoOneRadio" value="#{ managerCriarCampeonato.camp.tipoCampeonato }"
+                                                              required="true">
+                                                <f:selectItems value="#{ enums.tipoCampeonato() }" />
+                                                <p:ajax event="valueChange" process="@this" update="@form"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="column2 bold" >
                                             <p:outputLabel value="Categoria "
                                                            for="categoriaOneRadio"/>
                                         </div>
-                                        <div class="column3">
+                                        <div class="column4">
                                             <p:selectOneRadio id="categoriaOneRadio" value="#{ managerCriarCampeonato.camp.categoria }"
                                                               required="true">
                                                 <f:selectItems value="#{ enums.categorias() }" />
@@ -157,7 +170,7 @@
                         </p:panel>                        
                     </p:tab>
 
-                    <p:tab id="participantes2" title="Players" rendered="#{ managerCriarCampeonato.camp.jogo.nome eq 'INDIVIDUAL'}">
+                    <p:tab id="participantes2" title="Players" rendered="#{ managerCriarCampeonato.camp.categoria.nome eq 'INDIVIDUAL'}">
                         <p:panel header="Detalhes dos participantes" style="min-height: 180px">
                             <p:messages/>                            
                             <div class="row" style="padding: 15px">
@@ -190,8 +203,8 @@
                         </p:panel>                        
                     </p:tab>
 
-                    <p:tab id="rounds" title="Rounds">
-                        <p:panel header="Rounds">
+                    <p:tab id="rounds" title="#{managerCriarCampeonato.camp.tipoCampeonato.nome eq 'Grupo e Mata-mata' ? 'Grupos e Rounds' : 'Rounds'}">
+                        <p:panel id="roundsPanel" header="Rounds">
                             <p:messages/>                            
                             <div class="row">
                                 <div class="column3">

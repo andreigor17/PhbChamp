@@ -9,6 +9,7 @@ import br.com.champ.Enums.Categoria;
 import br.com.champ.Enums.Funcoes;
 import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
+import br.com.champ.Enums.TipoCampeonato;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,14 @@ public class Enums implements Serializable {
         List<SelectItem> itens = new ArrayList<SelectItem>();
         for (Categoria categoria : Categoria.values()) {
             itens.add(new SelectItem(categoria, categoria.getNome()));
+        }
+        return itens;
+    }
+
+    public List<SelectItem> tipoCampeonato() {
+        List<SelectItem> itens = new ArrayList<SelectItem>();
+        for (TipoCampeonato tipo : TipoCampeonato.values()) {
+            itens.add(new SelectItem(tipo, tipo.getNome()));
         }
         return itens;
     }

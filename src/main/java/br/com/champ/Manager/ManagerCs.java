@@ -62,8 +62,7 @@ public class ManagerCs {
             for (Partida partida : partidas) {
                 for (ItemPartida item : partida.getItemPartida()) {
                     if (item.isJogado()) {
-                        Mapas mapa = item.getMapas();
-                        mapaCount.put(mapa, mapaCount.getOrDefault(mapa, 0) + 1);
+                        mapaCount.put(item.getMapas(), mapaCount.getOrDefault(item.getMapas(), 0) + 1);
                     }
                 }
             }

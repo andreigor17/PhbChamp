@@ -13,12 +13,13 @@ import java.util.List;
  *
  * @author andre
  */
-public class Team extends ModeloGenerico implements Serializable{
-    
+public class Team extends ModeloGenerico implements Serializable {
+
     private String nome;
     private List<Player> players;
     private List<Estatisticas> estatisticas;
     private Anexo anexo;
+    private boolean timeAmistoso;
 
     public String getNome() {
         return nome;
@@ -35,7 +36,6 @@ public class Team extends ModeloGenerico implements Serializable{
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-    
 
     public List<Estatisticas> getEstatisticas() {
         return estatisticas;
@@ -53,5 +53,12 @@ public class Team extends ModeloGenerico implements Serializable{
         this.anexo = anexo;
     }
 
-   
+    public boolean isTimeAmistoso() {
+        return timeAmistoso;
+    }
+
+    public void setTimeAmistoso(boolean timeAmistoso) {
+        this.timeAmistoso = timeAmistoso;
+    }
+
 }

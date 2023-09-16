@@ -1,8 +1,8 @@
 package br.com.champ.Modelo;
 
 import br.com.champ.Enums.Categoria;
-import br.com.champ.Enums.Game;
 import br.com.champ.Enums.StatusCamp;
+import br.com.champ.Enums.TipoCampeonato;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.List;
@@ -18,13 +18,15 @@ public class Campeonato extends ModeloGenerico implements Serializable {
     private List<Player> players;
     private StatusCamp status;
     private List<Partida> partidas;
-    private List<Estatisticas> estatisticas;        
+    private List<Estatisticas> estatisticas;
     private String dataCamp;
     private String dataString;
     private Jogo jogo;
     private String dataFinal;
     private Anexo anexo;
+    private TipoCampeonato tipoCampeonato;
     private Categoria categoria;
+    private List<Grupo> grupos;
 
     public List<Partida> getPartidas() {
         return partidas;
@@ -74,7 +76,6 @@ public class Campeonato extends ModeloGenerico implements Serializable {
         this.dataCamp = dataCamp;
     }
 
-
     public String getDataString() {
         return dataString;
     }
@@ -121,6 +122,22 @@ public class Campeonato extends ModeloGenerico implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public TipoCampeonato getTipoCampeonato() {
+        return tipoCampeonato;
+    }
+
+    public void setTipoCampeonato(TipoCampeonato tipoCampeonato) {
+        this.tipoCampeonato = tipoCampeonato;
+    }
+
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
     }
 
 }

@@ -112,6 +112,7 @@ public class ManagerPesquisarEstatisticas implements Serializable {
     public void salvar() {
         
         if (this.itemPartida.getScoreT1() != null && this.itemPartida.getScoreT2() != null) {
+            this.itemPartida.setJogado(true);
             if (this.itemPartida.getScoreT1() > this.itemPartida.getScoreT2()) {
                 this.itemPartida.setTimeVencedor(this.itemPartida.getTeam1());
             } else {

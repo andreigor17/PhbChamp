@@ -27,14 +27,6 @@
                                  rowsPerPageTemplate="5,10,15"
                                  rows="5" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhuma partida encontrada">
 
-                        <p:column headerText="Opções" width="10%">
-                            <div class="options">
-                                <p:button title="Visualizar Partida"
-                                          icon="ui-icon-search"
-                                          href="visualizarPartida.xhtml?id=#{partida.id}"/>                                
-                            </div>
-                        </p:column>
-
                         <p:column headerText="Times" width="50%">                            
                             <p:outputLabel value="#{partida.itemPartida.get(0).team1.nome}   X   #{partida.itemPartida.get(0).team2.nome} "/>                                                  
                         </p:column>                
@@ -69,15 +61,15 @@
                                  emptyMessage="Nenhum Campeonato encontrado...">
 
 
-                        <p:column headerText="Opções" width="5%">
-                            <div class="options">
-                                <p:button title="Visualizar Campeonato"
-                                          icon="ui-icon-search"
-                                          href="visualizarCampeonato.xhtml?id=#{campeonato.id}"/>
+                        <f:facet name="header">
+                            <p:outputLabel value="Últimos Campeonatos" />
+                        </f:facet>
 
-                            </div>
-                        </p:column>
-
+                        <p:column headerText="Nome" width="20%">
+                            <h:outputLink  value="visualizarCampeonato.xhtml?id=#{campeonato.id}">
+                                <h:outputText value="#{campeonato.nome}" />
+                            </h:outputLink>
+                        </p:column>        
                         <p:column headerText="Nome" width="20%">
                             <p:outputLabel value="#{campeonato.nome}" />
                         </p:column>                

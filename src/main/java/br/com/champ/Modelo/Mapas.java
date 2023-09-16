@@ -8,6 +8,7 @@ package br.com.champ.Modelo;
 import br.com.champ.Generico.ModeloGenerico;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -41,6 +42,23 @@ public class Mapas extends ModeloGenerico implements Serializable {
 
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Mapas mapas = (Mapas) obj;
+        return Objects.equals(nome, mapas.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
     }
 
 }

@@ -254,6 +254,7 @@ public class ManagerCriarCampeonato implements Serializable {
                 for (int j = i + 1; j < this.times.size(); j++) {
                     match = salvarPartidaClassica(this.times.get(i), this.times.get(j), id, camp, null, null);
                     matches.add(match);
+                    this.partida = new Partida();
                 }
             }
         }
@@ -262,6 +263,7 @@ public class ManagerCriarCampeonato implements Serializable {
                 for (int j = i + 1; j < this.membros.size(); j++) {
                     match = salvarPartidaClassica(null, null, id, camp, this.membros.get(i), this.membros.get(j));
                     matches.add(match);
+                    this.partida = new Partida();
                 }
             }
         }
