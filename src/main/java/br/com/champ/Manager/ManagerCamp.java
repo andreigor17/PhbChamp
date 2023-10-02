@@ -45,6 +45,7 @@ public class ManagerCamp implements Serializable {
     PartidaServico partidaServico;
 
     private Campeonato camp;
+    private Campeonato preCamp;
     private List<Campeonato> camps;
     private List<Team> times;
     private Team time;
@@ -64,10 +65,16 @@ public class ManagerCamp implements Serializable {
         String visualizarCampId = FacesUtil
                 .getRequestParameter("id");
 
+        String visualizarPreCampId = FacesUtil
+                .getRequestParameter("preCampId");
+
         if (visualizarCampId != null && !visualizarCampId.isEmpty()) {
             this.camp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarCampId));
-
             this.partidas = partidaServico.partidaPorCamp(this.camp.getId());
+        }
+
+        if (visualizarPreCampId != null && !visualizarPreCampId.isEmpty()) {
+            this.preCamp = this.campeonatoServico.buscaCamp(Long.parseLong(visualizarPreCampId));
         }
 
         if (this.camp.getId() != null) {
@@ -78,6 +85,7 @@ public class ManagerCamp implements Serializable {
                 }
             }
         }
+
         HttpServletRequest uri = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
         if (uri.getRequestURI().contains("indexCampeonato.xhtml")) {
@@ -92,6 +100,7 @@ public class ManagerCamp implements Serializable {
 
     public void instanciar() {
         this.camp = new Campeonato();
+        this.preCamp = new Campeonato();
         this.camps = new ArrayList<>();
         this.time = new Team();
         this.times = new ArrayList<>();
@@ -101,6 +110,14 @@ public class ManagerCamp implements Serializable {
         this.ests = new ArrayList<>();
         this.partida = new Partida();
 
+    }
+
+    public Campeonato getPreCamp() {
+        return preCamp;
+    }
+
+    public void setPreCamp(Campeonato preCamp) {
+        this.preCamp = preCamp;
     }
 
     public Campeonato getCamp() {

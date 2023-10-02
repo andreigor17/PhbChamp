@@ -43,8 +43,8 @@ public class TeamServico {
     public List<Team> pesquisar(String nomeTeam) throws Exception {
 
         try {
-            String url = pathToAPI() + "/teams/team";            
-            url += "?nomePlayer=" + nomeTeam;
+            String url = pathToAPI() + "/teams/team-nome";            
+            url += "?nomeTime=" + nomeTeam;
             URL obj = new URL(url);            
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
@@ -98,7 +98,7 @@ public class TeamServico {
     private List<Team> buscaTimes() throws Exception {
 
         try {
-            String url = pathToAPI() + "/teams/teams";
+            String url = pathToAPI() + "/teams/teams-nao-amistosos";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET

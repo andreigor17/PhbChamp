@@ -70,6 +70,7 @@ public class ManagerCriarCampeonato implements Serializable {
     private Player membro;
     private List<Player> membros;
     private Jogo jogo;
+    private boolean faseInscricao;
 
     @PostConstruct
     public void init() {
@@ -97,7 +98,16 @@ public class ManagerCriarCampeonato implements Serializable {
         this.membro = new Player();
         this.membros = new ArrayList<>();
         this.jogo = new Jogo();
+        this.faseInscricao = true;
 
+    }
+
+    public boolean isFaseInscricao() {
+        return faseInscricao;
+    }
+
+    public void setFaseInscricao(boolean faseInscricao) {
+        this.faseInscricao = faseInscricao;
     }
 
     public Jogo getJogo() {
@@ -225,15 +235,24 @@ public class ManagerCriarCampeonato implements Serializable {
 
         this.camp.setTeams(this.times);
         this.camp.setPlayers(this.membros);
+        if (faseInscricao) {
+            
+            this.camp.setStatus(StatusCamp.INSCRICOES_ABERTAS);
+            this.camp = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
+            Mensagem.successAndRedirect("Camp salvo", "preCampeonato.xhtml?preCampId=" + this.camp.getId());
+        } else {
+            
+            this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
+            this.camp = campeonatoServico.buscaCamp(this.camp.getId());
+            this.camp.setPartidas(gerarPartidas(this.camp.getId(), this.camp));
 
-        this.camp.setStatus(StatusCamp.EM_ANDAMENTO);
+            this.camp = campeonatoServico.save(this.camp, this.camp.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
+            Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
+        }
+    }
 
-        this.camp = campeonatoServico.save(this.camp, null, Url.SALVAR_CAMPEONATO.getNome());
-        this.camp = campeonatoServico.buscaCamp(this.camp.getId());
-        this.camp.setPartidas(gerarPartidas(this.camp.getId(), this.camp));
+    public void salvarPreCamp() {
 
-        this.camp = campeonatoServico.save(this.camp, this.camp.getId(), Url.ATUALIZAR_CAMPEONATO.getNome());
-        Mensagem.successAndRedirect("Camp salvo", "visualizarCampeonato.xhtml?id=" + this.camp.getId());
     }
 
     public List<Team> autoCompletarTime() throws Exception {

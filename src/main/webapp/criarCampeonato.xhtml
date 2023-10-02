@@ -83,7 +83,17 @@
                                         <p:calendar id="dataCalendarFinal" value="#{managerCriarCampeonato.dataFinal}"  mindate="#{managerHelper.dataAtual()}" showOn="button"
                                                     pattern="dd/MM/yyyy"/>
                                     </div>
-                                </div>                                
+                                </div> 
+                                <div class="row">
+                                    <div class="column2 bold">
+                                        <p:outputLabel for="statusCampBoolean" style="text-align: left !important"  value="Inscrições abertas ?"/>
+                                    </div>
+                                    <div class="column2">
+                                        <p:selectBooleanButton id="statusCampBoolean" onLabel="Sim" offLabel="Não" value="#{ managerCriarCampeonato.faseInscricao }"
+                                                               required="true"/>
+
+                                    </div>
+                                </div>     
                             </div>
                         </p:panel>
                     </p:tab>
@@ -308,6 +318,7 @@
                                                      onclick="desabilitarBotoes(true);" oncomplete="desabilitarBotoes(false);"
                                                      process="@this"/>
                                 </div>
+                                <p:hotkey bind="ctrl+s" actionListener="#{ managerCriarCampeonato.salvarCampeonato() }" update="@form"/>
                             </div>
                         </p:panel>
                     </p:tab>

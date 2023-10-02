@@ -7,7 +7,8 @@ package br.com.champ.Enums;
 public enum StatusCamp {
     
     EM_ANDAMENTO(1, "Em Andamento"),
-    FINALIZADO(2, "Finalizado");
+    FINALIZADO(2, "Finalizado"),
+    INSCRICOES_ABERTAS(3, "Incrições Abertas");
     
     private String nome;
     private Integer valor;

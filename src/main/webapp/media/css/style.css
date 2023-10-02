@@ -575,6 +575,13 @@ body .ui-button.rounded-button.ui-button-icon-only {
     text-align: right
 }
 
+.nameBox {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #000;
+}
+
 .actions .button {
     min-width: 100px
 }
